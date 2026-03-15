@@ -1,0 +1,13 @@
+{
+  "name": "moviemall",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MovieMall frontend",
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "globals": "^15.15.0",
+    "prettier": "^3.8.1"
+  }
+}
