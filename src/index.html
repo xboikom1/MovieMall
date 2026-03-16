@@ -8,386 +8,527 @@
 </head>
 <body class="min-h-screen bg-bg text-text">
 
-<header>
-<!--  Left-->
-  <div class="flex item-center gap-3">
-    <a href="index.html">MovieMall</a>
+<header class="bg-dark px-6 py-4">
+  <div class="flex mx-auto max-w-7xl items-center justify-between gap-6">
 
-    <nav class="">
-      <a href="movies.html">Movies</a>
-      <a href="souvenirs.html">Souvenirs</a>
-    </nav>
-  </div>
+    <!--  Left-->
+    <div class="flex items-center gap-6">
+      <a href="index.html" class="bg-accent rounded-xl px-4 py-2 text-text text-lg font-bold">MovieMall</a>
 
-<!--  Right-->
-  <div class="flex item-center gap-3">
-    <input type="search" placeholder="Search...">
-    <a href="cart.html">Cart</a>
-    <a href="login.html">Log In</a>
-    <a href="register.html">Register</a>
+      <nav class="flex gap-2">
+        <a href="movies.html" class="bg-button rounded-lg px-4 py-2 text-sm">Movies</a>
+        <a href="souvenirs.html" class="bg-button rounded-lg px-4 py-2 text-sm">Souvenirs</a>
+      </nav>
+    </div>
+
+    <!--  Right-->
+    <div class="flex item-center gap-3 text-sm">
+      <input type="search" placeholder="Search..."
+             class="bg-button rounded-lg w-48 px-4 py-2 outline-none placeholder:text-placeholder">
+
+      <a href="cart.html" class="bg-button rounded-lg px-4 py-2 text-sm">Cart</a>
+      <a href="login.html" class="bg-accent rounded-lg px-4 py-2 text-sm font-semibold">Log In</a>
+      <a href="register.html" class="bg-button rounded-lg px-4 py-2 text-sm font-semibold">Register</a>
+    </div>
   </div>
 </header>
 
 
 <main>
-<!--  Banner-->
-  <section class="flex">
+  <!--  Banner-->
+  <section class="bg-dark px-6 py-20">
+    <div class="flex mx-auto max-w-7xl items-center gap-16">
 
-<!--    engager-->
-    <div class="flex-col">
-      <h1>
-        Your Cinema,
-        <br/>Your rules
-      </h1>
-      <p>Browse thousands of movies, collect souvenirs, and never miss a release — all in one place.</p>
+      <!--    engager-->
+      <div class="flex flex-col flex-1 gap-6">
+        <h1 class="text-5xl font-bold leading-tight">
+          Your Cinema,
+          <br />Your rules
+        </h1>
+        <p class="max-w-md text-placeholder">
+          Browse thousands of movies, collect souvenirs, and never miss a release — all in one place.
+        </p>
 
-     <div class="flex gap-3">
-       <a href="movies.html">Browse Movies</a>
-       <a href="souvenirs.html">Browse Souvenirs</a>
-     </div>
-    </div>
+        <div class="flex gap-3">
+          <a href="movies.html"
+             class="bg-accent rounded-xl px-6 py-3 text-text font-semibold">Browse Movies</a>
+          <a href="souvenirs.html"
+             class="bg-button rounded-xl px-6 py-3 text-text font-semibold">Browse Souvenirs</a>
+        </div>
+      </div>
 
-<!--    poster-->
-    <div>
-      <img src="" alt="Movie Poster">
+      <!--    poster-->
+      <div class="flex-shrink-0">
+        <img src="" alt="Movie Poster"
+             class="bg-button rounded-2xl w-52 aspect-[2/3] object-cover">
+      </div>
     </div>
   </section>
 
 
+  <!--  recommendation grid-->
+  <section class="flex flex-col mx-auto max-w-7xl gap-12 px-6 py-12">
 
-<!--  recommendation grid-->
-  <section class="flex-col gap-5">
+    <!--    row top movies-->
+    <div>
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-2xl font-bold">Top Movies</h2>
+        <a href="movies.html" class="text-accent text-sm font-semibold">See More</a>
+      </div>
 
-<!--    row top movies-->
-    <div class="flex items-center justify-between">
-      <h2>Top Movies</h2>
-      <a href="movies.html">See More</a>
+      <ul class="grid grid-cols-5 gap-5">
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
 
-    <ul class="flex gap-5">
-      <li>
-        <a href="movie-detail.html">
-          <img src="" alt="Movie Poster">
 
-          <div class="flex items-center gap-2">
-            <h3>Movie Title</h3>
-            <h3>Price</h3>
-          </div>
+    <!--    row new release-->
+    <div>
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-2xl font-bold">New Releases</h2>
+        <a href="movies.html" class="text-accent text-sm font-semibold">See More</a>
+      </div>
 
-          <div class="flex gap-2">
-            <p>Release Year</p>
-            <p>Genre</p>
-          </div>
-        </a>
-      </li>
+      <ul class="grid grid-cols-5 gap-5">
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
 
-      <li>
-        <a href="movie-detail.html">
-          <img src="" alt="Movie Poster">
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
 
-          <div class="flex items-center gap-2">
-            <h3>Movie Title</h3>
-            <h3>Price</h3>
-          </div>
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
 
-          <div class="flex gap-2">
-            <p>Release Year</p>
-            <p>Genre</p>
-          </div>
-        </a>
-      </li>
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
 
-      <li>
-        <a href="movie-detail.html">
-          <img src="" alt="Movie Poster">
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
 
-          <div class="flex items-center gap-2">
-            <h3>Movie Title</h3>
-            <h3>Price</h3>
-          </div>
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
 
-          <div class="flex gap-2">
-            <p>Release Year</p>
-            <p>Genre</p>
-          </div>
-        </a>
-      </li>
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
 
-      <li>
-        <a href="movie-detail.html">
-          <img src="" alt="Movie Poster">
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
 
-          <div class="flex items-center gap-2">
-            <h3>Movie Title</h3>
-            <h3>Price</h3>
-          </div>
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
 
-          <div class="flex gap-2">
-            <p>Release Year</p>
-            <p>Genre</p>
-          </div>
-        </a>
-      </li>
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
 
-      <li>
-        <a href="movie-detail.html">
-          <img src="" alt="Movie Poster">
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
 
-          <div class="flex items-center gap-2">
-            <h3>Movie Title</h3>
-            <h3>Price</h3>
-          </div>
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
 
-          <div class="flex gap-2">
-            <p>Release Year</p>
-            <p>Genre</p>
-          </div>
-        </a>
-      </li>
-    </ul>
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="movie-detail.html" class="block">
+            <div class="bg-button aspect-[2/3]">
+              <img src="" alt="Movie Poster" class="h-full w-full object-cover">
+            </div>
 
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Movie Title</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
 
-<!--    row new release-->
-    <div class="flex items-center justify-between">
-      <h2>New Releases</h2>
-      <a href="movies.html">See More</a>
+              <div class="flex gap-2 text-placeholder text-xs">
+                <p>Release Year</p>
+                <p>Genre</p>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
 
-    <ul class="flex gap-5">
-      <li>
-        <img src="" alt="Movie Poster">
-
-        <div class="flex items-center gap-2">
-          <h3>Movie Title</h3>
-          <h3>Price</h3>
-        </div>
-
-        <div class="flex gap-2">
-          <p>Release Year</p>
-          <p>Genre</p>
-        </div>
-      </li>
-
-      <li>
-        <img src="" alt="Movie Poster">
-
-        <div class="flex items-center gap-2">
-          <h3>Movie Title</h3>
-          <h3>Price</h3>
-        </div>
-
-        <div class="flex gap-2">
-          <p>Release Year</p>
-          <p>Genre</p>
-        </div>
-      </li>
-
-      <li>
-        <img src="" alt="Movie Poster">
-
-        <div class="flex items-center gap-2">
-          <h3>Movie Title</h3>
-          <h3>Price</h3>
-        </div>
-
-        <div class="flex gap-2">
-          <p>Release Year</p>
-          <p>Genre</p>
-        </div>
-      </li>
-
-      <li>
-        <img src="" alt="Movie Poster">
-
-        <div class="flex items-center gap-2">
-          <h3>Movie Title</h3>
-          <h3>Price</h3>
-        </div>
-
-        <div class="flex gap-2">
-          <p>Release Year</p>
-          <p>Genre</p>
-        </div>
-      </li>
-
-      <li>
-        <img src="" alt="Movie Poster">
-
-        <div class="flex items-center gap-2">
-          <h3>Movie Title</h3>
-          <h3>Price</h3>
-        </div>
-
-        <div class="flex gap-2">
-          <p>Release Year</p>
-          <p>Genre</p>
-        </div>
-      </li>
-    </ul>
-
-
-<!--    row top souvenirs-->
-    <div class="flex items-center justify-between">
-      <h2>Best Rated Souvenirs</h2>
-      <a href="souvenirs.html">See More</a>
-    </div>
-
-    <ul class="flex gap-5">
-      <li>
-        <img src="" alt="Souvenir image">
-
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
-
-      <li>
-        <img src="" alt="Souvenir image">
-
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
-
-      <li>
-        <img src="" alt="Souvenir image">
-
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
-
-      <li>
-        <img src="" alt="Souvenir image">
-
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
-
-      <li>
-        <img src="" alt="Souvenir image">
-
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
-    </ul>
 
     <!--    row top souvenirs-->
-    <div class="flex items-center justify-between">
-      <h2>Top Souvenirs</h2>
-      <a href="souvenirs.html">See More</a>
+    <div>
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-2xl font-bold">Best Rated Souvenirs</h2>
+        <a href="souvenirs.html" class="text-accent text-sm font-semibold">See More</a>
+      </div>
+
+      <ul class="grid grid-cols-5 gap-5">
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
 
-    <ul class="flex gap-5">
-      <li>
-        <img src="" alt="Souvenir image">
 
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
+    <!--    row top souvenirs-->
+    <div>
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-2xl font-bold">Best Rated Souvenirs</h2>
+        <a href="souvenirs.html" class="text-accent text-sm font-semibold">See More</a>
+      </div>
 
-      <li>
-        <img src="" alt="Souvenir image">
+      <ul class="grid grid-cols-5 gap-5">
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
 
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
 
-      <li>
-        <img src="" alt="Souvenir image">
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
 
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
 
-      <li>
-        <img src="" alt="Souvenir image">
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
 
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
 
-      <li>
-        <img src="" alt="Souvenir image">
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
 
-        <div class="flex items-center gap-2">
-          <h3>Souvenir Name</h3>
-          <h3>Price</h3>
-        </div>
-      </li>
-    </ul>
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li class="bg-dark rounded-2xl overflow-hidden">
+          <a href="souvenir-detail.html" class="block">
+            <div class="bg-button aspect-square">
+              <img src="" alt="Souvenir image" class="h-full w-full object-cover">
+            </div>
+
+            <div class="flex flex-col gap-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="min-w-0 truncate font-semibold">Souvenir Name</h3>
+                <h3 class="shrink-0 text-sm font-semibold text-accent">Price</h3>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
 
   </section>
 
 
+  <!-- select by genre-->
+  <section class="bg-dark px-6 py-12">
+    <div class="mx-auto max-w-7xl">
+      <h2 class="text-2xl font-bold mb-6">Browse By Genre</h2>
 
-
-<!-- select by genre-->
-  <section>
-    <div>
-      <h2>Browse By Genre</h2>
-      <ul class="grid">
-        <li>
-          <a href="movies.html?genre=action">Action</a>
+      <ul class="grid auto-rows-[140px] grid-cols-4 gap-3">
+        <li class="col-span-2 row-span-2">
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-5 text-xl font-bold">Action</a>
         </li>
 
         <li>
-          <a href="movies.html?genre=comedy">Comedy</a>
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Comedy</a>
         </li>
 
         <li>
-          <a href="movies.html?genre=drama">Drama</a>
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Drama</a>
+        </li>
+
+        <li class="col-span-2">
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Sci-Fi</a>
+        </li>
+
+        <li class="col-span-2">
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Thriller</a>
         </li>
 
         <li>
-          <a href="movies.html">Horror</a>
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Fantasy</a>
         </li>
 
         <li>
-          <a href="movies.html">Sci-Fi</a>
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Horror</a>
         </li>
 
         <li>
-          <a href="movies.html">Thriller</a>
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Romance</a>
+        </li>
+
+        <li class="col-span-2">
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Documentary</a>
         </li>
 
         <li>
-          <a href="movies.html">Fantasy</a>
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Apocalypse</a>
         </li>
 
-        <li>
-          <a href="movies.html">Romance</a>
+        <li class="col-span-2">
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Sports</a>
         </li>
 
-        <li>
-          <a href="movies.html">Documentrary</a>
-        </li>
-
-        <li>
-          <a href="movies.html">Apocalypse</a>
-        </li>
-
-        <li>
-          <a href="movies.html">Sports</a>
-        </li>
-
-        <li>
-          <a href="movies.html">Western</a>
+        <li class="col-span-2">
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Western</a>
         </li>
       </ul>
     </div>
@@ -395,11 +536,14 @@
 </main>
 
 
-<footer>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="">About</a>
-    <a href="">Contact</a>
+<footer class="bg-dark px-6 py-8 text-sm text-placeholder">
+  <div class="flex mx-auto max-w-7xl items-center justify-between">
+    <p class="font-semibold text-text">MovieMall</p>
+    <nav class="flex gap-6">
+      <a href="index.html">Home</a>
+      <a href="">About</a>
+      <a href="">Contact</a>
+    </nav>
   </div>
 </footer>
 </body>
