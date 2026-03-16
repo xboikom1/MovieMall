@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MovieMall</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        screens: {
+          tablets: '480px',
+          desktops: '768px'
+        },
+        extend: {
+          colors: {
+            bg: '#0f172a',
+            text: '#f9fafb',
+            rose: '#f43f5e'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen bg-bg text-text">
+
+<header>
+<!--  Left-->
+  <div class="flex item-center gap-3">
+    <a href="index.html">MovieMall</a>
+
+    <nav class="">
+      <a href="movies.html">Movies</a>
+      <a href="souvenirs.html">Souvenirs</a>
+    </nav>
+  </div>
+
+<!--  Right-->
+  <div class="flex item-center gap-3">
+    <input type="search" placeholder="Search...">
+    <a href="cart.html">Cart</a>
+    <a href="login.html">Log In</a>
+    <a href="register.html">Register</a>
+  </div>
+</header>
+
+
+<main>
+<!--  Banner-->
+  <section class="flex">
+
+<!--    engager-->
+    <div class="flex-col">
+      <h1>
+        Your Cinema,
+        <br/>Your rules
+      </h1>
+      <p>Browse thousands of movies, collect souvenirs, and never miss a release — all in one place.</p>
+
+     <div class="flex gap-3">
+       <a href="movies.html">Browse Movies</a>
+       <a href="souvenirs.html">Browse Souvenirs</a>
+     </div>
+    </div>
+
+<!--    poster-->
+    <div>
+      <img src="" alt="Movie Poster">
+    </div>
+  </section>
+
+
+
+<!--  recommendation grid-->
+  <section class="flex-col gap-5">
+
+<!--    row top movies-->
+    <div class="flex items-center justify-between">
+      <h2>Top Movies</h2>
+      <a href="movies.html">See More</a>
+    </div>
+
+    <ul class="flex gap-5">
+      <li>
+        <a href="movie-detail.html">
+          <img src="" alt="Movie Poster">
+
+          <div class="flex items-center gap-2">
+            <h3>Movie Title</h3>
+            <h3>Price</h3>
+          </div>
+
+          <div class="flex gap-2">
+            <p>Release Year</p>
+            <p>Genre</p>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="movie-detail.html">
+          <img src="" alt="Movie Poster">
+
+          <div class="flex items-center gap-2">
+            <h3>Movie Title</h3>
+            <h3>Price</h3>
+          </div>
+
+          <div class="flex gap-2">
+            <p>Release Year</p>
+            <p>Genre</p>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="movie-detail.html">
+          <img src="" alt="Movie Poster">
+
+          <div class="flex items-center gap-2">
+            <h3>Movie Title</h3>
+            <h3>Price</h3>
+          </div>
+
+          <div class="flex gap-2">
+            <p>Release Year</p>
+            <p>Genre</p>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="movie-detail.html">
+          <img src="" alt="Movie Poster">
+
+          <div class="flex items-center gap-2">
+            <h3>Movie Title</h3>
+            <h3>Price</h3>
+          </div>
+
+          <div class="flex gap-2">
+            <p>Release Year</p>
+            <p>Genre</p>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="movie-detail.html">
+          <img src="" alt="Movie Poster">
+
+          <div class="flex items-center gap-2">
+            <h3>Movie Title</h3>
+            <h3>Price</h3>
+          </div>
+
+          <div class="flex gap-2">
+            <p>Release Year</p>
+            <p>Genre</p>
+          </div>
+        </a>
+      </li>
+    </ul>
+
+
+<!--    row new release-->
+    <div class="flex items-center justify-between">
+      <h2>New Releases</h2>
+      <a href="movies.html">See More</a>
+    </div>
+
+    <ul class="flex gap-5">
+      <li>
+        <img src="" alt="Movie Poster">
+
+        <div class="flex items-center gap-2">
+          <h3>Movie Title</h3>
+          <h3>Price</h3>
+        </div>
+
+        <div class="flex gap-2">
+          <p>Release Year</p>
+          <p>Genre</p>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Movie Poster">
+
+        <div class="flex items-center gap-2">
+          <h3>Movie Title</h3>
+          <h3>Price</h3>
+        </div>
+
+        <div class="flex gap-2">
+          <p>Release Year</p>
+          <p>Genre</p>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Movie Poster">
+
+        <div class="flex items-center gap-2">
+          <h3>Movie Title</h3>
+          <h3>Price</h3>
+        </div>
+
+        <div class="flex gap-2">
+          <p>Release Year</p>
+          <p>Genre</p>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Movie Poster">
+
+        <div class="flex items-center gap-2">
+          <h3>Movie Title</h3>
+          <h3>Price</h3>
+        </div>
+
+        <div class="flex gap-2">
+          <p>Release Year</p>
+          <p>Genre</p>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Movie Poster">
+
+        <div class="flex items-center gap-2">
+          <h3>Movie Title</h3>
+          <h3>Price</h3>
+        </div>
+
+        <div class="flex gap-2">
+          <p>Release Year</p>
+          <p>Genre</p>
+        </div>
+      </li>
+    </ul>
+
+
+<!--    row top souvenirs-->
+    <div class="flex items-center justify-between">
+      <h2>Best Rated Souvenirs</h2>
+      <a href="souvenirs.html">See More</a>
+    </div>
+
+    <ul class="flex gap-5">
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+    </ul>
+
+    <!--    row top souvenirs-->
+    <div class="flex items-center justify-between">
+      <h2>Top Souvenirs</h2>
+      <a href="souvenirs.html">See More</a>
+    </div>
+
+    <ul class="flex gap-5">
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+
+      <li>
+        <img src="" alt="Souvenir image">
+
+        <div class="flex items-center gap-2">
+          <h3>Souvenir Name</h3>
+          <h3>Price</h3>
+        </div>
+      </li>
+    </ul>
+
+  </section>
+
+
+
+
+<!-- select by genre-->
+  <section>
+    <div>
+      <h2>Browse By Genre</h2>
+      <ul class="grid">
+        <li>
+          <a href="movies.html?genre=action">Action</a>
+        </li>
+
+        <li>
+          <a href="movies.html?genre=comedy">Comedy</a>
+        </li>
+
+        <li>
+          <a href="movies.html?genre=drama">Drama</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Horror</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Sci-Fi</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Thriller</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Fantasy</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Romance</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Documentrary</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Apocalypse</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Sports</a>
+        </li>
+
+        <li>
+          <a href="movies.html">Western</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+
+<footer>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="">About</a>
+    <a href="">Contact</a>
+  </div>
+</footer>
+</body>
+</html>
