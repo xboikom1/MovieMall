@@ -8,27 +8,44 @@
 </head>
 <body class="min-h-screen bg-bg text-text">
 
-<header class="bg-dark px-6 py-4">
-  <div class="flex mx-auto max-w-7xl items-center justify-between gap-6">
+<header class="bg-dark px-4 py-4 tablet:px-6 border-b border-border shadow-[0_14px_36px_rgba(0,0,0,.35)]">
+  <div class="flex mx-auto max-w-7xl items-center justify-between gap-3 tablet:gap-6">
 
     <!--  Left-->
-    <div class="flex items-center gap-6">
-      <a href="index.html" class="bg-accent rounded-xl px-4 py-2 text-text text-lg font-bold">MovieMall</a>
+    <div class="flex items-center gap-3 tablet:gap-6">
+      <a href="index.html"
+         class="bg-accent rounded-xl px-4 py-2 text-text text-lg font-bold transition hover:brightness-110">
+        MovieMall</a>
 
-      <nav class="flex gap-2">
-        <a href="movies.html" class="bg-button rounded-lg px-4 py-2 text-sm">Movies</a>
-        <a href="souvenirs.html" class="bg-button rounded-lg px-4 py-2 text-sm">Souvenirs</a>
+      <nav class="flex gap-2 hidden tablet:flex">
+        <a href="movies.html"
+           class="bg-button rounded-lg px-4 py-2 text-sm border border-border transition hover:bg-accent">
+          Movies</a>
+
+        <a href="souvenirs.html"
+           class="bg-button rounded-lg px-4 py-2 text-sm border border-border transition hover:bg-accent">
+          Souvenirs</a>
       </nav>
     </div>
 
     <!--  Right-->
-    <div class="flex item-center gap-3 text-sm">
+    <div class="flex items-center gap-2 tablet:gap-3 text-sm">
       <input type="search" placeholder="Search..."
-             class="bg-button rounded-lg w-48 px-4 py-2 outline-none placeholder:text-placeholder">
+             class="bg-button rounded-lg w-48 px-4 py-2 outline-none placeholder:text-placeholder hidden
+             desktop:block border border-border focus:border-accent focus:ring-2 focus:ring-accent">
 
-      <a href="cart.html" class="bg-button rounded-lg px-4 py-2 text-sm">Cart</a>
-      <a href="login.html" class="bg-accent rounded-lg px-4 py-2 text-sm font-semibold">Log In</a>
-      <a href="register.html" class="bg-button rounded-lg px-4 py-2 text-sm font-semibold">Register</a>
+      <a href="cart.html"
+         class="bg-button rounded-lg px-4 py-2 text-sm hidden tablet:block border border-border transition hover:bg-accent">
+        Cart
+      </a>
+      <a href="login.html"
+         class="bg-accent rounded-lg px-3 tablet:px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110">
+        Log In
+      </a>
+      <a href="register.html"
+         class="bg-button rounded-lg px-3 tablet:px-4 py-2 text-sm font-semibold border border-border transition hover:bg-accent">
+        Register
+      </a>
     </div>
   </div>
 </header>
@@ -36,12 +53,12 @@
 
 <main>
   <!--  Banner-->
-  <section class="bg-dark px-6 py-20">
-    <div class="flex mx-auto max-w-7xl items-center gap-16">
+  <section class="bg-dark px-4 py-14 tablet:px-6 tablet:py-20 desktop:py-28 border-b border-border">
+    <div class="flex mx-auto max-w-7xl items-center gap-10">
 
       <!--    engager-->
       <div class="flex flex-col flex-1 gap-6">
-        <h1 class="text-5xl font-bold leading-tight">
+        <h1 class="text-3xl tablet:text-4xl desktop:text-5xl font-bold leading-tight">
           Your Cinema,
           <br />Your rules
         </h1>
@@ -49,35 +66,39 @@
           Browse thousands of movies, collect souvenirs, and never miss a release — all in one place.
         </p>
 
-        <div class="flex gap-3">
+        <div class="flex gap-3 flex-wrap">
           <a href="movies.html"
-             class="bg-accent rounded-xl px-6 py-3 text-text font-semibold">Browse Movies</a>
+             class="bg-accent rounded-xl px-6 py-3 text-text font-semibold
+             shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:brightness-110">Browse Movies</a>
+
           <a href="souvenirs.html"
-             class="bg-button rounded-xl px-6 py-3 text-text font-semibold">Browse Souvenirs</a>
+             class="bg-button rounded-xl px-6 py-3 text-text font-semibold
+             border border-border transition hover:bg-accent">Browse Souvenirs</a>
         </div>
       </div>
 
       <!--    poster-->
-      <div class="flex-shrink-0">
+      <div class="flex-shrink-0 hidden tablet:block">
         <img src="" alt="Movie Poster"
-             class="bg-button rounded-2xl w-52 aspect-[2/3] object-cover">
+             class="bg-button rounded-2xl w-52 aspect-[2/3] object-cover shadow-[0_24px_48px_rgba(0,0,0,.6)] ring-1 ring-border">
       </div>
     </div>
   </section>
 
 
   <!--  recommendation grid-->
-  <section class="flex flex-col mx-auto max-w-7xl gap-12 px-6 py-12">
+  <section class="flex flex-col mx-auto max-w-7xl gap-12 px-4 py-12 tablet:px-6 tablet:py-16">
 
     <!--    row top movies-->
     <div>
-      <div class="flex items-center justify-between mb-5">
-        <h2 class="text-2xl font-bold">Top Movies</h2>
-        <a href="movies.html" class="text-accent text-sm font-semibold">See More</a>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl tablet:text-2xl font-bold">Top Movies</h2>
+        <a href="movies.html" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
       </div>
 
-      <ul class="grid grid-cols-5 gap-5">
-        <li class="bg-dark rounded-2xl overflow-hidden">
+      <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -97,7 +118,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -117,7 +138,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -137,7 +158,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -157,7 +178,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -182,13 +203,13 @@
 
     <!--    row new release-->
     <div>
-      <div class="flex items-center justify-between mb-5">
-        <h2 class="text-2xl font-bold">New Releases</h2>
-        <a href="movies.html" class="text-accent text-sm font-semibold">See More</a>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl tablet:text-2xl font-bold">New Releases</h2>
+        <a href="movies.html" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
       </div>
 
-      <ul class="grid grid-cols-5 gap-5">
-        <li class="bg-dark rounded-2xl overflow-hidden">
+      <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -208,7 +229,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -228,7 +249,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -248,7 +269,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -268,7 +289,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-detail.html" class="block">
             <div class="bg-button aspect-[2/3]">
               <img src="" alt="Movie Poster" class="h-full w-full object-cover">
@@ -293,13 +314,13 @@
 
     <!--    row top souvenirs-->
     <div>
-      <div class="flex items-center justify-between mb-5">
-        <h2 class="text-2xl font-bold">Best Rated Souvenirs</h2>
-        <a href="souvenirs.html" class="text-accent text-sm font-semibold">See More</a>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl tablet:text-2xl font-bold">Best Rated Souvenirs</h2>
+        <a href="souvenirs.html" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
       </div>
 
-      <ul class="grid grid-cols-5 gap-5">
-        <li class="bg-dark rounded-2xl overflow-hidden">
+      <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -314,7 +335,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -329,7 +350,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -344,7 +365,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -359,7 +380,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -379,13 +400,13 @@
 
     <!--    row top souvenirs-->
     <div>
-      <div class="flex items-center justify-between mb-5">
-        <h2 class="text-2xl font-bold">Best Rated Souvenirs</h2>
-        <a href="souvenirs.html" class="text-accent text-sm font-semibold">See More</a>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl tablet:text-2xl font-bold">Top Souvenirs</h2>
+        <a href="souvenirs.html" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
       </div>
 
-      <ul class="grid grid-cols-5 gap-5">
-        <li class="bg-dark rounded-2xl overflow-hidden">
+      <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -400,7 +421,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -415,7 +436,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -430,7 +451,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -445,7 +466,7 @@
           </a>
         </li>
 
-        <li class="bg-dark rounded-2xl overflow-hidden">
+        <li class="bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="souvenir-detail.html" class="block">
             <div class="bg-button aspect-square">
               <img src="" alt="Souvenir image" class="h-full w-full object-cover">
@@ -466,69 +487,93 @@
 
 
   <!-- select by genre-->
-  <section class="bg-dark px-6 py-12">
+  <section class="bg-dark px-4 py-12 tablet:px-6 tablet:py-16 border-t border-border">
     <div class="mx-auto max-w-7xl">
-      <h2 class="text-2xl font-bold mb-6">Browse By Genre</h2>
+      <h2 class="text-xl tablet:text-2xl font-bold mb-6">Browse By Genre</h2>
 
-      <ul class="grid auto-rows-[140px] grid-cols-4 gap-3">
-        <li class="col-span-2 row-span-2">
+      <ul class="grid auto-rows-[120px] grid-cols-2 gap-3 tablet:auto-rows-[140px] tablet:grid-cols-4">
+        <li class="tablet:col-span-2 tablet:row-span-2">
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-5 text-xl font-bold">Action</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 tablet:p-5 text-lg tablet:text-xl font-bold border border-border transition hover:bg-accent hover:border-accent">
+            Action
+          </a>
         </li>
 
         <li>
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Comedy</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Comedy
+          </a>
         </li>
 
         <li>
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Drama</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Drama
+          </a>
         </li>
 
-        <li class="col-span-2">
+        <li class="tablet:col-span-2">
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Sci-Fi</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Sci-Fi
+          </a>
         </li>
 
-        <li class="col-span-2">
+        <li class="tablet:col-span-2">
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Thriller</a>
-        </li>
-
-        <li>
-          <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Fantasy</a>
-        </li>
-
-        <li>
-          <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Horror</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Thriller
+          </a>
         </li>
 
         <li>
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Romance</a>
-        </li>
-
-        <li class="col-span-2">
-          <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Documentary</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Fantasy
+          </a>
         </li>
 
         <li>
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Apocalypse</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Horror
+          </a>
         </li>
 
-        <li class="col-span-2">
+        <li>
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Sports</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Romance
+          </a>
         </li>
 
-        <li class="col-span-2">
+        <li class="tablet:col-span-2">
           <a href="movies.html"
-             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold">Western</a>
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Documentary
+          </a>
+        </li>
+
+        <li>
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Apocalypse
+          </a>
+        </li>
+
+        <li class="tablet:col-span-2">
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Sports
+          </a>
+        </li>
+
+        <li class="tablet:col-span-2">
+          <a href="movies.html"
+             class="flex rounded-2xl h-full items-end bg-button p-4 font-semibold border border-border transition hover:bg-accent hover:border-accent">
+            Western
+          </a>
         </li>
       </ul>
     </div>
@@ -536,13 +581,13 @@
 </main>
 
 
-<footer class="bg-dark px-6 py-8 text-sm text-placeholder">
-  <div class="flex mx-auto max-w-7xl items-center justify-between">
+<footer class="bg-dark px-4 tablet:px-6 py-8 text-sm text-placeholder border-t border-border">
+  <div class="flex flex-col gap-4 mx-auto max-w-7xl tablet:flex-row tablet:items-center tablet:justify-between">
     <p class="font-semibold text-text">MovieMall</p>
     <nav class="flex gap-6">
-      <a href="index.html">Home</a>
-      <a href="">About</a>
-      <a href="">Contact</a>
+      <a href="index.html" class="transition hover:text-text">Home</a>
+      <a href="" class="transition hover:text-text">About</a>
+      <a href="" class="transition hover:text-text">Contact</a>
     </nav>
   </div>
 </footer>
