@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieMall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          screens: {
+            tablet: '768px',
+            desktop: '1024px'
+          },
+          extend: {
+            colors: {
+              bg: '#0f172a',
+              text: '#f9fafb',
+              accent: '#f43f5e',
+              border: '#374151',
+              placeholder: '#9ca3af',
+              dark: '#111827',
+              button: '#1f2937'
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-bg text-text">
+    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)]">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
+        <div class="flex items-center gap-3 tablet:gap-6">
+          <a
+            href="index.html"
+            class="flex items-center rounded-xl bg-accent px-4 py-2 font-semibold text-white tablet:text-lg"
+            >MovieMall</a
+          >
+          <nav class="hidden gap-2 text-sm tablet:flex">
+            <a
+              href="movie-details.html"
+              class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent"
+              >Movies</a
+            >
+            <a
+              href="souvenir-details.html"
+              class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent"
+              >Souvenirs</a
+            >
+          </nav>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs tablet:gap-3 tablet:text-sm">
+          <label for="site-search" class="sr-only">Search</label>
+          <input
+            id="site-search"
+            type="search"
+            placeholder="Search..."
+            class="hidden w-44 rounded-lg border border-border bg-button px-3 py-2 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent tablet:block"
+          />
+          <a
+            href="cart.html"
+            class="rounded-lg border border-border bg-button px-3 py-2 transition hover:bg-accent tablet:px-4"
+            >Cart</a
+          >
+          <a
+            href="profile.html"
+            aria-current="page"
+            class="rounded-lg border border-border bg-accent px-3 py-2 font-semibold transition hover:brightness-110 tablet:px-4"
+            >Profile</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 tablet:px-6 tablet:py-12">
+      <header class="mb-6 flex flex-col gap-2">
+        <h1 class="text-2xl font-bold tablet:text-3xl">Profile</h1>
+        <p class="text-sm text-placeholder">Manage your personal details and avatar.</p>
+      </header>
+
+      <!-- Profile card -->
+      <section class="rounded-3xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-10">
+        <div class="grid grid-cols-1 gap-8 desktop:grid-cols-[320px_1fr] desktop:gap-10">
+          <aside class="flex flex-col items-center gap-4">
+            <div
+              class="grid h-44 w-44 place-items-center rounded-full border border-border bg-button text-center shadow-[0_14px_36px_rgba(0,0,0,.35)]"
+            >
+              <div class="px-8">
+                <p class="text-base font-semibold">Profile</p>
+                <p class="text-base font-semibold">Avatar</p>
+              </div>
+            </div>
+
+            <div class="mt-1 flex flex-wrap items-center justify-center gap-3">
+              <label
+                class="cursor-pointer rounded-xl border border-border bg-bg px-4 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent"
+              >
+                Upload New
+                <input type="file" class="sr-only" accept="image/*" />
+              </label>
+              <button
+                type="button"
+                class="rounded-xl border border-border bg-bg px-4 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent"
+              >
+                Delete Avatar
+              </button>
+            </div>
+          </aside>
+
+         <!-- Form -->
+          <div class="flex flex-col gap-6">
+            <form class="grid grid-cols-1 gap-5">
+              <div>
+                <label for="profile-name" class="mb-2 block text-xs font-semibold uppercase tracking-widest"
+                  >Full Name</label
+                >
+                <input
+                  id="profile-name"
+                  type="text"
+                  placeholder=""
+                  class="w-full rounded-xl border border-border bg-bg px-4 py-3.5 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent tablet:text-base"
+                />
+              </div>
+
+              <div>
+                <label for="profile-email" class="mb-2 block text-xs font-semibold uppercase tracking-widest"
+                  >Email</label
+                >
+                <input
+                  id="profile-email"
+                  type="email"
+                  placeholder=""
+                  class="w-full rounded-xl border border-border bg-bg px-4 py-3.5 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent tablet:text-base"
+                />
+              </div>
+
+              <div>
+                <label for="profile-phone" class="mb-2 block text-xs font-semibold uppercase tracking-widest"
+                  >Phone Number</label
+                >
+                <input
+                  id="profile-phone"
+                  type="tel"
+                  inputmode="tel"
+                  placeholder=""
+                  class="w-full rounded-xl border border-border bg-bg px-4 py-3.5 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent tablet:text-base"
+                />
+              </div>
+
+              <div>
+                <label for="profile-age" class="mb-2 block text-xs font-semibold uppercase tracking-widest">Age</label>
+                <select
+                  id="profile-age"
+                  class="w-full rounded-xl border border-border bg-bg px-4 py-3.5 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent tablet:text-base appearance-none"
+                >
+                  <option value="" selected disabled>Select...</option>
+                  <option>Under 18</option>
+                  <option>18–24</option>
+                  <option>25–34</option>
+                  <option>35–44</option>
+                  <option>45–54</option>
+                  <option>55–64</option>
+                  <option>65+</option>
+                </select>
+              </div>
+
+              <div class="pt-2">
+                <button
+                  type="button"
+                  class="mx-auto block w-full max-w-md mt-4 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:brightness-110 tablet:text-lg"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
