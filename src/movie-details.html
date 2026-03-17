@@ -5,7 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MovieMall</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/tailwind.config.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          screens: {
+            tablet: '768px',
+            desktop: '1024px'
+          },
+          extend: {
+            colors: {
+              bg: '#0f172a',
+              text: '#f9fafb',
+              accent: '#f43f5e',
+              border: '#374151',
+              placeholder: '#9ca3af',
+              dark: '#111827',
+              button: '#1f2937'
+            }
+          }
+        }
+      };
+    </script>
   </head>
 
   <body class="min-h-screen bg-bg text-text">
@@ -29,7 +49,9 @@
           </nav>
         </div>
         <div class="flex items-center gap-2 text-xs tablet:gap-3 tablet:text-sm">
+          <label for="site-search" class="sr-only">Search</label>
           <input
+            id="site-search"
             type="search"
             placeholder="Search..."
             class="hidden w-44 rounded-lg border border-border bg-button px-3 py-2 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent/30 tablet:block"
@@ -61,32 +83,42 @@
         class="mb-6 inline-flex items-center gap-1.5 text-sm text-placeholder transition hover:text-accent"
         >← Back to Movies</a
       >
-      <!-- Movie info -->
-      <section
-        class="relative mb-8 min-h-[220px] overflow-hidden rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.5)] tablet:min-h-[280px]"
-      >
-        <div class="flex gap-5 p-5 tablet:flex-row tablet:gap-8 tablet:p-8">
-          <div class="w-28 tablet:w-80">
+
+     <!-- Movie Image -->
+
+      <section class="grid grid-cols-1 gap-8 tablet:grid-cols-2">
+        <div
+          class="rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.5)] tablet:p-6"
+        >
+          <div class="mx-auto overflow-hidden rounded-2xl bg-button aspect-square">
             <img
               src="/images/Supergrandpa.png"
               alt="Movie Poster"
-              class="aspect-[2/3] h-full w-full rounded-xl bg-button object-cover"
             />
           </div>
+        </div>
+
+        <!-- Details -->
+        <div class="flex flex-col gap-6">
+          <nav class="text-xs text-placeholder">
+            <a href="index.html" class="transition hover:text-accent">Home</a>
+            <span class="px-1.5">/</span>
+            <a href="movies.html" class="transition hover:text-accent">Movies</a>
+            <span class="px-1.5">/</span>
+            <span class="text-text">Super Grandpa</span>
+          </nav>
 
           <div class="flex flex-col gap-3">
-            <div class="flex gap-2 text-xs font-semibold">
+            <div class="flex flex-wrap gap-2 text-xs font-semibold">
               <span class="rounded-full border border-border bg-button px-3 py-1">Mystery</span>
               <span class="rounded-full border border-border bg-button px-3 py-1">Drama</span>
               <span class="rounded-full border border-border bg-button px-3 py-1">Horror</span>
             </div>
 
-            <h1 class="text-2xl font-bold tablet:text-4xl">The Hollow Cartographer</h1>
-            <p class="text-sm italic text-placeholder tablet:text-base">
-              Some maps lead to places that should stay lost.
-            </p>
+            <h1 class="text-3xl font-bold tablet:text-4xl">Super Grandpa</h1>
+            <p class="text-sm italic text-placeholder tablet:text-base">Some maps lead to places that should stay lost.</p>
 
-            <div class="flex gap-4 text-sm text-placeholder">
+            <div class="flex flex-wrap gap-4 text-sm text-placeholder">
               <span class="flex items-center gap-1.5"
                 ><span class="text-yellow-400">★</span><span class="font-semibold">7.9</span>/10</span
               >
@@ -94,9 +126,9 @@
               <span class="flex items-center gap-1.5">📅 February 28, 2026</span>
             </div>
 
-            <div class="mt-1 flex flex-wrap gap-3">
+            <div class="mt-2 flex flex-wrap gap-3">
               <button
-                class="flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white transition tablet:text-base"
+                class="flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110 tablet:text-base"
               >
                 ▶ Watch Trailer
               </button>
@@ -112,7 +144,7 @@
 
       <!-- Overview -->
 
-      <div class="grid grid-cols-1 gap-6 tablet:gap-8 desktop:grid-cols-[1fr_380px]">
+      <div class="mt-8 grid grid-cols-1 gap-6 tablet:gap-8 desktop:grid-cols-[1fr_380px]">
         <section>
           <div class="order-2 flex flex-col gap-6 desktop:order-1">
             <div class="flex border-b border-border">
@@ -306,7 +338,6 @@
                   <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                   <div class="h-4 w-5 rounded-sm bg-border"></div>
                   <div class="h-4 w-5 rounded-sm bg-border"></div>
-                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                   <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                   <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                   <div class="h-4 w-5 rounded-sm bg-green-500"></div>

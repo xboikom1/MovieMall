@@ -4,7 +4,27 @@
     <meta charset="UTF-8" />
     <title>MovieMall</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/tailwind.config.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          screens: {
+            tablet: '768px',
+            desktop: '1024px'
+          },
+          extend: {
+            colors: {
+              bg: '#0f172a',
+              text: '#f9fafb',
+              accent: '#f43f5e',
+              border: '#374151',
+              placeholder: '#9ca3af',
+              dark: '#111827',
+              button: '#1f2937'
+            }
+          }
+        }
+      };
+    </script>
   </head>
   <body class="min-h-screen bg-bg text-text">
     <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)]">
