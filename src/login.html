@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MovieMall</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/tailwind.config.js"></script>
+</head>
+
+<body class="min-h-screen bg-bg text-text">
+<header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)]">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
+    <div class="flex items-center gap-3 tablet:gap-6">
+      <a
+        href="index.html"
+        class="flex items-center rounded-xl bg-accent px-4 py-2 text-base tablet:text-lg font-semibold text-white"
+      >MovieMall</a
+      >
+      <nav class="tablet:flex hidden gap-2 text-sm">
+        <a
+          href="movies.html"
+          class="rounded-lg border border-border bg-button px-4 py-2 focus:bg-accent text-text transition hover:bg-accent"
+        >Movies</a
+        >
+        <a
+          href="souvenirs.html"
+          class="rounded-lg border border-border bg-button px-4 py-2 focus:bg-accent text-text transition hover:bg-accent"
+        >Souvenirs</a
+        >
+      </nav>
+    </div>
+    <div class="flex items-center gap-2 tablet:gap-4 text-xs tablet:text-sm">
+      <span class="hidden text-placeholder tablet:block">Don't have an account?</span>
+      <a
+        href="register.html"
+        class="border border-border rounded-lg bg-button px-3 tablet:px-5 py-2 font-semibold text-white transition hover:bg-accent focus:bg-accent"
+      >Register</a
+      >
+    </div>
+  </div>
+</header>
+
+<main
+  class="mx-auto flex min-h-[calc(100vh-76px)] max-w-7xl items-center justify-center px-4 py-8 tablet:px-6 tablet:py-14"
+>
+  <section
+    class="w-full max-w-xl rounded-3xl border border-border bg-dark p-5 tablet:max-w-2xl tablet:p-10 shadow-[0_14px_36px_rgba(0,0,0,.35)]"
+  >
+    <h1 class="mb-6 tablet:mb-8 text-2xl tablet:text-4xl font-bold text-text">
+      Log in to your account
+    </h1>
+
+    <form class="mx-auto flex max-w-xl flex-col gap-4 tablet:gap-6">
+      <label class="sr-only" for="login-email">Email</label>
+      <input
+        id="login-email"
+        type="email"
+        placeholder="Email"
+        class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 text-base tablet:text-lg text-text outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent"
+      />
+
+      <label class="sr-only" for="login-password">Password</label>
+      <input
+        id="login-password"
+        type="password"
+        placeholder="Password"
+        class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 text-base tablet:text-lg text-text outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent"
+      />
+
+      <button
+        type="button"
+        class="mt-2 w-full rounded-xl bg-accent px-6 py-3.5 tablet:py-4 tablet:text-xl text-base font-semibold text-white shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:brightness-110"
+      >
+        Register
+      </button>
+    </form>
+  </section>
+</main>
+</body>
+</html>
