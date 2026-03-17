@@ -4,7 +4,7 @@
   "private": true,
   "description": "MovieMall frontend",
   "scripts": {
-    "format": "prettier --write ."
+    "format": "prettier --write src"
   },
   "devDependencies": {
     "globals": "^15.15.0",

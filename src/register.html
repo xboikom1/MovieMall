@@ -9,7 +9,7 @@
   </head>
 
   <body class="min-h-screen bg-bg text-text">
-    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)]">
+    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,0.4)]">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
         <div class="flex items-center gap-3 tablet:gap-6">
           <a
@@ -20,12 +20,12 @@
           <nav class="tablet:flex hidden gap-2 text-sm">
             <a
               href="movies.html"
-              class="rounded-lg border border-border bg-button px-4 py-2 focus:bg-accent text-text transition hover:bg-accent"
+              class="rounded-lg border border-border bg-button px-4 py-2 focus:bg-accent transition hover:bg-accent"
               >Movies</a
             >
             <a
               href="souvenirs.html"
-              class="rounded-lg border border-border bg-button px-4 py-2 focus:bg-accent text-text transition hover:bg-accent"
+              class="rounded-lg border border-border bg-button px-4 py-2 focus:bg-accent transition hover:bg-accent"
               >Souvenirs</a
             >
           </nav>
@@ -45,11 +45,9 @@
       class="mx-auto flex min-h-[calc(100vh-76px)] max-w-7xl items-center justify-center px-4 py-8 tablet:px-6 tablet:py-14"
     >
       <section
-        class="w-full max-w-xl rounded-3xl border border-border bg-dark p-5 tablet:max-w-2xl tablet:p-10 shadow-[0_14px_36px_rgba(0,0,0,.35)]"
+        class="w-full max-w-xl rounded-3xl border border-border bg-dark p-5 tablet:max-w-2xl tablet:p-10 shadow-[0_14px_36px_rgba(0,0,0,.4)]"
       >
-        <h1 class="mb-6 tablet:mb-8 text-2xl tablet:text-4xl font-bold text-text">
-          Create your account
-        </h1>
+        <h1 class="mb-6 tablet:mb-8 text-2xl tablet:text-4xl font-bold">Create your account</h1>
 
         <form class="mx-auto flex max-w-xl flex-col gap-4 tablet:gap-6">
           <label class="sr-only" for="register-name">Full Name</label>
@@ -57,7 +55,7 @@
             id="register-name"
             type="text"
             placeholder="Full Name"
-            class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 text-base tablet:text-lg text-text outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent"
+            class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 text-base tablet:text-lg outline-none placeholder:text-placeholder focus:border-accent"
           />
 
           <label class="sr-only" for="register-email">Email</label>
@@ -65,7 +63,7 @@
             id="register-email"
             type="email"
             placeholder="Email"
-            class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 text-base tablet:text-lg text-text outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent"
+            class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 text-base tablet:text-lg outline-none placeholder:text-placeholder focus:border-accent"
           />
 
           <label class="sr-only" for="register-password">Password</label>
@@ -73,12 +71,12 @@
             id="register-password"
             type="password"
             placeholder="Password"
-            class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 text-base tablet:text-lg text-text outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent"
+            class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 text-base tablet:text-lg outline-none placeholder:text-placeholder focus:border-accent"
           />
 
           <button
             type="button"
-            class="mt-2 w-full rounded-xl bg-accent px-6 py-3.5 tablet:py-4 tablet:text-xl text-base font-semibold text-white shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:brightness-110"
+            class="mt-2 w-full rounded-xl bg-accent px-6 py-3.5 tablet:py-4 tablet:text-xl text-base text-white shadow-[0_14px_36px_rgba(0,0,0,.4)]"
           >
             Register
           </button>
