@@ -14,10 +14,10 @@
         <div class="flex items-center gap-3 tablet:gap-6">
           <a
             href="index.html"
-            class="flex items-center rounded-xl bg-accent px-4 py-2 text-base tablet:text-lg font-semibold text-white"
+            class="flex items-center rounded-xl bg-accent px-4 py-2 text-base font-semibold text-white tablet:text-lg"
             >MovieMall</a
           >
-          <nav class="tablet:flex hidden gap-2 text-sm">
+          <nav class="hidden gap-2 text-sm tablet:flex">
             <a href="movies.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent"
               >Movies</a
             >
@@ -28,25 +28,25 @@
             >
           </nav>
         </div>
-        <div class="flex items-center gap-2 tablet:gap-3 text-xs tablet:text-sm">
+        <div class="flex items-center gap-2 text-xs tablet:gap-3 tablet:text-sm">
           <input
             type="search"
             placeholder="Search..."
-            class="hidden tablet:block rounded-lg border border-border bg-button px-3 py-2 text-sm placeholder:text-placeholder outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 w-44"
+            class="hidden w-44 rounded-lg border border-border bg-button px-3 py-2 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent/30 tablet:block"
           />
           <a
             href="cart.html"
-            class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent"
+            class="rounded-lg border border-border bg-button px-3 py-2 transition hover:bg-accent tablet:px-4"
             >Cart</a
           >
           <a
             href="login.html"
-            class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent"
+            class="rounded-lg border border-border bg-button px-3 py-2 transition hover:bg-accent tablet:px-4"
             >Log In</a
           >
           <a
             href="register.html"
-            class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 font-semibold text-white transition hover:bg-accent"
+            class="rounded-lg border border-border bg-button px-3 py-2 font-semibold text-white transition hover:bg-accent tablet:px-4"
             >Register</a
           >
         </div>
@@ -63,9 +63,9 @@
       >
       <!-- Movie info -->
       <section
-        class="relative mb-8 overflow-hidden rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.5)] min-h-[220px] tablet:min-h-[280px]"
+        class="relative mb-8 min-h-[220px] overflow-hidden rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.5)] tablet:min-h-[280px]"
       >
-        <div class="flex tablet:flex-row gap-5 tablet:gap-8 p-5 tablet:p-8">
+        <div class="flex gap-5 p-5 tablet:flex-row tablet:gap-8 tablet:p-8">
           <div class="w-28 tablet:w-80">
             <img src="" alt="Movie Poster" class="aspect-[3/3] rounded-xl bg-button object-cover" />
           </div>
@@ -77,8 +77,8 @@
               <span class="rounded-full border border-border bg-button px-3 py-1">Horror</span>
             </div>
 
-            <h1 class="text-2xl tablet:text-4xl font-bold">The Hollow Cartographer</h1>
-            <p class="text-placeholder text-sm tablet:text-base italic">
+            <h1 class="text-2xl font-bold tablet:text-4xl">The Hollow Cartographer</h1>
+            <p class="text-sm italic text-placeholder tablet:text-base">
               Some maps lead to places that should stay lost.
             </p>
 
@@ -90,14 +90,14 @@
               <span class="flex items-center gap-1.5">📅 February 28, 2026</span>
             </div>
 
-            <div class="flex flex-wrap gap-3 mt-1">
+            <div class="mt-1 flex flex-wrap gap-3">
               <button
-                class="flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm tablet:text-base font-semibold text-white transition"
+                class="flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white transition tablet:text-base"
               >
                 ▶ Watch Trailer
               </button>
               <button
-                class="flex items-center gap-2 rounded-xl border border-border bg-button px-5 py-2.5 text-sm tablet:text-base font-semibold transition hover:border-accent hover:text-accent"
+                class="flex items-center gap-2 rounded-xl border border-border bg-button px-5 py-2.5 text-sm font-semibold transition hover:border-accent hover:text-accent tablet:text-base"
               >
                 Add to Wishlist
               </button>
@@ -108,26 +108,26 @@
 
       <!-- Overview -->
 
-      <div class="grid grid-cols-1 desktop:grid-cols-[1fr_380px] gap-6 tablet:gap-8">
+      <div class="grid grid-cols-1 gap-6 tablet:gap-8 desktop:grid-cols-[1fr_380px]">
         <section>
-          <div class="flex flex-col gap-6 order-2 desktop:order-1">
+          <div class="order-2 flex flex-col gap-6 desktop:order-1">
             <div class="flex border-b border-border">
-              <button class="border-b-2 border-accent px-5 py-3 text-sm tablet:text-base font-semibold">
+              <button class="border-b-2 border-accent px-5 py-3 text-sm font-semibold tablet:text-base">
                 Overview
               </button>
               <button
-                class="border-b-2 border-transparent px-5 py-3 text-sm tablet:text-base font-semibold text-placeholder"
+                class="border-b-2 border-transparent px-5 py-3 text-sm font-semibold text-placeholder tablet:text-base"
               >
                 Cast & Crew
               </button>
               <button
-                class="border-b-2 border-transparent px-5 py-3 text-sm tablet:text-base font-semibold text-placeholder"
+                class="border-b-2 border-transparent px-5 py-3 text-sm font-semibold text-placeholder tablet:text-base"
               >
                 Reviews
               </button>
             </div>
 
-            <div class="rounded-2xl border border-border bg-dark p-5 tablet:p-6 shadow-[0_14px_36px_rgba(0,0,0,.4)]">
+            <div class="rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6">
               <h2 class="mb-3 text-lg font-bold">Synopsis</h2>
               <p class="text-sm tablet:text-base">
                 When a reclusive antique dealer inherits a collection of hand-drawn maps from her estranged uncle, she
@@ -139,19 +139,19 @@
 
               <div class="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-5 text-sm">
                 <div>
-                  <p class="text-placeholder mb-1">Director</p>
+                  <p class="mb-1 text-placeholder">Director</p>
                   <p class="font-semibold">Nora Veldtmann</p>
                 </div>
                 <div>
-                  <p class="text-placeholder mb-1">Release Date</p>
+                  <p class="mb-1 text-placeholder">Release Date</p>
                   <p class="font-semibold">February 28, 2026</p>
                 </div>
                 <div>
-                  <p class="text-placeholder mb-1">Language</p>
+                  <p class="mb-1 text-placeholder">Language</p>
                   <p class="font-semibold">English</p>
                 </div>
                 <div>
-                  <p class="text-placeholder mb-1">Studio</p>
+                  <p class="mb-1 text-placeholder">Studio</p>
                   <p class="font-semibold">Driftwood Films</p>
                 </div>
               </div>
@@ -160,64 +160,64 @@
             <!-- Souvenirs -->
 
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg tablet:text-xl font-bold">Related Souvenirs</h2>
+              <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-lg font-bold tablet:text-xl">Related Souvenirs</h2>
                 <a href="souvenirs.html" class="text-sm text-placeholder transition hover:text-accent">See More</a>
               </div>
-              <ul class="grid grid-cols-2 tablet:grid-cols-4 gap-4">
+              <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-4">
                 <li
-                  class="rounded-2xl border border-border bg-dark overflow-hidden shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:border-accent/50"
+                  class="overflow-hidden rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:border-accent/50"
                 >
                   <a href="souvenir-details.html">
-                    <div class="w-full aspect-square bg-button">
+                    <div class="aspect-square w-full bg-button">
                       <img src="" alt="HC Poster Print souvenir" class="h-full w-full object-cover" />
                     </div>
                     <div class="p-3">
-                      <p class="font-semibold text-sm truncate">HC Poster Print</p>
+                      <p class="truncate text-sm font-semibold">HC Poster Print</p>
                       <p class="text-xs text-placeholder">The Hollow Cartographer</p>
-                      <p class="mt-1.5 font-bold text-accent text-sm">$15.00</p>
+                      <p class="mt-1.5 text-sm font-bold text-accent">$15.00</p>
                     </div>
                   </a>
                 </li>
                 <li
-                  class="rounded-2xl border border-border bg-dark overflow-hidden shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:border-accent/50"
+                  class="overflow-hidden rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:border-accent/50"
                 >
                   <a href="souvenir-details.html">
-                    <div class="w-full aspect-square bg-button">
+                    <div class="aspect-square w-full bg-button">
                       <img src="" alt="Replica Map Scroll souvenir" class="h-full w-full object-cover" />
                     </div>
                     <div class="p-3">
-                      <p class="font-semibold text-sm truncate">Replica Map Scroll</p>
+                      <p class="truncate text-sm font-semibold">Replica Map Scroll</p>
                       <p class="text-xs text-placeholder">The Hollow Cartographer</p>
-                      <p class="mt-1.5 font-bold text-accent text-sm">$34.00</p>
+                      <p class="mt-1.5 text-sm font-bold text-accent">$34.00</p>
                     </div>
                   </a>
                 </li>
                 <li
-                  class="rounded-2xl border border-border bg-dark overflow-hidden shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:border-accent/50"
+                  class="overflow-hidden rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:border-accent/50"
                 >
                   <a href="souvenir-details.html">
-                    <div class="w-full aspect-square bg-button">
+                    <div class="aspect-square w-full bg-button">
                       <img src="" alt="Compass Pendant souvenir" class="h-full w-full object-cover" />
                     </div>
                     <div class="p-3">
-                      <p class="font-semibold text-sm truncate">Compass Pendant</p>
+                      <p class="truncate text-sm font-semibold">Compass Pendant</p>
                       <p class="text-xs text-placeholder">The Hollow Cartographer</p>
-                      <p class="mt-1.5 font-bold text-accent text-sm">$22.00</p>
+                      <p class="mt-1.5 text-sm font-bold text-accent">$22.00</p>
                     </div>
                   </a>
                 </li>
                 <li
-                  class="rounded-2xl border border-border bg-dark overflow-hidden shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:border-accent/50"
+                  class="overflow-hidden rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:border-accent/50"
                 >
                   <a href="souvenir-details.html">
-                    <div class="w-full aspect-square bg-button">
+                    <div class="aspect-square w-full bg-button">
                       <img src="" alt="Enamel Pin Set souvenir" class="h-full w-full object-cover" />
                     </div>
                     <div class="p-3">
-                      <p class="font-semibold text-sm truncate">Enamel Pin Set</p>
+                      <p class="truncate text-sm font-semibold">Enamel Pin Set</p>
                       <p class="text-xs text-placeholder">The Hollow Cartographer</p>
-                      <p class="mt-1.5 font-bold text-accent text-sm">$9.00</p>
+                      <p class="mt-1.5 text-sm font-bold text-accent">$9.00</p>
                     </div>
                   </a>
                 </li>
@@ -228,8 +228,8 @@
 
         <!-- Book tickets -->
 
-        <aside class="flex flex-col gap-5 order-1 desktop:order-2">
-          <div class="rounded-2xl border border-border bg-dark p-5 tablet:p-6 shadow-[0_14px_36px_rgba(0,0,0,.4)]">
+        <aside class="order-1 flex flex-col gap-5 desktop:order-2">
+          <div class="rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6">
             <h2 class="mb-5 text-lg font-bold">Book Tickets</h2>
 
             <p class="mb-2 text-xs font-semibold uppercase tracking-widest text-placeholder">1. Select Date</p>
@@ -272,120 +272,120 @@
             <!-- Select Seats-->
 
             <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-placeholder">3. Select Seats</p>
-            <div class="rounded-xl border border-border bg-bg p-3 mb-5">
+            <div class="mb-5 rounded-xl border border-border bg-bg p-3">
               <div
                 class="mb-4 rounded-lg bg-button py-1.5 text-center text-xs font-semibold uppercase text-placeholder"
               >
                 Screen
               </div>
 
-              <div class="flex flex-col gap-2 items-center">
+              <div class="flex flex-col items-center gap-2">
                 <div class="flex items-center gap-1">
-                  <span class="text-[10px] text-placeholder w-3 text-right mr-1">A</span>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
+                  <span class="mr-1 w-3 text-right text-[10px] text-placeholder">A</span>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span class="text-[10px] text-placeholder w-3 text-right mr-1">B</span>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
+                  <span class="mr-1 w-3 text-right text-[10px] text-placeholder">B</span>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span class="text-[10px] text-placeholder w-3 text-right mr-1">C</span>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-accent"></div>
-                  <div class="w-5 h-4 rounded-sm bg-accent"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
+                  <span class="mr-1 w-3 text-right text-[10px] text-placeholder">C</span>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-accent"></div>
+                  <div class="h-4 w-5 rounded-sm bg-accent"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span class="text-[10px] text-placeholder w-3 text-right mr-1">D</span>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
+                  <span class="mr-1 w-3 text-right text-[10px] text-placeholder">D</span>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span class="text-[10px] text-placeholder w-3 text-right mr-1">E</span>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
+                  <span class="mr-1 w-3 text-right text-[10px] text-placeholder">E</span>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span class="text-[10px] text-placeholder w-3 text-right mr-1">F</span>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
+                  <span class="mr-1 w-3 text-right text-[10px] text-placeholder">F</span>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span class="text-[10px] text-placeholder w-3 text-right mr-1">G</span>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
+                  <span class="mr-1 w-3 text-right text-[10px] text-placeholder">G</span>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                 </div>
                 <div class="flex items-center gap-1">
-                  <span class="text-[10px] text-placeholder w-3 text-right mr-1">H</span>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-border"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
-                  <div class="w-5 h-4 rounded-sm bg-green-500"></div>
+                  <span class="mr-1 w-3 text-right text-[10px] text-placeholder">H</span>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-border"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
+                  <div class="h-4 w-5 rounded-sm bg-green-500"></div>
                 </div>
 
-                <div class="mt-3 flex justify-center gap-4 text-xs text-placeholder mb-4">
+                <div class="mb-4 mt-3 flex justify-center gap-4 text-xs text-placeholder">
                   <span class="flex items-center gap-1.5"
                     ><span class="size-3 rounded-sm bg-green-500"></span>Available</span
                   >
@@ -407,14 +407,14 @@
                   <span class="text-placeholder">Price per ticket</span>
                   <span class="font-medium">$12.99</span>
                 </div>
-                <div class="flex justify-between font-bold text-base mt-1">
+                <div class="mt-1 flex justify-between text-base font-bold">
                   <span>Total</span>
                   <span class="text-accent">$0.00</span>
                 </div>
               </div>
 
               <button
-                class="mt-5 w-full rounded-xl bg-accent px-6 py-3.5 text-base tablet:text-lg shadow-[0_14px_36px_rgba(0,0,0,.4)]"
+                class="mt-5 w-full rounded-xl bg-accent px-6 py-3.5 text-base shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:text-lg"
               >
                 Book Now
               </button>
@@ -425,10 +425,10 @@
     </main>
 
     <footer class="mt-12 border-t border-border bg-dark">
-      <div class="mx-auto max-w-7xl px-4 tablet:px-6 py-10 tablet:py-14">
-        <div class="flex flex-col tablet:flex-row tablet:items-center justify-between gap-8">
+      <div class="mx-auto max-w-7xl px-4 py-10 tablet:px-6 tablet:py-14">
+        <div class="flex flex-col justify-between gap-8 tablet:flex-row tablet:items-center">
           <div class="flex flex-col gap-3">
-            <a href="index.html" class="flex items-center rounded-xl bg-accent px-4 py-2 w-fit">MovieMall</a>
+            <a href="index.html" class="flex w-fit items-center rounded-xl bg-accent px-4 py-2">MovieMall</a>
           </div>
           <nav class="flex gap-6 text-sm">
             <a href="movies.html" class="text-placeholder transition hover:text-accent">Movies</a>
