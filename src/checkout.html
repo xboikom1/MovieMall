@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieMall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          screens: {
+            tablet: '768px',
+            desktop: '1024px'
+          },
+          extend: {
+            colors: {
+              bg: '#0f172a',
+              text: '#f9fafb',
+              accent: '#f43f5e',
+              border: '#374151',
+              placeholder: '#9ca3af',
+              dark: '#111827',
+              button: '#1f2937'
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-bg text-text">
+    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)]">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
+        <div class="flex items-center gap-3 tablet:gap-6">
+          <a
+            href="index.html"
+            class="flex items-center rounded-xl bg-accent px-4 py-2 text-base font-semibold text-white tablet:text-lg"
+            >MovieMall</a
+          >
+          <nav class="hidden gap-2 text-sm tablet:flex">
+            <a href="movies.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent"
+              >Movies</a
+            >
+            <a
+              href="souvenirs.html"
+              class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent"
+              >Souvenirs</a
+            >
+          </nav>
+        </div>
+        <div class="flex items-center gap-2 text-xs tablet:gap-3 tablet:text-sm">
+          <label for="site-search" class="sr-only">Search</label>
+          <input
+            id="site-search"
+            type="search"
+            placeholder="Search..."
+            class="hidden w-44 rounded-lg border border-border bg-button px-3 py-2 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+          />
+          <a
+            href="cart.html"
+            class="rounded-lg border border-border bg-button px-3 py-2 transition hover:bg-accent tablet:px-4"
+            >Cart</a
+          >
+          <a
+            href="login.html"
+            class="rounded-lg border border-border bg-button px-3 py-2 transition hover:bg-accent tablet:px-4"
+            >Log In</a
+          >
+          <a
+            href="register.html"
+            class="rounded-lg border border-border bg-button px-3 py-2 transition hover:bg-accent tablet:px-4"
+            >Register</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-10">
+      <a href="cart.html" class="block text-l pb-4 text-placeholder transition hover:text-accent">← Back to Cart</a>
+
+      <div class="mb-6 flex flex-col gap-2">
+        <h1 class="text-2xl font-bold tablet:text-4xl block">Checkout</h1>
+        <p class="text-sm text-placeholder">Complete your purchase securely. Review your items before confirming.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 desktop:grid-cols-[1fr_380px] desktop:gap-8">
+        <!-- Checkout Form -->
+
+        <section class="rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6">
+          <form id="checkout-form" class="flex flex-col gap-8" action="#" method="post">
+            <div>
+              <div class="mb-4 flex items-end justify-between gap-3">
+                <h2 class="text-xl font-bold">Contact</h2>
+              </div>
+
+              <div class="grid grid-cols-1 gap-4 tablet:grid-cols-2">
+                <div>
+                  <label for="email" class="mb-1 block text-xs font-semibold text-placeholder">Email</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="email@example.com"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="phone" class="mb-1 block text-xs font-semibold text-placeholder">Phone</label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                    placeholder="+421 123 456 789"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Delivery Address -->
+
+            <div>
+              <h2 class="mb-4 text-lg font-bold">Delivery Address</h2>
+
+              <div class="grid grid-cols-1 gap-4 tablet:grid-cols-2">
+                <div>
+                  <label for="firstName" class="mb-1 block text-xs font-semibold text-placeholder">First Name</label>
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    autocomplete="given-name"
+                    placeholder="First name"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="lastName" class="mb-1 block text-xs font-semibold text-placeholder">Last Name</label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    autocomplete="family-name"
+                    placeholder="Last name"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  />
+                </div>
+
+                <div class="tablet:col-span-2">
+                  <label for="address1" class="mb-1 block text-xs font-semibold text-placeholder">Street Address</label>
+                  <input
+                    id="address1"
+                    name="address1"
+                    type="text"
+                    autocomplete="address-line1"
+                    placeholder="Street address"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label for="city" class="mb-1 block text-xs font-semibold text-placeholder">City</label>
+                  <input
+                    id="city"
+                    name="city"
+                    type="text"
+                    autocomplete="address-level2"
+                    placeholder="City"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="postal" class="mb-1 block text-xs font-semibold text-placeholder">Postal Code</label>
+                  <input
+                    id="postal"
+                    name="postal"
+                    type="text"
+                    autocomplete="postal-code"
+                    placeholder="Postal code"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  />
+                </div>
+
+                <div class="tablet:col-span-2">
+                  <label for="country" class="mb-1 block text-xs font-semibold text-placeholder">Country</label>
+                  <select
+                    id="country"
+                    name="country"
+                    autocomplete="country-name"
+                    class="w-full appearance-none rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  >
+                    <option value="" selected disabled>Select Country</option>
+                    <option>Slovakia</option>
+                    <option>United States</option>
+                    <option>Canada</option>
+                    <option>United Kingdom</option>
+                    <option>Germany</option>
+                    <option>France</option>
+                    <option>Spain</option>
+                    <option>Australia</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment -->
+
+            <div>
+              <h2 class="mb-4 text-lg font-bold">Payment Method</h2>
+
+              <div class="rounded-2xl border border-border bg-bg p-4">
+                <div class="flex flex-wrap items-center gap-4 border-b border-border pb-4">
+                  <label class="flex items-center gap-2 text-sm">
+                    <input type="radio" name="payment" value="card" class="accent-accent" checked />
+                    <span class="font-semibold">Credit Card</span>
+                  </label>
+                  <label class="flex items-center gap-2 text-sm text-placeholder">
+                    <input type="radio" name="payment" value="paypal" class="accent-accent" />
+                    <span class="font-semibold">PayPal</span>
+                  </label>
+                </div>
+
+                <div class="mt-4 grid grid-cols-1 gap-4 tablet:grid-cols-2">
+                  <div class="tablet:col-span-2">
+                    <label for="cardNumber" class="mb-1 block text-xs font-semibold text-placeholder"
+                      >Card Number</label
+                    >
+                    <input
+                      id="cardNumber"
+                      name="cardNumber"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="cc-number"
+                      placeholder="XXXX XXXX XXXX XXXX"
+                      class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="expiry" class="mb-1 block text-xs font-semibold text-placeholder">Expiry Date</label>
+                    <input
+                      id="expiry"
+                      name="expiry"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="cc-exp"
+                      placeholder="MM/YY"
+                      class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    />
+                  </div>
+
+                  <div>
+                    <label for="cvv" class="mb-1 block text-xs font-semibold text-placeholder">CVV</label>
+                    <input
+                      id="cvv"
+                      name="cvv"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="cc-csc"
+                      placeholder="XXX"
+                      class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    />
+                  </div>
+
+                  <div class="tablet:col-span-2">
+                    <label for="cardName" class="mb-1 block text-xs font-semibold text-placeholder">Name on Card</label>
+                    <input
+                      id="cardName"
+                      name="cardName"
+                      type="text"
+                      autocomplete="cc-name"
+                      placeholder="Name on card"
+                      class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- Order Summary -->
+
+        <aside class="rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6">
+          <div class="mb-4 flex items-center justify-between">
+            <h2 class="text-lg font-bold">Order Summary</h2>
+            <span class="rounded-full border border-border bg-button px-3 py-1 text-xs font-semibold text-placeholder"
+              >2 items</span
+            >
+          </div>
+
+          <ul class="flex flex-col gap-4">
+            <li>
+              <a href="movie-details.html" class="flex gap-4 rounded-xl border border-border bg-bg p-3">
+                <div class="h-60 overflow-hidden rounded-lg border border-border bg-button">
+                  <img src="/images/Supergrandpa.png" alt="Movie poster" class="h-full w-full object-cover" />
+                </div>
+                <div class="flex flex-col gap-3">
+                  <div class="min-w-0 self-start text-left flex flex-col">
+                    <p class="text-m font-semibold mb-2">Super Grandpa (Tickets)</p>
+                    <p class="text-s text-placeholder">Mystery • 118 min</p>
+                    <p class="text-s text-placeholder">Tickets: 2</p>
+                  </div>
+                  <div class="text-sm font-semibold">$25.98</div>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a href="souvenir-details.html" class="flex gap-4 rounded-xl border border-border bg-bg p-3">
+                <div class="h-60 overflow-hidden rounded-lg border border-border bg-button">
+                  <img src="/images/SuperGrandpaSouvenir.png" alt="Souvenir" class="h-full w-full object-cover" />
+                </div>
+                <div class="flex flex-col gap-3">
+                  <div class="min-w-0 self-start text-left flex flex-col">
+                    <p class="text-m font-semibold mb-2">Super Grandpa souvenir</p>
+                    <p class="text-s text-placeholder">Figurine</p>
+                    <p class="text-s text-placeholder">Quantity: 1</p>
+                  </div>
+                  <div class="text-sm font-semibold">$15.00</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+
+          <div class="mt-5 rounded-2xl border border-border bg-bg p-4">
+            <div class="flex flex-col gap-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-placeholder">Subtotal</span>
+                <span class="font-medium">$40.98</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-placeholder">Shipping</span>
+                <span class="font-medium">$5.00</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-placeholder">Taxes</span>
+                <span class="font-medium">$3.28</span>
+              </div>
+              <div class="mt-1 flex justify-between text-base font-bold">
+                <span>Total</span>
+                <span class="text-accent">$49.26</span>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              form="checkout-form"
+              class="mt-5 flex w-full items-center justify-center rounded-xl bg-accent px-6 py-3 font-semibold shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:brightness-110"
+            >
+              Confirm Purchase
+            </button>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="mt-12 border-t border-border bg-dark">
+      <div class="mx-auto max-w-7xl px-4 py-10 tablet:px-6 tablet:py-14">
+        <div class="flex flex-col justify-between gap-8 tablet:flex-row tablet:items-center">
+          <div class="flex flex-col gap-3">
+            <a href="index.html" class="flex w-fit items-center rounded-xl bg-accent px-4 py-2">MovieMall</a>
+          </div>
+          <nav class="flex gap-6 text-sm">
+            <a href="movies.html" class="text-placeholder transition hover:text-accent">Movies</a>
+            <a href="souvenirs.html" class="text-placeholder transition hover:text-accent">Souvenirs</a>
+            <a href="cart.html" class="text-placeholder transition hover:text-accent">Cart</a>
+            <a href="profile.html" class="text-placeholder transition hover:text-accent">Account</a>
+          </nav>
+        </div>
+        <div class="mt-10 border-t border-border pt-6 text-xs text-placeholder">
+          © 2026 MovieMall. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
