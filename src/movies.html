@@ -78,9 +78,10 @@
     purchase.</p>
 </div>
 
-<main class="mx-auto max-w-7xl flex flex-row gap-6">
+<main class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-8">
+<div class="flex flex-col gap-6 desktop:flex-row desktop:items-start">
   <!--  filters-->
-  <aside class="bg-dark rounded-2xl border border-border w-56 mx-4 my-8 shadow-[0_14px_36px_rgba(0,0,0,.35)">
+  <aside class="w-full desktop:sticky desktop:top-4 desktop:w-56 desktop:shrink-0 bg-dark rounded-2xl border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)]">
     <div class="text-text px-4 py-2">
       <div class="flex items-center justify-between mt-4 mb-4">
         <h2 class="text-md font-semibold">Filters</h2>
@@ -165,7 +166,7 @@
 
       <!--        prce-->
       <h3 class="text-placeholder text-xs font-bold mt-4 mb-1">MAX PRICE</h3>
-      <input type="range" min="0" max="10" value="5" class="accent-accent w-full" id="priceRange"
+      <input type="range" min="0" max="100" value="50" class="accent-accent w-full" id="priceRange"
              oninput="document.getElementById('priceVal').textContent=this.value">
       <div class="flex item-center justify-between text-xs mt-1">
         <span class="text-text font-bold">0</span>
@@ -173,12 +174,12 @@
         <span class="text-text font-bold">100</span>
       </div>
 
-      <button class="bg-accent rounded-xl w-full px-4 py-1.5 mt-8 mb-1 text-bold">Apply Filters</button>
+      <button class="bg-accent rounded-xl w-full px-4 py-1.5 mt-6 mb-1 text-bold">Apply Filters</button>
     </div>
   </aside>
 
   <!--main content-->
-  <section class="min-w-0 flex-1 my-8 mr-4">
+  <section class="min-w-0 flex-1">
 
     <!--    info and sort-->
     <div class="flex items-center justify-between gap-3">
@@ -201,9 +202,7 @@
     </div>
 
     <!--    movies grid-->
-    <div class="flex flex-col gap-4 mt-8">
-      <!--        row 1-->
-      <ul class="grid grid-cols-5 gap-3">
+    <ul class="grid grid-cols-2 gap-3 mt-8 tablet:grid-cols-3 desktop:grid-cols-5">
         <li
           class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-details.html" class="block relative h-full">
@@ -333,10 +332,6 @@
             </div>
           </a>
         </li>
-      </ul>
-
-      <!--        row 2-->
-      <ul class="grid grid-cols-5 gap-3">
         <li
           class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-details.html" class="block relative h-full">
@@ -466,10 +461,6 @@
             </div>
           </a>
         </li>
-      </ul>
-
-      <!--        row 3-->
-      <ul class="grid grid-cols-5 gap-3">
         <li
           class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-details.html" class="block relative h-full">
@@ -599,10 +590,6 @@
             </div>
           </a>
         </li>
-      </ul>
-
-      <!--        row 4-->
-      <ul class="grid grid-cols-5 gap-3">
         <li
           class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
           <a href="movie-details.html" class="block relative h-full">
@@ -732,8 +719,7 @@
             </div>
           </a>
         </li>
-      </ul>
-    </div>
+    </ul>
 
     <!--  paging-->
     <div class="mt-8 flex flex-wrap items-center justify-between gap-3">
@@ -759,6 +745,7 @@
       </div>
     </div>
   </section>
+</div>
 </main>
 
 <footer class="mt-12 border-t border-border bg-dark">
