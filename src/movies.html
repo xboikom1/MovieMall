@@ -20,7 +20,7 @@
             placeholder: '#9ca3af',
             dark: '#111827',
             button: '#1f2937',
-            rating: '#fbbf24',
+            rating: '#fbbf24'
           }
         }
       }
@@ -74,627 +74,691 @@
   </div>
 
   <h1 class="max-w-7xl mx-auto text-3xl font-bold">Movies Catalog</h1>
-  <p class="max-w-7xl mx-auto text-placeholder text-sm">Browse our full collection of tickets available for purchase.</p>
+  <p class="max-w-7xl mx-auto text-placeholder text-sm">Browse our full collection of tickets available for
+    purchase.</p>
 </div>
 
-<main>
-  <div class="mx-auto max-w-7xl flex flex-row gap-6">
-    <!--  filters-->
-    <aside class="bg-dark rounded-2xl border border-border w-56 mx-4 my-8">
-      <div class="text-text px-4 py-2 border-b border-border shadow-[0_14px_36px_rgba(0,0,0,.35)">
-        <div class="flex items-center justify-between mt-4 mb-4">
-          <h2 class="text-md font-semibold">Filters</h2>
-          <button class="bg-button border border-border px-2 py-1 rounded-lg text-placeholder text-xs hover:text-text">
-            Reset
-          </button>
-        </div>
-
-        <!--        genre-->
-        <h3 class="text-placeholder text-xs font-bold">GENRE</h3>
-        <div class="flex flex-col text-sm my-1 gap-1.5">
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Action</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Comedy</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Drama</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Horror</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Sci-Fi</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Thriller</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Fantasy</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Romance</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Documentary</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Apocalypse</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Sports</span>
-          </label>
-          <label class="flex items-center gap-1">
-            <input type="checkbox" class="accent-accent">
-            <span class="cursor-pointer transition hover:text-accent">Western</span>
-          </label>
-        </div>
-
-        <!--        relsese year-->
-        <h3 class="text-placeholder text-xs font-bold mt-4 mb-1">RELEASE YEAR</h3>
-        <input type="range" min="1900" max="2026" value="2000" class="accent-accent w-full" id="yearRange"
-               oninput="document.getElementById('yearVal').textContent=this.value">
-        <div class="flex item-center justify-between text-xs mt-1">
-          <span class="text-text font-bold">1900</span>
-          <span class="text-placeholder"> Year: <strong class="text-text font-bold" id="yearVal">2000</strong>+</span>
-          <span class="text-text font-bold">2026</span>
-        </div>
-
-
-        <!--        rating-->
-        <h3 class="text-placeholder text-xs font-bold mt-4 mb-1">RATING</h3>
-        <input type="range" min="0" max="10" value="5" class="accent-accent w-full" id="ratingRange"
-               oninput="document.getElementById('ratingVal').textContent=this.value">
-        <div class="flex item-center justify-between text-xs mt-1">
-          <span class="text-text font-bold">0</span>
-          <span class="text-placeholder"> Rating: <strong class="text-text font-bold" id="ratingVal">5</strong>+</span>
-          <span class="text-text font-bold">10</span>
-        </div>
-
-        <!--        prce-->
-        <h3 class="text-placeholder text-xs font-bold mt-4 mb-1">MAX PRICE</h3>
-        <input type="range" min="0" max="10" value="5" class="accent-accent w-full" id="priceRange"
-               oninput="document.getElementById('priceVal').textContent=this.value">
-        <div class="flex item-center justify-between text-xs mt-1">
-          <span class="text-text font-bold">0</span>
-          <span class="text-placeholder"> Up to: <strong class="text-text font-bold" id="priceVal">50</strong>$</span>
-          <span class="text-text font-bold">100</span>
-        </div>
-
-        <button class="bg-accent rounded-xl w-full px-4 py-1.5 mt-8 mb-1 text-bold">Apply Filters</button>
-      </div>
-    </aside>
-
-<!--main content-->
-    <div class="min-w-0 flex-1 my-8 mr-4">
-
-      <!--    info and sort-->
-      <div class="flex items-center justify-between gap-3">
-        <p class="text-sm text-placeholder">
-          Showing <span class="text-text font-bold">1–20</span> of
-          <span class="text-text font-bold">195</span> movies
-        </p>
-
-        <div class="flex items-center gap-2">
-          <p class="text-sm text-placeholder">Sort:</p>
-          <select class="bg-button border border-border rounded-lg px-3 py-1 text-sm text-text focus:border-accent outline-none">
-            <option>Most Popular</option>
-            <option>Highest Rated</option>
-            <option>Newest First</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-          </select>
-        </div>
+<main class="mx-auto max-w-7xl flex flex-row gap-6">
+  <!--  filters-->
+  <aside class="bg-dark rounded-2xl border border-border w-56 mx-4 my-8 shadow-[0_14px_36px_rgba(0,0,0,.35)">
+    <div class="text-text px-4 py-2">
+      <div class="flex items-center justify-between mt-4 mb-4">
+        <h2 class="text-md font-semibold">Filters</h2>
+        <button class="bg-button border border-border px-2 py-1 rounded-lg text-placeholder text-xs hover:text-text">
+          Reset
+        </button>
       </div>
 
-      <!--    movies grid-->
-      <section class="flex flex-col gap-4 mt-8">
-        <!--        row 1-->
-        <ul class="grid grid-cols-5 gap-3">
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
+      <!--        genre-->
+      <h3 class="text-placeholder text-xs font-bold">GENRE</h3>
+      <div class="flex flex-col text-sm my-1 gap-1.5">
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Action</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Comedy</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Drama</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Horror</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Sci-Fi</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Thriller</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Fantasy</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Romance</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Documentary</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Apocalypse</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Sports</span>
+        </label>
+        <label class="flex items-center gap-1">
+          <input type="checkbox" class="accent-accent">
+          <span class="cursor-pointer transition hover:text-accent">Western</span>
+        </label>
+      </div>
 
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
+      <!--        relsese year-->
+      <h3 class="text-placeholder text-xs font-bold mt-4 mb-1">RELEASE YEAR</h3>
+      <input type="range" min="1900" max="2026" value="2000" class="accent-accent w-full" id="yearRange"
+             oninput="document.getElementById('yearVal').textContent=this.value">
+      <div class="flex item-center justify-between text-xs mt-1">
+        <span class="text-text font-bold">1900</span>
+        <span class="text-placeholder"> Year: <strong class="text-text font-bold" id="yearVal">2000</strong>+</span>
+        <span class="text-text font-bold">2026</span>
+      </div>
 
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
 
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
+      <!--        rating-->
+      <h3 class="text-placeholder text-xs font-bold mt-4 mb-1">RATING</h3>
+      <input type="range" min="0" max="10" value="5" class="accent-accent w-full" id="ratingRange"
+             oninput="document.getElementById('ratingVal').textContent=this.value">
+      <div class="flex item-center justify-between text-xs mt-1">
+        <span class="text-text font-bold">0</span>
+        <span class="text-placeholder"> Rating: <strong class="text-text font-bold" id="ratingVal">5</strong>+</span>
+        <span class="text-text font-bold">10</span>
+      </div>
 
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
+      <!--        prce-->
+      <h3 class="text-placeholder text-xs font-bold mt-4 mb-1">MAX PRICE</h3>
+      <input type="range" min="0" max="10" value="5" class="accent-accent w-full" id="priceRange"
+             oninput="document.getElementById('priceVal').textContent=this.value">
+      <div class="flex item-center justify-between text-xs mt-1">
+        <span class="text-text font-bold">0</span>
+        <span class="text-placeholder"> Up to: <strong class="text-text font-bold" id="priceVal">50</strong>$</span>
+        <span class="text-text font-bold">100</span>
+      </div>
 
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-
-        <!--        row 2-->
-        <ul class="grid grid-cols-5 gap-3">
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-
-        <!--        row 3-->
-        <ul class="grid grid-cols-5 gap-3">
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-
-        <!--        row 4-->
-        <ul class="grid grid-cols-5 gap-3">
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-
-          <li class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
-            <a href="movie-details.html" class="block relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-              <div class="aspect-[2/3]">
-                <img src="/images/Supergrandpa.png" alt="Movie Poster">
-              </div>
-
-              <div class="flex flex-col gap-1 mt-2 mb-4">
-                <div class="flex items-center justify-between px-2 gap-3">
-                  <span class="truncate text-sm font-semibold">Supergrandpa</span>
-                  <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
-                </div>
-                <div class="flex items-center px-2 gap-2">
-                  <span class="text-xs text-placeholder">2026</span>
-                  <span class="text-xs text-placeholder">Action</span>
-                </div>
-                <div class="flex items-center px-2 gap-1">
-                  <span class="text-xs text-rating">★</span>
-                  <span class="text-xs text-rating">7.5</span>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </section>
+      <button class="bg-accent rounded-xl w-full px-4 py-1.5 mt-8 mb-1 text-bold">Apply Filters</button>
     </div>
-  </div>
+  </aside>
+
+  <!--main content-->
+  <section class="min-w-0 flex-1 my-8 mr-4">
+
+    <!--    info and sort-->
+    <div class="flex items-center justify-between gap-3">
+      <p class="text-sm text-placeholder">
+        Showing <span class="text-text font-bold">1–20</span> of
+        <span class="text-text font-bold">195</span> movies
+      </p>
+
+      <div class="flex items-center gap-2">
+        <p class="text-sm text-placeholder">Sort:</p>
+        <select
+          class="bg-button border border-border rounded-lg px-3 py-1 text-sm text-text focus:border-accent outline-none">
+          <option>Most Popular</option>
+          <option>Highest Rated</option>
+          <option>Newest First</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    <!--    movies grid-->
+    <div class="flex flex-col gap-4 mt-8">
+      <!--        row 1-->
+      <ul class="grid grid-cols-5 gap-3">
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+
+      <!--        row 2-->
+      <ul class="grid grid-cols-5 gap-3">
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+
+      <!--        row 3-->
+      <ul class="grid grid-cols-5 gap-3">
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+
+      <!--        row 4-->
+      <ul class="grid grid-cols-5 gap-3">
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+        <li
+          class="group bg-dark rounded-xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:border-accent">
+          <a href="movie-details.html" class="block relative h-full">
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div class="aspect-[2/3]">
+              <img src="/images/Supergrandpa.png" alt="Movie Poster">
+            </div>
+
+            <div class="flex flex-col gap-1 mt-2 mb-4">
+              <div class="flex items-center justify-between px-2 gap-3">
+                <span class="truncate text-sm font-semibold">Supergrandpa</span>
+                <span class="shrink-0 text-xs font-bold text-accent">$9.99</span>
+              </div>
+              <div class="flex items-center px-2 gap-2">
+                <span class="text-xs text-placeholder">2026</span>
+                <span class="text-xs text-placeholder">Action</span>
+              </div>
+              <div class="flex items-center px-2 gap-1">
+                <span class="text-xs text-rating">★</span>
+                <span class="text-xs text-rating">7.5</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!--  paging-->
+    <div class="mt-8 flex flex-wrap items-center justify-between gap-3">
+      <p class="text-sm text-placeholder">Page <strong class="text-text">1</strong> of 10</p>
+      <div class="flex flex-wrap items-center gap-1.5 text-sm">
+        <a href="movies.html"
+           class="cursor-not-allowed rounded-lg border border-border bg-button px-3 py-1.5 opacity-40">← Prev</a>
+        <a href="movies.html" class="rounded-lg border border-accent bg-accent px-3 py-1.5 font-bold text-white">1</a>
+        <a href="movies.html"
+           class="rounded-lg border border-border bg-button px-3 py-1.5 transition hover:border-accent hover:bg-accent hover:text-white">2</a>
+        <a href="movies.html"
+           class="rounded-lg border border-border bg-button px-3 py-1.5 transition hover:border-accent hover:bg-accent hover:text-white">3</a>
+        <a href="movies.html"
+           class="rounded-lg border border-border bg-button px-3 py-1.5 transition hover:border-accent hover:bg-accent hover:text-white">4</a>
+        <a href="movies.html"
+           class="rounded-lg border border-border bg-button px-3 py-1.5 transition hover:border-accent hover:bg-accent hover:text-white">5</a>
+        <span class="px-1 text-placeholder">…</span>
+        <a href="movies.html"
+           class="rounded-lg border border-border bg-button px-3 py-1.5 transition hover:border-accent hover:bg-accent hover:text-white">10</a>
+        <a href="movies.html"
+           class="rounded-lg border border-border bg-button px-3 py-1.5 transition hover:border-accent hover:bg-accent hover:text-white">Next
+          →</a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="mt-12 border-t border-border bg-dark">
