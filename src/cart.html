@@ -1,377 +1,452 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cart — MovieMall</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        screens: { tablet: '768px', desktop: '1024px' },
-        extend: {
-          colors: {
-            bg: '#0f172a',
-            text: '#f9fafb',
-            accent: '#f43f5e',
-            border: '#374151',
-            placeholder: '#9ca3af',
-            dark: '#111827',
-            button: '#1f2937',
-            rating: '#fbbf24'
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart — MovieMall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          screens: { tablet: '768px', desktop: '1024px' },
+          extend: {
+            colors: {
+              bg: '#0f172a',
+              text: '#f9fafb',
+              accent: '#f43f5e',
+              border: '#374151',
+              placeholder: '#9ca3af',
+              dark: '#111827',
+              button: '#1f2937',
+              rating: '#fbbf24'
+            }
           }
         }
-      }
-    };
-  </script>
-</head>
-<body class="min-h-screen bg-bg text-text">
-
-<header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)]">
-  <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
-    <div class="flex items-center gap-3 tablet:gap-6">
-      <a href="index.html"
-         class="flex items-center rounded-xl bg-accent px-4 py-2 text-base tablet:text-lg font-semibold text-white">MovieMall</a>
-      <nav class="tablet:flex hidden gap-2 text-sm">
-        <a href="movies.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent">Movies</a>
-        <a href="souvenirs.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent">Souvenirs</a>
-      </nav>
-    </div>
-    <div class="flex items-center gap-2 tablet:gap-3 text-xs tablet:text-sm">
-      <input type="search" placeholder="Search..."
-             class="hidden tablet:block rounded-lg border border-border bg-button px-3 py-2 text-sm placeholder:text-placeholder outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 w-44" />
-      <a href="cart.html"
-         class="rounded-lg border border-accent bg-button px-3 tablet:px-4 py-2 text-accent font-semibold">Cart</a>
-      <a href="login.html"
-         class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent">Log In</a>
-      <a href="register.html"
-         class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent">Register</a>
-    </div>
-  </div>
-</header>
-
-
-<div class="bg-dark border-b border-border px-6 py-8">
-  <div class="mx-auto max-w-7xl">
-    <div class="flex items-center gap-2 text-xs mb-2 text-placeholder">
-      <a href="index.html" class="hover:text-accent transition">Home</a>
-      <span>/</span>
-      <span class="text-text">Cart</span>
-    </div>
-    <h1 class="text-3xl font-bold">Your Cart</h1>
-    <p class="text-placeholder text-sm mt-1">Review items before proceeding to checkout.</p>
-  </div>
-</div>
-
-<main class="mx-auto max-w-7xl px-4 py-8 tablet:px-6 tablet:py-10">
-  <div class="flex flex-col gap-8 desktop:flex-row desktop:items-start desktop:gap-8">
-
-    <div class="min-w-0 flex-1 flex flex-col gap-10">
-
-      <!--      tickets-->
-      <section>
-        <div class="flex items-center gap-3 mb-5">
-          <h2 class="text-xl font-bold">Tickets</h2>
-          <span
-            class="rounded-full bg-button border border-border px-2.5 py-0.5 text-xs text-placeholder">2 films</span>
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-bg text-text">
+    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)]">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
+        <div class="flex items-center gap-3 tablet:gap-6">
+          <a
+            href="index.html"
+            class="flex items-center rounded-xl bg-accent px-4 py-2 text-base tablet:text-lg font-semibold text-white"
+            >MovieMall</a
+          >
+          <nav class="tablet:flex hidden gap-2 text-sm">
+            <a href="movies.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent"
+              >Movies</a
+            >
+            <a
+              href="souvenirs.html"
+              class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent"
+              >Souvenirs</a
+            >
+          </nav>
         </div>
+        <div class="flex items-center gap-2 tablet:gap-3 text-xs tablet:text-sm">
+          <input
+            type="search"
+            placeholder="Search..."
+            class="hidden tablet:block rounded-lg border border-border bg-button px-3 py-2 text-sm placeholder:text-placeholder outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 w-44"
+          />
+          <a
+            href="cart.html"
+            class="rounded-lg border border-accent bg-button px-3 tablet:px-4 py-2 text-accent font-semibold"
+            >Cart</a
+          >
+          <a
+            href="login.html"
+            class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent"
+            >Log In</a
+          >
+          <a
+            href="register.html"
+            class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent"
+            >Register</a
+          >
+        </div>
+      </div>
+    </header>
 
-        <div class="flex flex-col gap-4">
-          <!-- detals-->
-          <div class="rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden">
-            <div class="flex gap-4 p-4 tablet:p-5">
-              <a href="movie-details.html" class="shrink-0 w-16 tablet:w-20 rounded-xl overflow-hidden">
-                <img src="/images/Supergrandpa.png" alt="Supergrandpa" class="w-full h-full object-cover aspect-[2/3]">
-              </a>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between gap-2">
-                  <div>
-                    <a href="movie-details.html" class="font-semibold hover:text-accent transition tablet:text-lg">Supergrandpa</a>
-                    <div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-placeholder">
-                      <span>Action</span>
-                      <span>·</span>
-                      <span>2026</span>
-                      <span>·</span>
-                      <span class="text-xs text-rating">★ 7.5</span>
+    <div class="bg-dark border-b border-border px-6 py-8">
+      <div class="mx-auto max-w-7xl">
+        <div class="flex items-center gap-2 text-xs mb-2 text-placeholder">
+          <a href="index.html" class="hover:text-accent transition">Home</a>
+          <span>/</span>
+          <span class="text-text">Cart</span>
+        </div>
+        <h1 class="text-3xl font-bold">Your Cart</h1>
+        <p class="text-placeholder text-sm mt-1">Review items before proceeding to checkout.</p>
+      </div>
+    </div>
+
+    <main class="mx-auto max-w-7xl px-4 py-8 tablet:px-6 tablet:py-10">
+      <div class="flex flex-col gap-8 desktop:flex-row desktop:items-start desktop:gap-8">
+        <div class="min-w-0 flex-1 flex flex-col gap-10">
+          <!--      tickets-->
+          <section>
+            <div class="flex items-center gap-3 mb-5">
+              <h2 class="text-xl font-bold">Tickets</h2>
+              <span class="rounded-full bg-button border border-border px-2.5 py-0.5 text-xs text-placeholder"
+                >2 films</span
+              >
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <!-- detals-->
+              <div
+                class="rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden"
+              >
+                <div class="flex gap-4 p-4 tablet:p-5">
+                  <a href="movie-details.html" class="shrink-0 w-16 tablet:w-20 rounded-xl overflow-hidden">
+                    <img
+                      src="/images/Supergrandpa.png"
+                      alt="Supergrandpa"
+                      class="w-full h-full object-cover aspect-[2/3]"
+                    />
+                  </a>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-2">
+                      <div>
+                        <a href="movie-details.html" class="font-semibold hover:text-accent transition tablet:text-lg"
+                          >Supergrandpa</a
+                        >
+                        <div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-placeholder">
+                          <span>Action</span>
+                          <span>·</span>
+                          <span>2026</span>
+                          <span>·</span>
+                          <span class="text-xs text-rating">★ 7.5</span>
+                        </div>
+                      </div>
+                      <button
+                        class="text-placeholder hover:text-accent transition text-base leading-none shrink-0 mt-0.5"
+                        title="Remove"
+                      >
+                        ✕
+                      </button>
                     </div>
                   </div>
-                  <button class="text-placeholder hover:text-accent transition text-base leading-none shrink-0 mt-0.5"
-                          title="Remove">✕
-                  </button>
                 </div>
-              </div>
-            </div>
 
-            <!-- seats-->
-            <div class="border-t border-border bg-button/40 px-4 py-4 tablet:px-5 flex flex-col gap-3">
-              <div class="flex flex-wrap gap-4 text-sm">
-                <div class="flex items-center gap-2 text-placeholder">
-                  <span>Sat, 22 Mar 2026</span>
-                  <span>·</span>
-                  <span>18:30</span>
-                  <span>·</span>
-                  <span>Hall B - IMAX</span>
-                </div>
-              </div>
-
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="text-xs text-placeholder font-semibold uppercase tracking-wider">Seats:</span>
-                <span
-                  class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent">
-                  Row C · 4
-                </span>
-                <span
-                  class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent">
-                  Row C · 5
-                </span>
-                <a href="movie-details.html"
-                   class="ml-auto text-xs text-placeholder hover:text-accent transition underline underline-offset-2">
-                  Change seats
-                </a>
-              </div>
-
-              <div class="flex items-center justify-between pt-1 border-t border-border">
-                <span class="text-xs text-placeholder">2 tickets × $9.99</span>
-                <span class="text-sm font-bold text-accent">$19.98</span>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden">
-            <div class="flex gap-4 p-4 tablet:p-5">
-              <a href="movie-details.html" class="shrink-0 w-16 tablet:w-20 rounded-xl overflow-hidden">
-                <img src="/images/Squirrel.png" alt="Squirrel" class="w-full h-full object-cover aspect-[2/3]">
-              </a>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between gap-2">
-                  <div>
-                    <a href="movie-details.html" class="font-semibold hover:text-accent transition tablet:text-lg">Squirrels
-                      Redemption</a>
-                    <div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-placeholder">
-                      <span>Comedy</span>
+                <!-- seats-->
+                <div class="border-t border-border bg-button/40 px-4 py-4 tablet:px-5 flex flex-col gap-3">
+                  <div class="flex flex-wrap gap-4 text-sm">
+                    <div class="flex items-center gap-2 text-placeholder">
+                      <span>Sat, 22 Mar 2026</span>
                       <span>·</span>
-                      <span>2020</span>
+                      <span>18:30</span>
                       <span>·</span>
-                      <span class="text-xs text-rating">★ 6.9</span>
+                      <span>Hall B - IMAX</span>
                     </div>
                   </div>
-                  <button class="text-placeholder hover:text-accent transition text-base leading-none shrink-0 mt-0.5"
-                          title="Remove">✕
-                  </button>
+
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs text-placeholder font-semibold uppercase tracking-wider">Seats:</span>
+                    <span
+                      class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent"
+                    >
+                      Row C · 4
+                    </span>
+                    <span
+                      class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent"
+                    >
+                      Row C · 5
+                    </span>
+                    <a
+                      href="movie-details.html"
+                      class="ml-auto text-xs text-placeholder hover:text-accent transition underline underline-offset-2"
+                    >
+                      Change seats
+                    </a>
+                  </div>
+
+                  <div class="flex items-center justify-between pt-1 border-t border-border">
+                    <span class="text-xs text-placeholder">2 tickets × $9.99</span>
+                    <span class="text-sm font-bold text-accent">$19.98</span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden"
+              >
+                <div class="flex gap-4 p-4 tablet:p-5">
+                  <a href="movie-details.html" class="shrink-0 w-16 tablet:w-20 rounded-xl overflow-hidden">
+                    <img src="/images/Squirrel.png" alt="Squirrel" class="w-full h-full object-cover aspect-[2/3]" />
+                  </a>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-2">
+                      <div>
+                        <a href="movie-details.html" class="font-semibold hover:text-accent transition tablet:text-lg"
+                          >Squirrels Redemption</a
+                        >
+                        <div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-placeholder">
+                          <span>Comedy</span>
+                          <span>·</span>
+                          <span>2020</span>
+                          <span>·</span>
+                          <span class="text-xs text-rating">★ 6.9</span>
+                        </div>
+                      </div>
+                      <button
+                        class="text-placeholder hover:text-accent transition text-base leading-none shrink-0 mt-0.5"
+                        title="Remove"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- seats-->
+                <div class="border-t border-border bg-button/40 px-4 py-4 tablet:px-5 flex flex-col gap-3">
+                  <div class="flex flex-wrap gap-4 text-sm">
+                    <div class="flex items-center gap-2 text-placeholder">
+                      <span>Sat, 28 Feb 2026</span>
+                      <span>·</span>
+                      <span>16:30</span>
+                      <span>·</span>
+                      <span>Hall A - Standard</span>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-xs text-placeholder font-semibold uppercase tracking-wider">Seats:</span>
+                    <span
+                      class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent"
+                    >
+                      Row A · 6
+                    </span>
+                    <a
+                      href="movie-details.html"
+                      class="ml-auto text-xs text-placeholder hover:text-accent transition underline underline-offset-2"
+                    >
+                      Change seats
+                    </a>
+                  </div>
+
+                  <div class="flex items-center justify-between pt-1 border-t border-border">
+                    <span class="text-xs text-placeholder">1 ticket × $9.99</span>
+                    <span class="text-sm font-bold text-accent">$9.99</span>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            <!-- seats-->
-            <div class="border-t border-border bg-button/40 px-4 py-4 tablet:px-5 flex flex-col gap-3">
-              <div class="flex flex-wrap gap-4 text-sm">
-                <div class="flex items-center gap-2 text-placeholder">
-                  <span>Sat, 28 Feb 2026</span>
-                  <span>·</span>
-                  <span>16:30</span>
-                  <span>·</span>
-                  <span>Hall A - Standard</span>
-                </div>
-              </div>
+          <!-- souvenirs-->
+          <section>
+            <div class="flex items-center gap-3 mb-5">
+              <h2 class="text-xl font-bold">Souvenirs</h2>
+              <span class="rounded-full bg-button border border-border px-2.5 py-0.5 text-xs text-placeholder"
+                >2 items</span
+              >
+            </div>
 
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="text-xs text-placeholder font-semibold uppercase tracking-wider">Seats:</span>
-                <span
-                  class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent">
-                  Row A · 6
-                </span>
-                <a href="movie-details.html"
-                   class="ml-auto text-xs text-placeholder hover:text-accent transition underline underline-offset-2">
-                  Change seats
+            <!-- first-->
+            <div class="flex flex-col gap-4">
+              <div
+                class="flex gap-4 rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.35)] tablet:p-5"
+              >
+                <a href="souvenir-details.html" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
+                  <img
+                    src="/images/SuperGrandpaSouvenir.png"
+                    alt="Supergrandpa Figure"
+                    class="w-full h-full object-cover aspect-square"
+                  />
                 </a>
+                <div class="flex flex-1 flex-col gap-3 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <div>
+                      <a
+                        href="souvenir-details.html"
+                        class="font-semibold hover:text-accent transition tablet:text-base"
+                        >Supergrandpa Figure</a
+                      >
+                      <p class="text-xs text-placeholder mt-0.5">Supergrandpa · Figurine</p>
+                    </div>
+                    <button
+                      class="text-placeholder hover:text-accent transition text-base leading-none shrink-0 mt-0.5"
+                      title="Remove"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div class="flex items-center justify-between mt-auto">
+                    <div class="flex items-center gap-2">
+                      <button
+                        class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition"
+                      >
+                        −
+                      </button>
+                      <span class="text-sm font-semibold w-5 text-center">1</span>
+                      <button
+                        class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span class="text-sm font-bold text-accent">$59.99</span>
+                  </div>
+                </div>
               </div>
 
-              <div class="flex items-center justify-between pt-1 border-t border-border">
-                <span class="text-xs text-placeholder">1 ticket × $9.99</span>
-                <span class="text-sm font-bold text-accent">$9.99</span>
+              <!-- second-->
+              <div
+                class="flex gap-4 rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.35)] tablet:p-5"
+              >
+                <a href="souvenir-details.html" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
+                  <img
+                    src="/images/SquirrelSouvenir.png"
+                    alt="Squirrel Sticker Pack"
+                    class="w-full h-full object-cover aspect-square"
+                  />
+                </a>
+                <div class="flex flex-1 flex-col gap-3 min-w-0">
+                  <div class="flex items-start justify-between gap-2">
+                    <div>
+                      <a
+                        href="souvenir-details.html"
+                        class="font-semibold hover:text-accent transition tablet:text-base"
+                        >Squirrel Vinyl Sticker Pack</a
+                      >
+                      <p class="text-xs text-placeholder mt-0.5">The Squirrel's Revenge · Stationery</p>
+                    </div>
+                    <button
+                      class="text-placeholder hover:text-accent transition text-base leading-none shrink-0 mt-0.5"
+                      title="Remove"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div class="flex items-center justify-between mt-auto">
+                    <div class="flex items-center gap-2">
+                      <button
+                        class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition"
+                      >
+                        −
+                      </button>
+                      <span class="text-sm font-semibold w-5 text-center">2</span>
+                      <button
+                        class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span class="text-sm font-bold text-accent">$11.98</span>
+                  </div>
+                </div>
               </div>
             </div>
+          </section>
+
+          <!-- back browsing-->
+          <div class="flex gap-3">
+            <a
+              href="movies.html"
+              class="rounded-xl border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent"
+              >← Browse Movies</a
+            >
+            <a
+              href="souvenirs.html"
+              class="rounded-xl border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent"
+              >← Browse Souvenirs</a
+            >
+          </div>
+        </div>
+
+        <!-- summary-->
+        <aside
+          class="w-full desktop:w-80 desktop:shrink-0 desktop:sticky desktop:top-6 h-fit rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden"
+        >
+          <div class="border-b border-border px-5 py-4">
+            <h2 class="font-bold text-lg">Order Summary</h2>
           </div>
 
-        </div>
-      </section>
+          <!-- tickets-->
+          <div class="px-5 py-4 flex flex-col gap-3">
+            <p class="text-[0.65rem] font-bold uppercase tracking-widest text-placeholder">Tickets</p>
+            <div class="flex flex-col gap-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-placeholder">Supergrandpa × 2</span>
+                <span>$19.98</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-placeholder">Squirrels Redemption × 1</span>
+                <span>$9.99</span>
+              </div>
+            </div>
 
-      <!-- souvenirs-->
-      <section>
-        <div class="flex items-center gap-3 mb-5">
-          <h2 class="text-xl font-bold">Souvenirs</h2>
-          <span
-            class="rounded-full bg-button border border-border px-2.5 py-0.5 text-xs text-placeholder">2 items</span>
-        </div>
+            <div class="border-t border-border"></div>
 
-        <!-- first-->
-        <div class="flex flex-col gap-4">
-          <div
-            class="flex gap-4 rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.35)] tablet:p-5">
-            <a href="souvenir-details.html" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
-              <img src="/images/SuperGrandpaSouvenir.png" alt="Supergrandpa Figure"
-                   class="w-full h-full object-cover aspect-square">
+            <!-- souvenirs-->
+            <p class="text-[0.65rem] font-bold uppercase tracking-widest text-placeholder">Souvenirs</p>
+            <div class="flex flex-col gap-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-placeholder">Supergrandpa Figure × 1</span>
+                <span>$59.99</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-placeholder">Squirrel Sticker Pack × 2</span>
+                <span>$11.98</span>
+              </div>
+            </div>
+
+            <div class="border-t border-border"></div>
+
+            <!-- totals-->
+            <div class="flex justify-between font-bold text-base">
+              <span>Total</span>
+              <span class="text-accent">$101.94</span>
+            </div>
+
+            <!--  promo-->
+            <div class="flex gap-2 pt-1">
+              <input
+                type="text"
+                placeholder="Promo code"
+                class="flex-1 rounded-xl border border-border bg-button px-3 py-2 text-sm placeholder:text-placeholder outline-none focus:border-accent focus:ring-1 focus:ring-accent/30"
+              />
+              <button
+                class="rounded-xl border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent"
+              >
+                Apply
+              </button>
+            </div>
+
+            <a
+              href="checkout.html"
+              class="block w-full rounded-xl bg-accent py-3 text-center text-sm font-semibold text-white transition hover:brightness-110 mt-1"
+            >
+              Proceed to Checkout
             </a>
-            <div class="flex flex-1 flex-col gap-3 min-w-0">
-              <div class="flex items-start justify-between gap-2">
-                <div>
-                  <a href="souvenir-details.html" class="font-semibold hover:text-accent transition tablet:text-base">Supergrandpa
-                    Figure</a>
-                  <p class="text-xs text-placeholder mt-0.5">Supergrandpa · Figurine</p>
-                </div>
-                <button class="text-placeholder hover:text-accent transition text-base leading-none shrink-0 mt-0.5"
-                        title="Remove">✕
-                </button>
-              </div>
-              <div class="flex items-center justify-between mt-auto">
-                <div class="flex items-center gap-2">
-                  <button
-                    class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition">
-                    −
-                  </button>
-                  <span class="text-sm font-semibold w-5 text-center">1</span>
-                  <button
-                    class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition">
-                    +
-                  </button>
-                </div>
-                <span class="text-sm font-bold text-accent">$59.99</span>
-              </div>
-            </div>
           </div>
-
-          <!-- second-->
-          <div
-            class="flex gap-4 rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.35)] tablet:p-5">
-            <a href="souvenir-details.html" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
-              <img src="/images/SquirrelSouvenir.png" alt="Squirrel Sticker Pack"
-                   class="w-full h-full object-cover aspect-square">
-            </a>
-            <div class="flex flex-1 flex-col gap-3 min-w-0">
-              <div class="flex items-start justify-between gap-2">
-                <div>
-                  <a href="souvenir-details.html" class="font-semibold hover:text-accent transition tablet:text-base">Squirrel
-                    Vinyl Sticker Pack</a>
-                  <p class="text-xs text-placeholder mt-0.5">The Squirrel's Revenge · Stationery</p>
-                </div>
-                <button class="text-placeholder hover:text-accent transition text-base leading-none shrink-0 mt-0.5"
-                        title="Remove">✕
-                </button>
-              </div>
-              <div class="flex items-center justify-between mt-auto">
-                <div class="flex items-center gap-2">
-                  <button
-                    class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition">
-                    −
-                  </button>
-                  <span class="text-sm font-semibold w-5 text-center">2</span>
-                  <button
-                    class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition">
-                    +
-                  </button>
-                </div>
-                <span class="text-sm font-bold text-accent">$11.98</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- back browsing-->
-      <div class="flex gap-3">
-        <a href="movies.html"
-           class="rounded-xl border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent">←
-          Browse Movies</a>
-        <a href="souvenirs.html"
-           class="rounded-xl border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent">←
-          Browse Souvenirs</a>
+        </aside>
       </div>
+    </main>
 
-    </div>
-
-    <!-- summary-->
-    <aside
-      class="w-full desktop:w-80 desktop:shrink-0 desktop:sticky desktop:top-6 h-fit rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden">
-      <div class="border-b border-border px-5 py-4">
-        <h2 class="font-bold text-lg">Order Summary</h2>
+    <footer class="mt-12 border-t border-border bg-dark">
+      <div class="mx-auto max-w-7xl px-4 tablet:px-6 py-10 tablet:py-14">
+        <div class="flex flex-col tablet:flex-row items-start tablet:items-center justify-between gap-8">
+          <a
+            href="index.html"
+            class="flex items-center rounded-xl bg-accent px-4 py-2 text-base font-semibold text-white w-fit"
+            >MovieMall</a
+          >
+          <nav class="flex gap-6 text-sm">
+            <a href="movies.html" class="text-placeholder transition hover:text-accent">Movies</a>
+            <a href="souvenirs.html" class="text-placeholder transition hover:text-accent">Souvenirs</a>
+            <a href="cart.html" class="text-placeholder transition hover:text-accent">Cart</a>
+            <a href="profile.html" class="text-placeholder transition hover:text-accent">Account</a>
+          </nav>
+        </div>
+        <div class="mt-10 border-t border-border pt-6 text-xs text-placeholder">
+          © 2026 MovieMall. All rights reserved.
+        </div>
       </div>
-
-      <!-- tickets-->
-      <div class="px-5 py-4 flex flex-col gap-3">
-        <p class="text-[0.65rem] font-bold uppercase tracking-widest text-placeholder">Tickets</p>
-        <div class="flex flex-col gap-2 text-sm">
-          <div class="flex justify-between">
-            <span class="text-placeholder">Supergrandpa × 2</span>
-            <span>$19.98</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-placeholder">Squirrels Redemption × 1</span>
-            <span>$9.99</span>
-          </div>
-        </div>
-
-        <div class="border-t border-border"></div>
-
-        <!-- souvenirs-->
-        <p class="text-[0.65rem] font-bold uppercase tracking-widest text-placeholder">Souvenirs</p>
-        <div class="flex flex-col gap-2 text-sm">
-          <div class="flex justify-between">
-            <span class="text-placeholder">Supergrandpa Figure × 1</span>
-            <span>$59.99</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-placeholder">Squirrel Sticker Pack × 2</span>
-            <span>$11.98</span>
-          </div>
-        </div>
-
-        <div class="border-t border-border"></div>
-
-        <!-- totals-->
-        <div class="flex justify-between font-bold text-base">
-          <span>Total</span>
-          <span class="text-accent">$101.94</span>
-        </div>
-
-        <!--  promo-->
-        <div class="flex gap-2 pt-1">
-          <input type="text" placeholder="Promo code"
-                 class="flex-1 rounded-xl border border-border bg-button px-3 py-2 text-sm placeholder:text-placeholder outline-none focus:border-accent focus:ring-1 focus:ring-accent/30">
-          <button
-            class="rounded-xl border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent">
-            Apply
-          </button>
-        </div>
-
-        <a href="checkout.html"
-           class="block w-full rounded-xl bg-accent py-3 text-center text-sm font-semibold text-white transition hover:brightness-110 mt-1">
-          Proceed to Checkout
-        </a>
-      </div>
-    </aside>
-
-  </div>
-</main>
-
-<footer class="mt-12 border-t border-border bg-dark">
-  <div class="mx-auto max-w-7xl px-4 tablet:px-6 py-10 tablet:py-14">
-    <div class="flex flex-col tablet:flex-row items-start tablet:items-center justify-between gap-8">
-      <a href="index.html"
-         class="flex items-center rounded-xl bg-accent px-4 py-2 text-base font-semibold text-white w-fit">MovieMall</a>
-      <nav class="flex gap-6 text-sm">
-        <a href="movies.html" class="text-placeholder transition hover:text-accent">Movies</a>
-        <a href="souvenirs.html" class="text-placeholder transition hover:text-accent">Souvenirs</a>
-        <a href="cart.html" class="text-placeholder transition hover:text-accent">Cart</a>
-        <a href="profile.html" class="text-placeholder transition hover:text-accent">Account</a>
-      </nav>
-    </div>
-    <div class="mt-10 border-t border-border pt-6 text-xs text-placeholder">
-      © 2026 MovieMall. All rights reserved.
-    </div>
-  </div>
-</footer>
-
-</body>
+    </footer>
+  </body>
 </html>
