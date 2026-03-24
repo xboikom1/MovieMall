@@ -39,8 +39,6 @@
           </nav>
         </div>
         <div class="flex items-center gap-2 text-xs tablet:gap-3 tablet:text-sm">
-          <span class="hidden text-placeholder tablet:block">Already have an account?</span>
-          <a href="login.html" class="rounded-lg border border-border bg-button px-3 py-2 font-semibold text-white transition hover:bg-accent tablet:px-4">Sign In</a>
           <label for="site-search" class="sr-only">Search</label>
           <input
             id="site-search"
@@ -58,9 +56,20 @@
     <main class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-10">
       <a href="cart.html" class="block text-l pb-4 text-placeholder transition hover:text-accent">← Back to Cart</a>
 
-      <div class="mb-6 flex flex-col gap-2">
-        <h1 class="text-2xl font-bold tablet:text-4xl block">Checkout</h1>
-        <p class="text-sm text-placeholder">Complete your purchase securely. Review your items before confirming.</p>
+      <div class="mb-6 flex flex-col gap-3 tablet:flex-row tablet:items-start tablet:justify-between">
+        <div class="flex flex-col gap-2">
+          <h1 class="text-2xl font-bold tablet:text-4xl block">Checkout</h1>
+          <p class="text-sm text-placeholder">Complete your purchase securely. Review your items before confirming.</p>
+        </div>
+
+        <div class="mt-2 flex items-center gap-3 text-sm tablet:mt-1">
+          <span class="text-placeholder">Already have an account?</span>
+          <a
+            href="login.html"
+            class="rounded-lg border border-border bg-button px-5 py-2 font-semibold text-white shadow-[0_10px_24px_rgba(0,0,0,.35)] transition hover:bg-accent"
+            >Sign In</a
+          >
+        </div>
       </div>
 
       <div class="grid grid-cols-1 gap-6 desktop:grid-cols-[1fr_380px] desktop:gap-8">
@@ -108,7 +117,9 @@
                 <p class="mt-1 text-xs text-placeholder">Choose how you'd like your souvenir order delivered.</p>
 
                 <div class="mt-4 grid grid-cols-1 gap-3 tablet:grid-cols-3">
-                  <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                  <label
+                    class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button"
+                  >
                     <input type="radio" name="delivery" value="courier" class="mt-1 accent-accent" checked />
                     <span class="min-w-0">
                       <span class="block text-sm font-semibold">Courier</span>
@@ -116,7 +127,9 @@
                     </span>
                   </label>
 
-                  <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                  <label
+                    class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button"
+                  >
                     <input type="radio" name="delivery" value="locker" class="mt-1 accent-accent" />
                     <span class="min-w-0">
                       <span class="block text-sm font-semibold">Parcel locker</span>
@@ -124,7 +137,9 @@
                     </span>
                   </label>
 
-                  <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                  <label
+                    class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button"
+                  >
                     <input type="radio" name="delivery" value="pickup" class="mt-1 accent-accent" />
                     <span class="min-w-0">
                       <span class="block text-sm font-semibold">Pick up myself</span>
