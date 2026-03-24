@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieMall — Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          screens: { tablet: '768px', desktop: '1024px' },
+          extend: {
+            colors: {
+              bg: '#0f172a',
+              text: '#f9fafb',
+              accent: '#f43f5e',
+              border: '#374151',
+              placeholder: '#9ca3af',
+              dark: '#111827',
+              button: '#1f2937'
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+
+  <body class="min-h-screen bg-bg text-text">
+    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)]">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
+        <a href="index.html" class="flex items-center rounded-xl bg-accent px-4 py-2 text-base tablet:text-lg font-semibold text-white">MovieMall</a>
+        <span class="text-xs text-placeholder">Administrator Portal</span>
+      </div>
+    </header>
+
+    <main class="mx-auto flex min-h-[calc(100vh-76px)] max-w-7xl items-center justify-center px-4 py-8 tablet:px-6 tablet:py-14">
+      <section class="w-full max-w-xl rounded-3xl border border-border bg-dark p-5 tablet:max-w-2xl tablet:p-10 shadow-[0_14px_36px_rgba(0,0,0,.35)]">
+        <div class="mb-6 tablet:mb-8 flex items-center gap-3">
+          <div>
+            <h1 class="text-2xl tablet:text-3xl font-bold">Admin Login</h1>
+          </div>
+        </div>
+
+        <form action="admin-dashboard.html" class="mx-auto flex max-w-xl flex-col gap-4 tablet:gap-5">
+          <div class="flex flex-col gap-1.5">
+            <label class="text-sm font-medium text-placeholder" for="admin-email">Email</label>
+            <input
+              id="admin-email"
+              type="email"
+              placeholder="Email"
+              class="w-full rounded-xl border border-border bg-button px-4 py-3.5 tablet:text-lg outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-sm font-medium text-placeholder" for="admin-password">Password</label>
+            <input
+              id="admin-password"
+              type="password"
+              placeholder="Password"
+              class="w-full rounded-xl border border-border bg-button px-4 py-3.5 tablet:text-lg outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="mt-2 w-full rounded-xl bg-accent px-6 py-3.5 text-base tablet:text-lg font-semibold text-white shadow-[0_14px_36px_rgba(0,0,0,.35)] transition hover:brightness-110"
+          >
+            Sign In
+          </button>
+        </form>
+
+        <p class="mt-6 text-center text-xs text-placeholder">
+          <a href="index.html" class="transition hover:text-accent">← Back to store</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
