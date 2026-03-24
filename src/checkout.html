@@ -39,6 +39,8 @@
           </nav>
         </div>
         <div class="flex items-center gap-2 text-xs tablet:gap-3 tablet:text-sm">
+          <span class="hidden text-placeholder tablet:block">Already have an account?</span>
+          <a href="login.html" class="rounded-lg border border-border bg-button px-3 py-2 font-semibold text-white transition hover:bg-accent tablet:px-4">Sign In</a>
           <label for="site-search" class="sr-only">Search</label>
           <input
             id="site-search"
@@ -101,6 +103,37 @@
             <!-- Delivery Address -->
 
             <div>
+              <div class="mb-6 rounded-2xl border border-border bg-bg p-4">
+                <h3 class="text-sm font-semibold">Delivery Method (Souvenirs)</h3>
+                <p class="mt-1 text-xs text-placeholder">Choose how you'd like your souvenir order delivered.</p>
+
+                <div class="mt-4 grid grid-cols-1 gap-3 tablet:grid-cols-3">
+                  <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                    <input type="radio" name="delivery" value="courier" class="mt-1 accent-accent" checked />
+                    <span class="min-w-0">
+                      <span class="block text-sm font-semibold">Courier</span>
+                      <span class="block text-xs text-placeholder">Delivery to your address.</span>
+                    </span>
+                  </label>
+
+                  <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                    <input type="radio" name="delivery" value="locker" class="mt-1 accent-accent" />
+                    <span class="min-w-0">
+                      <span class="block text-sm font-semibold">Parcel locker</span>
+                      <span class="block text-xs text-placeholder">Pickup from a nearby locker.</span>
+                    </span>
+                  </label>
+
+                  <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                    <input type="radio" name="delivery" value="pickup" class="mt-1 accent-accent" />
+                    <span class="min-w-0">
+                      <span class="block text-sm font-semibold">Pick up myself</span>
+                      <span class="block text-xs text-placeholder">Collect from our store.</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
               <h2 class="mb-4 text-lg font-bold">Delivery Address</h2>
 
               <div class="grid grid-cols-1 gap-4 tablet:grid-cols-2">
