@@ -27,7 +27,7 @@
 
   <body class="min-h-screen bg-bg text-text">
     <!-- header -->
-    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)]">
+    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)]">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
         <div class="flex items-center gap-3 tablet:gap-5">
           <a href="index.html" class="flex items-center rounded-xl bg-accent px-4 py-2 font-semibold">MovieMall</a>
@@ -43,60 +43,62 @@
     </header>
 
     <main class="mx-auto max-w-7xl px-4 py-8 tablet:px-6">
+
       <div class="flex items-center gap-2 text-xs text-placeholder mb-6">
         <a href="admin-dashboard.html" class="transition hover:text-accent">Dashboard</a>
         <span>/</span>
-        <span class="text-text">Edit Product</span>
+        <span class="text-text">New Product</span>
       </div>
 
       <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold">Edit Product</h1>
+        <h1 class="text-2xl font-bold">Add New Product</h1>
         <a href="admin-dashboard.html" class="rounded-lg border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent"
           >← Back</a
         >
       </div>
 
       <form action="admin-dashboard.html" class="grid gap-6 desktop:grid-cols-[1fr_360px]">
+
         <div class="flex flex-col gap-5">
+
+          <!-- basic information -->
           <div class="rounded-2xl border border-border bg-dark p-5 tablet:p-6 shadow-[0_14px_36px_rgba(0,0,0,.25)]">
             <h2 class="font-semibold mb-4">Basic Information</h2>
 
             <div class="flex flex-col gap-4">
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm font-medium text-placeholder tablet:text-base" for="name">Product Name <span class="text-accent">*</span></label>
+                <label class="text-sm font-medium text-placeholder" for="name">Product Name <span class="text-accent">*</span></label>
                 <input
                   id="name"
                   type="text"
-                  value="SuperGrandpa"
+                  placeholder="Enter product name"
                   required
                   class="w-full rounded-xl border border-border bg-button px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                 />
               </div>
 
               <div class="flex flex-col gap-1.5">
-                <label class="text-sm tablet:text-base font-medium text-placeholder" for="description">Description <span class="text-accent">*</span></label>
+                <label class="text-sm font-medium text-placeholder" for="description">Description <span class="text-accent">*</span></label>
                 <textarea
                   id="description"
                   rows="5"
+                  placeholder="Describe the product..."
                   required
                   class="w-full resize-none rounded-xl border border-border bg-button px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
-                >
-An action-packed adventure for the whole family featuring an unlikely hero.</textarea
-                >
+                ></textarea>
               </div>
 
               <div class="grid grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1.5">
                   <label class="text-sm font-medium text-placeholder" for="price">Price <span class="text-accent">*</span></label>
                   <div class="relative">
-                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-placeholder text-sm">$</span>
-
+                    <span class="absolute left-3.5 top-1/2 text-placeholder text-sm -translate-y-1/2">$</span>
                     <input
                       id="price"
                       type="number"
                       min="0"
                       step="0.01"
-                      value="14.99"
+                      placeholder="0.00"
                       required
                       class="w-full rounded-xl border border-border bg-button pl-8 pr-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
                     />
@@ -110,32 +112,10 @@ An action-packed adventure for the whole family featuring an unlikely hero.</tex
                     required
                     class="w-full rounded-xl border border-border bg-button px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 appearance-none"
                   >
-                    <option value="movie" selected>Movie</option>
+                    <option value="" disabled selected>Select…</option>
+                    <option value="movie">Movie</option>
                     <option value="souvenir">Souvenir</option>
                   </select>
-                </div>
-              </div>
-
-              <div id="movie-fields" class="grid grid-cols-2 gap-4">
-                <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-placeholder" for="year">Release Year</label>
-                  <input
-                    id="year"
-                    type="number"
-                    value="2026"
-                    min="1900"
-                    max="2100"
-                    class="w-full rounded-xl border border-border bg-button px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
-                  />
-                </div>
-                <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-medium text-placeholder" for="genre">Genre</label>
-                  <input
-                    id="genre"
-                    type="text"
-                    value="Action, Comedy, Drama"
-                    class="w-full rounded-xl border border-border bg-button px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
-                  />
                 </div>
               </div>
             </div>
@@ -150,37 +130,25 @@ An action-packed adventure for the whole family featuring an unlikely hero.</tex
               </div>
               <label
                 for="photo-input"
-                class="cursor-pointer flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-semibold transition hover:brightness-110"
+                class="cursor-pointer flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-semibold"
               >
                 + Add Photo
               </label>
               <input id="photo-input" type="file" accept="image/*" multiple class="hidden" />
             </div>
 
-            <!-- Existing photos -->
-            <div id="photo-previews" class="grid grid-cols-2 tablet:grid-cols-4 gap-3">
-              <div class="group relative rounded-xl overflow-hidden border border-border bg-button aspect-square">
-                <img src="/images/Supergrandpa.png" alt="Photo 1" class="w-full h-full object-cover" />
-                <span class="absolute top-1.5 left-1.5 rounded-md bg-accent px-1.5 py-0.5 text-xs font-semibold">Main</span>
-                <button
-                  type="button"
-                  aria-label="Remove photo"
-                  class="leading-none absolute top-1.5 right-1.5 flex justify-center align-center rounded-full bg-black/60 w-6 h-6 opacity-0 group-hover:opacity-100 transition"
-                >
-                  x
-                </button>
+            <!-- upload photo -->
+
+            <label
+              for="photo-input"
+              class="flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-border bg-button/40 p-10 text-center cursor-pointer transition hover:border-accent"
+            >
+              <div>
+                <p class="text-sm font-medium">Click to upload or drop the file here</p>
+                <p class="text-xs text-placeholder mt-1">PNG, JPG, WEBP</p>
               </div>
-              <div class="group relative rounded-xl overflow-hidden border border-border bg-button aspect-square">
-                <img src="/images/Supergrandpa.png" alt="Photo 2" class="w-full h-full object-cover" />
-                <button
-                  type="button"
-                  aria-label="Remove photo"
-                  class="leading-none absolute top-1.5 right-1.5 grid place-items-center rounded-full bg-black/60 w-6 h-6 opacity-0 group-hover:opacity-100 transition"
-                >
-                  x
-                </button>
-              </div>
-            </div>
+            </label>
+
           </div>
         </div>
 
@@ -194,21 +162,20 @@ An action-packed adventure for the whole family featuring an unlikely hero.</tex
                 <div class="relative">
                   <input type="checkbox" id="published" class="sr-only peer" checked />
                   <div class="w-10 h-5 bg-button rounded-full border border-border peer-checked:bg-accent transition"></div>
-                  <div class="absolute bg-placeholder rounded-full left-0.5 top-0.5 w-4 h-4 transition peer-checked:translate-x-5 peer-checked:bg-white"></div>
+                  <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-placeholder rounded-full transition peer-checked:translate-x-5 peer-checked:bg-white"></div>
                 </div>
               </label>
               <label class="flex items-center justify-between cursor-pointer">
                 <span class="text-sm">Featured</span>
                 <div class="relative">
-                  <input type="checkbox" id="featured" class="sr-only peer" checked />
+                  <input type="checkbox" id="featured" class="sr-only peer" />
                   <div class="w-10 h-5 bg-button rounded-full border border-border peer-checked:bg-accent transition"></div>
-                  <div class="absolute bg-placeholder rounded-full left-0.5 top-0.5 w-4 h-4 transition peer-checked:translate-x-5 peer-checked:bg-white"></div>
+                  <div class="absolute left-0.5 top-0.5 w-4 h-4 bg-placeholder rounded-full transition peer-checked:translate-x-5 peer-checked:bg-white"></div>
                 </div>
               </label>
             </div>
           </div>
 
-          <!-- stock -->
           <div class="rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.25)]">
             <h2 class="font-semibold mb-4">Stock</h2>
             <div class="flex flex-col gap-1.5">
@@ -217,26 +184,25 @@ An action-packed adventure for the whole family featuring an unlikely hero.</tex
                 id="stock"
                 type="number"
                 min="0"
-                value="50"
+                value="1"
                 class="w-full rounded-xl border border-border bg-button px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
               />
             </div>
           </div>
 
           <div class="flex flex-col gap-3">
-            <button type="submit" class="w-full rounded-xl bg-accent px-6 py-3.5 font-semibold shadow-[0_14px_36px_rgba(0,0,0,4)]">Save Changes</button>
+            <button
+              type="submit"
+              class="w-full rounded-xl bg-accent px-6 py-3.5 font-semibold shadow-[0_14px_36px_rgba(0,0,0,.35)]"
+            >
+              Save Product
+            </button>
             <a
               href="admin-dashboard.html"
               class="w-full rounded-xl border border-border bg-button px-6 py-3.5 text-center font-semibold transition hover:border-accent hover:text-accent"
             >
               Cancel
             </a>
-            <button
-              type="button"
-              class="w-full rounded-xl border border-red-800/60 bg-red-950/30 px-6 py-3.5 text-sm font-semibold text-red-400 transition hover:border-red-500 hover:text-red-300"
-            >
-              Delete Product
-            </button>
           </div>
         </div>
       </form>
