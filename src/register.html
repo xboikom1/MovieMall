@@ -54,13 +54,29 @@
         <h1 class="mb-6 tablet:mb-8 text-2xl tablet:text-4xl font-bold">Create your account</h1>
 
         <form class="mx-auto flex max-w-xl flex-col gap-4 tablet:gap-6">
-          <label class="sr-only" for="register-name">Full Name</label>
-          <input
-            id="register-name"
-            type="text"
-            placeholder="Full Name"
-            class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 tablet:text-lg outline-none focus:border-accent focus:ring-2 focus:ring-accent"
-          />
+          <div class="grid grid-cols-1 gap-4 tablet:grid-cols-2">
+            <div>
+              <label class="sr-only" for="register-first-name">First Name</label>
+              <input
+                id="register-first-name"
+                name="firstName"
+                type="text"
+                placeholder="First Name"
+                class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 tablet:text-lg outline-none focus:border-accent focus:ring-2 focus:ring-accent"
+              />
+            </div>
+
+            <div>
+              <label class="sr-only" for="register-last-name">Last Name</label>
+              <input
+                id="register-last-name"
+                name="lastName"
+                type="text"
+                placeholder="Last Name"
+                class="w-full rounded-xl border border-border bg-button px-4 tablet:px-5 py-3.5 tablet:py-4 tablet:text-lg outline-none focus:border-accent focus:ring-2 focus:ring-accent"
+              />
+            </div>
+          </div>
 
           <label class="sr-only" for="register-email">Email</label>
           <input

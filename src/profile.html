@@ -94,14 +94,28 @@
           <!-- Form -->
           <div class="flex flex-col gap-6">
             <form class="grid grid-cols-1 gap-5">
-              <div>
-                <label for="profile-name" class="mb-2 block text-xs font-semibold uppercase tracking-widest">Full Name</label>
-                <input
-                  id="profile-name"
-                  type="text"
-                  placeholder=""
-                  class="w-full rounded-xl border border-border bg-bg px-4 py-3.5 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent tablet:text-base"
-                />
+                <div class="grid grid-cols-1 gap-5 tablet:grid-cols-2">
+                <div>
+                  <label for="profile-first-name" class="mb-2 block text-xs font-semibold uppercase tracking-widest">First Name</label>
+                  <input
+                    id="profile-first-name"
+                    name="firstName"
+                    type="text"
+                    placeholder=""
+                    class="w-full rounded-xl border border-border bg-bg px-4 py-3.5 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent tablet:text-base"
+                  />
+                </div>
+
+                <div>
+                  <label for="profile-last-name" class="mb-2 block text-xs font-semibold uppercase tracking-widest">Last Name</label>
+                  <input
+                    id="profile-last-name"
+                    name="lastName"
+                    type="text"
+                    placeholder=""
+                    class="w-full rounded-xl border border-border bg-bg px-4 py-3.5 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-2 focus:ring-accent tablet:text-base"
+                  />
+                </div>
               </div>
 
               <div>

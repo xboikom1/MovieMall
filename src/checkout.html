@@ -84,6 +84,30 @@
 
               <div class="grid grid-cols-1 gap-4 tablet:grid-cols-2">
                 <div>
+                  <label for="firstName" class="mb-1 block text-xs font-semibold text-placeholder">First Name</label>
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    autocomplete="given-name"
+                    placeholder="First name"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="lastName" class="mb-1 block text-xs font-semibold text-placeholder">Last Name</label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    autocomplete="family-name"
+                    placeholder="Last name"
+                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                    required
+                  />
+                </div>
+                <div>
                   <label for="email" class="mb-1 block text-xs font-semibold text-placeholder">Email</label>
                   <input
                     id="email"
@@ -152,31 +176,6 @@
               <h2 class="mb-4 text-lg font-bold">Delivery Address</h2>
 
               <div class="grid grid-cols-1 gap-4 tablet:grid-cols-2">
-                <div>
-                  <label for="firstName" class="mb-1 block text-xs font-semibold text-placeholder">First Name</label>
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    autocomplete="given-name"
-                    placeholder="First name"
-                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
-                    required
-                  />
-                </div>
-                <div>
-                  <label for="lastName" class="mb-1 block text-xs font-semibold text-placeholder">Last Name</label>
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    autocomplete="family-name"
-                    placeholder="Last name"
-                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
-                    required
-                  />
-                </div>
-
                 <div class="tablet:col-span-2">
                   <label for="address1" class="mb-1 block text-xs font-semibold text-placeholder">Street Address</label>
                   <input
