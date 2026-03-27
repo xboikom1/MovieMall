@@ -32,7 +32,7 @@
     <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)]">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
         <div class="flex items-center gap-3 tablet:gap-6">
-          <a href="index.html" class="flex items-center rounded-xl bg-accent px-4 py-2 text-base font-semibold text-white tablet:text-lg">MovieMall</a>
+          <a href="index.html" class="flex items-center rounded-xl bg-accent px-4 py-2 font-semibold tablet:text-lg">MovieMall</a>
           <nav class="hidden gap-2 text-sm tablet:flex">
             <a href="movies.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent">Movies</a>
             <a href="souvenirs.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent">Souvenirs</a>
@@ -81,7 +81,7 @@
             </div>
 
             <h1 class="text-3xl font-bold tablet:text-4xl">Super Grandpa</h1>
-            <p class="text-sm italic text-placeholder tablet:text-base">Some maps lead to places that should stay lost.</p>
+            <p class="text-sm italic text-placeholder tablet">Some maps lead to places that should stay lost.</p>
 
             <div class="flex flex-wrap gap-2 text-sm text-placeholder">
               <span class="flex items-center gap-1.5"><span class="text-yellow-400">★</span>7.9/10</span>
@@ -100,12 +100,12 @@
         <section>
           <div class="order-2 flex flex-col gap-6 desktop:order-1">
             <div class="flex border-b border-border">
-              <button class="border-b-2 border-accent px-5 py-3 text-sm font-semibold tablet:text-base">Overview</button>
+              <button class="border-b-2 border-accent px-5 py-3 text-sm font-semibold tablet">Overview</button>
             </div>
 
             <div class="rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6">
               <h2 class="mb-3 text-lg font-bold">Synopsis</h2>
-              <p class="text-sm tablet:text-base">
+              <p class="text-sm tablet">
                 When a reclusive antique dealer inherits a collection of hand-drawn maps from her estranged uncle, she begins to notice that the locations they
                 depict don't exist — yet somehow feel disturbingly familiar. As she digs deeper into her uncle's obsessive final years, the maps start to change
                 overnight, and the places they show begin bleeding into her waking life. Somewhere between memory and madness, she must decide: is she
@@ -370,13 +370,16 @@
                   <span class="text-placeholder">Price per ticket</span>
                   <span class="font-medium">$12.99</span>
                 </div>
-                <div class="mt-1 flex justify-between text-base font-bold">
+                <div class="mt-1 flex justify-between font-bold">
                   <span>Total</span>
                   <span class="text-accent">$0.00</span>
                 </div>
               </div>
 
-              <button class="mt-5 w-full rounded-xl bg-accent px-6 py-3.5 text-base shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:text-lg">Add to cart</button>
+              <a href="cart.html" class="flex justify-center mt-5 w-full rounded-xl bg-accent px-6 py-3.5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:text-lg">
+                Add to cart
+                <button disabled class="hidden">Add to cart</button>
+              </a>
             </div>
           </div>
         </aside>
