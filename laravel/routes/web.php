@@ -4,11 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 })->name('home');
 
-Route::view('/movies', 'welcome')->name('movies.index');
-Route::view('/souvenirs', 'welcome')->name('souvenirs.index');
+Route::view('/movies', 'home')->name('movies.index');
+Route::view('/souvenirs', 'home')->name('souvenirs.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
