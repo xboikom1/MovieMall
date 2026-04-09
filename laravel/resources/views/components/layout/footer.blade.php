@@ -7,7 +7,7 @@
       <nav class="flex gap-6 text-sm">
         <a href="movies.html" class="text-placeholder transition hover:text-accent">Movies</a>
         <a href="souvenirs.html" class="text-placeholder transition hover:text-accent">Souvenirs</a>
-        <a href="cart.html" class="text-placeholder transition hover:text-accent">Cart</a>
+        <a href="{{ route('cart.index') }}" class="text-placeholder transition hover:text-accent">Cart</a>
         <a href="{{ route('profile.edit') }}" class="text-placeholder transition hover:text-accent">Account</a>
       </nav>
     </div>

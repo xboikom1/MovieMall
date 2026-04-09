@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,6 +13,9 @@ Route::get('/', function () {
 Route::view('/movies', 'home')->name('movies.index');
 Route::get('/movies/{slug}', [MovieController::class, 'show'])->name('movies.show');
 Route::view('/souvenirs', 'home')->name('souvenirs.index');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
