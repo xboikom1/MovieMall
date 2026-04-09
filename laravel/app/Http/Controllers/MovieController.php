@@ -3,155 +3,87 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MovieController extends Controller
 {
     public function show(string $slug): View
     {
-        $movie = Arr::get($this->movies(), $slug);
+        $movies = DB::table('movies')
+            ->join('directors', 'movies.director_id', '=', 'directors.id')
+            ->join('studios', 'movies.studio_id', '=', 'studios.id')
+            ->join('languages', 'movies.language_id', '=', 'languages.id')
+            ->select(
+                'movies.id',
+                'movies.title',
+                'movies.description as synopsis',
+                'movies.rating',
+                'movies.length_minutes',
+                'movies.release_date',
+                'directors.name as director',
+                'studios.name as studio',
+                'languages.name as language'
+            )
+            ->get();
 
-        abort_unless($movie, 404);
+        $movieRecord = $movies->first(fn ($m) => Str::slug($m->title) === $slug);
+
+        abort_unless($movieRecord, 404);
+
+        $poster = DB::table('movie_images')
+            ->where('movie_id', $movieRecord->id)
+            ->where('is_primary', true)
+            ->value('url');
+
+        $genres = DB::table('movie_genres')
+            ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
+            ->where('movie_id', $movieRecord->id)
+            ->pluck('genres.name')
+            ->toArray();
+
+        $relatedSouvenirs = DB::table('souvenirs')
+            ->join('category', 'souvenirs.category_id', '=', 'category.id')
+            ->leftJoin('souvenir_images', function ($join) {
+                $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
+                     ->where('souvenir_images.is_primary', true);
+            })
+            ->where('souvenirs.movie_id', $movieRecord->id)
+            ->select(
+                'souvenirs.name as title',
+                'souvenirs.price',
+                'category.name as type',
+                'souvenir_images.url as image'
+            )
+            ->get()
+            ->map(function ($s) use ($movieRecord) {
+                return [
+                    'title' => $s->title,
+                    'image' => $s->image,
+                    'movie' => $movieRecord->title,
+                    'type'  => $s->type,
+                    'price' => number_format($s->price, 2) . 'EUR',
+                ];
+            })->toArray();
+
+        $movieData = [
+            'slug' => $slug,
+            'title' => $movieRecord->title,
+            'poster' => $poster,
+            'genres' => $genres,
+            'synopsis' => $movieRecord->synopsis,
+            'rating' => $movieRecord->rating . '/10',
+            'duration' => $movieRecord->length_minutes . ' min',
+            'release_date' => \Carbon\Carbon::parse($movieRecord->release_date)->format('F j, Y'),
+            'director' => $movieRecord->director,
+            'language' => $movieRecord->language,
+            'studio' => $movieRecord->studio,
+            'related_souvenirs' => $relatedSouvenirs,
+        ];
 
         return view('movie-details', [
-            'movie' => $movie,
+            'movie' => $movieData,
         ]);
-    }
-
-
-    //Temporary catalog until movies are stored in DB.
-
-    private function movies(): array
-    {
-        return [
-            'supergrandpa' => [
-                'slug' => 'supergrandpa',
-                'title' => 'SuperGrandpa',
-                'poster' => '/images/Supergrandpa.png',
-                'genres' => ['Action', 'Adventure', 'Comedy'],
-                'synopsis' => 'An extraordinary superhero adventure spanning multiple dimensions. SuperGrandpa must save the world from the Mad Squirrels before time runs out.',
-                'rating' => '7.5/10',
-                'duration' => '118 min',
-                'release_date' => 'February 28, 2026',
-                'director' => 'John Smith',
-                'language' => 'English',
-                'studio' => 'MovieMall Studios',
-                'related_souvenirs' => [
-                    [
-                        'title' => 'SuperGrandpa Figurine',
-                        'image' => '/images/SuperGrandpaSouvenir.png',
-                        'movie' => 'SuperGrandpa',
-                        'type' => 'Figurine',
-                        'price' => '9.99EUR',
-                    ],
-                    [
-                        'title' => 'Gollum\'s Ring',
-                        'image' => '/images/gollumring.png',
-                        'movie' => 'Gollum: Steal The Ring',
-                        'type' => 'Accessory',
-                        'price' => '9.99EUR',
-                    ],
-                    [
-                        'title' => 'Hiding Nemo Plush Toy',
-                        'image' => '/images/plushtoynemo.png',
-                        'movie' => 'Hiding Nemo',
-                        'type' => 'Plush Toy',
-                        'price' => '9.99EUR',
-                    ],
-                    [
-                        'title' => 'Blue Bulk Prop Replica',
-                        'image' => '/images/bluebulkpropreplica.png',
-                        'movie' => 'The Ordinary Blue Bulk',
-                        'type' => 'Prop Replica',
-                        'price' => '9.99EUR',
-                    ],
-                ],
-            ],
-            'gollum-steal-the-ring' => [
-                'slug' => 'gollum-steal-the-ring',
-                'title' => 'Gollum: Steal The Ring',
-                'poster' => '/images/gollum.png',
-                'genres' => ['Adventure', 'Action'],
-                'synopsis' => 'A desperate anti-hero embarks on a dangerous quest to reclaim a legendary ring and outsmart enemies from every realm.',
-                'rating' => '9.5/10',
-                'duration' => '132 min',
-                'release_date' => 'October 10, 2028',
-                'director' => 'Ava Knight',
-                'language' => 'English',
-                'studio' => 'MovieMall Studios',
-                'related_souvenirs' => [],
-            ],
-            'mission-possible' => [
-                'slug' => 'mission-possible',
-                'title' => 'Mission: Possible',
-                'poster' => '/images/missionpossible.png',
-                'genres' => ['Action', 'Drama'],
-                'synopsis' => 'When every plan fails, one team improvises the impossible to stop a global catastrophe.',
-                'rating' => '6.5/10',
-                'duration' => '109 min',
-                'release_date' => 'June 1, 2024',
-                'director' => 'Mia Stone',
-                'language' => 'English',
-                'studio' => 'MovieMall Studios',
-                'related_souvenirs' => [],
-            ],
-            'hiding-nemo' => [
-                'slug' => 'hiding-nemo',
-                'title' => 'Hiding Nemo',
-                'poster' => '/images/hidingnemo.png',
-                'genres' => ['Drama', 'Adventure'],
-                'synopsis' => 'A heartfelt underwater journey about courage, friendship, and finding your way home.',
-                'rating' => '4.5/10',
-                'duration' => '103 min',
-                'release_date' => 'March 15, 2018',
-                'director' => 'Evan Lee',
-                'language' => 'English',
-                'studio' => 'MovieMall Studios',
-                'related_souvenirs' => [],
-            ],
-            'the-ordinary-blue-bulk' => [
-                'slug' => 'the-ordinary-blue-bulk',
-                'title' => 'The Ordinary Blue Bulk',
-                'poster' => '/images/bluebulk.png',
-                'genres' => ['Action', 'Apocalypse', 'Drama'],
-                'synopsis' => 'An unlikely hero rises in a collapsing world, balancing brute force with unexpected compassion.',
-                'rating' => '9.8/10',
-                'duration' => '124 min',
-                'release_date' => 'May 12, 2025',
-                'director' => 'Noah Grant',
-                'language' => 'English',
-                'studio' => 'MovieMall Studios',
-                'related_souvenirs' => [],
-            ],
-            'the-squirrels-revenge' => [
-                'slug' => 'the-squirrels-revenge',
-                'title' => "The Squirrel's Revenge",
-                'poster' => '/images/Squirrel.png',
-                'genres' => ['Comedy'],
-                'synopsis' => 'A mischievous squirrel mastermind turns a quiet city into chaos, forcing unlikely heroes to step up.',
-                'rating' => '7.5/10',
-                'duration' => '101 min',
-                'release_date' => 'August 23, 2020',
-                'director' => 'Liam Carter',
-                'language' => 'English',
-                'studio' => 'MovieMall Studios',
-                'related_souvenirs' => [],
-            ],
-            'dr-normal' => [
-                'slug' => 'dr-normal',
-                'title' => 'Dr. Normal',
-                'poster' => '/images/drnormal.png',
-                'genres' => ['Drama', 'Documentary'],
-                'synopsis' => 'A brilliant scientist tries to live an ordinary life while confronting the consequences of past experiments.',
-                'rating' => '8.2/10',
-                'duration' => '116 min',
-                'release_date' => 'January 17, 2026',
-                'director' => 'Sophie Hall',
-                'language' => 'English',
-                'studio' => 'MovieMall Studios',
-                'related_souvenirs' => [],
-            ],
-        ];
     }
 }
 
