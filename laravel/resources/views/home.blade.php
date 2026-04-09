@@ -76,7 +76,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block relative h-full">
+              <a href="{{ route('movies.show', 'supergrandpa') }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
 
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -109,7 +109,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block relative h-full">
+              <a href="{{ route('movies.show', 'gollum-steal-the-ring') }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
 
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -138,7 +138,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block relative h-full">
+              <a href="{{ route('movies.show', 'mission-possible') }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
 
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -171,7 +171,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block relative h-full">
+              <a href="{{ route('movies.show', 'hiding-nemo') }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
 
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -204,7 +204,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block relative h-full">
+              <a href="{{ route('movies.show', 'the-ordinary-blue-bulk') }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
 
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -247,7 +247,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block h-full relative">
+              <a href="{{ route('movies.show', 'the-squirrels-revenge') }}" class="block h-full relative">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-[2/3] overflow-hidden">
                   <img
@@ -279,7 +279,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block h-full relative">
+              <a href="{{ route('movies.show', 'dr-normal') }}" class="block h-full relative">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-[2/3] overflow-hidden">
                   <img
@@ -311,7 +311,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block relative h-full">
+              <a href="{{ route('movies.show', 'hiding-nemo') }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
 
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -344,7 +344,7 @@
             <li
               class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
             >
-              <a href="movie-details.html" class="block relative h-full">
+              <a href="{{ route('movies.show', 'the-ordinary-blue-bulk') }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
 
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -373,35 +373,34 @@
                 </div>
               </a>
             </li>
+              <li
+                  class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
+              >
+                  <a href="{{ route('movies.show', 'gollum-steal-the-ring') }}" class="block relative h-full">
+                      <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
 
-            <li
-              class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105"
-            >
-              <a href="movie-details.html" class="block relative h-full">
-                <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+                      <div class="bg-button aspect-[2/3] overflow-hidden">
+                          <img src="/images/gollum.png" alt="Movie Poster" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      </div>
 
-                <div class="bg-button aspect-[2/3] overflow-hidden">
-                  <img src="/images/gollum.png" alt="Movie Poster" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                </div>
+                      <div class="flex flex-col gap-1 p-3">
+                          <div class="flex items-center justify-between gap-2">
+                              <span class="min-w-0 truncate font-semibold">Gollum: Steal The Ring</span>
+                              <span class="shrink-0 text-sm font-semibold text-accent">109.99€</span>
+                          </div>
 
-                <div class="flex flex-col gap-1 p-3">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="min-w-0 truncate font-semibold">Gollum: Steal The Ring</span>
-                    <span class="shrink-0 text-sm font-semibold text-accent">109.99€</span>
-                  </div>
+                          <div class="flex gap-2 text-placeholder text-xs">
+                              <span>2028</span>
+                              <span class="truncate max-w-[160px] inline-block">Adventure, Action</span>
+                          </div>
 
-                  <div class="flex gap-2 text-placeholder text-xs">
-                    <span>2028</span>
-                    <span class="truncate max-w-[160px] inline-block">Adventure, Action</span>
-                  </div>
-
-                  <div class="flex items-center gap-1">
-                    <span class="text-xs text-rating">★</span>
-                    <span class="text-xs text-rating">9.5</span>
-                  </div>
-                </div>
-              </a>
-            </li>
+                          <div class="flex items-center gap-1">
+                              <span class="text-xs text-rating">★</span>
+                              <span class="text-xs text-rating">9.5</span>
+                          </div>
+                      </div>
+                  </a>
+              </li>
           </ul>
         </div>
 
