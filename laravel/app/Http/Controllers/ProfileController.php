@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\DeliveryAddress;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,19 +12,14 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
+        return view('profile', [
+            'user'      => $request->user(),
+            'addresses' => $request->user()->addresses()->orderByDesc('is_default')->get(),
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -37,9 +33,38 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
+    public function storeAddress(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'street'          => ['required', 'string', 'max:100'],
+            'building_number' => ['nullable', 'string', 'max:20'],
+            'city'            => ['required', 'string', 'max:100'],
+            'postal_code'     => ['required', 'string', 'max:20'],
+            'country'         => ['required', 'string', 'max:100'],
+            'is_default'      => ['boolean'],
+        ]);
+
+        if (!empty($data['is_default'])) {
+            $request->user()->addresses()->update(['is_default' => false]);
+        }
+
+        $request->user()->addresses()->create(array_merge(
+            $data,
+            ['created_at' => now(), 'is_default' => !empty($data['is_default'])]
+        ));
+
+        return Redirect::route('profile.edit')->with('status', 'address-added');
+    }
+
+    public function destroyAddress(Request $request, DeliveryAddress $address): RedirectResponse
+    {
+        abort_if($address->user_id !== $request->user()->id, 403);
+
+        $address->delete();
+
+        return Redirect::route('profile.edit')->with('status', 'address-deleted');
+    }
+
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
