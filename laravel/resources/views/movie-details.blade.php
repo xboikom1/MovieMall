@@ -41,7 +41,7 @@
             <p class="text-sm italic text-placeholder">{{ $movie['synopsis'] }}</p>
 
             <div class="flex flex-wrap gap-2 text-sm text-placeholder">
-              <span class="flex items-center gap-1.5"><span class="text-yellow-400">*</span>{{ $movie['rating'] }}</span>
+              <span class="flex items-center gap-1.5"><span class="text-yellow-400">★</span>{{ $movie['rating'] }}</span>
               <span>|</span>
               <span class="flex items-center gap-1.5">{{ $movie['duration'] }}</span>
               <span>|</span>
@@ -266,7 +266,7 @@
                 </div>
               </div>
 
-              <a href="#" class="mt-5 flex w-full justify-center rounded-xl bg-accent px-6 py-3.5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:text-lg">
+              <a href="{{ route('cart.index') }}" class="mt-5 flex w-full justify-center rounded-xl bg-accent px-6 py-3.5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:text-lg">
                 Add to cart
               </a>
             </div>

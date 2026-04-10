@@ -62,7 +62,7 @@ class MovieController extends Controller
                     'image' => $s->image,
                     'movie' => $movieRecord->title,
                     'type'  => $s->type,
-                    'price' => number_format($s->price, 2) . 'EUR',
+                    'price' => number_format($s->price, 2) . '€',
                 ];
             })->toArray();
 

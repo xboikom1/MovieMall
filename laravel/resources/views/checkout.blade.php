@@ -3,252 +3,250 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MovieMall</title>
+    <title>Checkout | MovieMall</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="min-h-screen bg-bg text-text">
 <x-layout.header />
 
-<div class="bg-dark border-b border-border px-6 py-8">
-    <div class="mx-auto max-w-7xl">
-        <div class="flex items-center gap-2 text-xs mb-2 text-placeholder">
-            <a href="{{ route('home') }}" class="hover:text-accent transition">Home</a>
-            <span>/</span>
-            <span class="text-text">Cart</span>
+<main class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-10">
+    <a href="{{ route('cart.index') }}" class="block pb-4 text-placeholder transition hover:text-accent">← Back to Cart</a>
+
+    <div class="mb-6 flex flex-col gap-3 tablet:flex-row tablet:items-start tablet:justify-between">
+        <div class="flex flex-col gap-2">
+            <h1 class="text-2xl font-bold tablet:text-4xl">Checkout</h1>
+            <p class="text-sm text-placeholder">Complete your purchase securely. Review your items before confirming.</p>
         </div>
-        <h1 class="text-3xl font-bold">Your Cart</h1>
-        <p class="text-placeholder text-sm mt-1">Review items before proceeding to checkout.</p>
+
+        @guest
+        <div class="mt-2 flex items-center gap-3 text-sm tablet:mt-1">
+            <span class="text-placeholder">Already have an account?</span>
+            <a href="{{ route('login') }}" class="rounded-lg border border-border bg-button px-5 py-2 font-semibold shadow-[0_10px_24px_rgba(0,0,0,.35)] transition hover:bg-accent">Sign In</a>
+        </div>
+        @endguest
     </div>
-</div>
 
-<main class="mx-auto max-w-7xl px-4 py-8 tablet:px-6 tablet:py-10">
-    <div class="flex flex-col gap-8 desktop:flex-row desktop:items-start desktop:gap-8">
-        <div class="min-w-0 flex-1 flex flex-col gap-10">
+    <div class="grid grid-cols-1 gap-6 desktop:grid-cols-[1fr_380px] desktop:gap-8">
 
-            {{-- Tickets section --}}
-            <section>
-                <div class="flex items-center gap-3 mb-5">
-                    <h2 class="text-xl font-bold">Tickets</h2>
-                    <span class="rounded-full bg-button border border-border px-2.5 py-0.5 text-xs text-placeholder">2 films</span>
-                </div>
-
-                <div class="flex flex-col gap-4">
-                    {{-- Ticket 1 --}}
-                    <div class="rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden">
-                        <div class="flex gap-4 p-4 tablet:p-5">
-                            <a href="{{ route('movies.show', 'supergrandpa') }}" class="shrink-0 w-16 tablet:w-20 rounded-xl overflow-hidden">
-                                <img src="/images/Supergrandpa.png" alt="Supergrandpa" class="w-full h-full object-cover aspect-[2/3]" />
-                            </a>
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-start justify-between gap-2">
-                                    <div class="min-w-0">
-                                        <a href="{{ route('movies.show', 'supergrandpa') }}" class="block line-clamp-2 font-semibold hover:text-accent transition tablet:text-lg">SuperGrandpa</a>
-                                        <div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-placeholder">
-                                            <span>Action</span>
-                                            <span>·</span>
-                                            <span>2026</span>
-                                            <span>·</span>
-                                            <span class="text-xs text-rating">★ 7.5</span>
-                                        </div>
-                                    </div>
-                                    <button class="text-placeholder hover:text-accent transition leading-none shrink-0 mt-0.5" title="Remove">✕</button>
-                                </div>
-                            </div>
+        {{-- Checkout Form --}}
+        <section class="rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6">
+            <form id="checkout-form" class="flex flex-col gap-8">
+                {{-- Contact --}}
+                <div>
+                    <h2 class="mb-4 text-xl font-bold">Contact</h2>
+                    <div class="grid grid-cols-1 gap-4 tablet:grid-cols-2">
+                        <div>
+                            <label for="firstName" class="mb-1 block text-xs font-semibold text-placeholder">First Name</label>
+                            <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="First name"
+                                class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                                required />
                         </div>
-
-                        <div class="border-t border-border bg-button/40 px-4 py-4 tablet:px-5 flex flex-col gap-3">
-                            <div class="flex flex-wrap gap-4 text-sm">
-                                <div class="flex items-center gap-2 text-placeholder">
-                                    <span>Sat, 22 Mar 2026</span>
-                                    <span>·</span>
-                                    <span>18:30</span>
-                                    <span>·</span>
-                                    <span>Hall A</span>
-                                </div>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2">
-                                <span class="text-xs text-placeholder font-semibold uppercase tracking-wider">Seats:</span>
-                                <span class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent">
-                      Row C · 4
-                    </span>
-                                <span class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent">
-                      Row C · 5
-                    </span>
-                                <a href="{{ route('movies.show', 'supergrandpa') }}" class="ml-auto text-xs text-placeholder hover:text-accent transition underline underline-offset-2">
-                                    Change seats
-                                </a>
-                            </div>
-
-                            <div class="flex items-center justify-between pt-1 border-t border-border">
-                                <span class="text-xs text-placeholder">2 tickets × 9.99€</span>
-                                <span class="text-sm font-bold text-accent">19.98€</span>
-                            </div>
+                        <div>
+                            <label for="lastName" class="mb-1 block text-xs font-semibold text-placeholder">Last Name</label>
+                            <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Last name"
+                                class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                                required />
                         </div>
-                    </div>
-
-                    {{-- Ticket 2 --}}
-                    <div class="rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden">
-                        <div class="flex gap-4 p-4 tablet:p-5">
-                            <a href="{{ route('movies.show', 'the-squirrels-revenge') }}" class="shrink-0 w-16 tablet:w-20 rounded-xl overflow-hidden">
-                                <img src="/images/Squirrel.png" alt="Squirrel" class="w-full h-full object-cover aspect-[2/3]" />
-                            </a>
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-start justify-between gap-2">
-                                    <div class="min-w-0">
-                                        <a href="{{ route('movies.show', 'the-squirrels-revenge') }}" class="block line-clamp-2 font-semibold hover:text-accent transition tablet:text-lg">The Squirrel's Revenge</a>
-                                        <div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-placeholder">
-                                            <span>Comedy</span>
-                                            <span>·</span>
-                                            <span>2020</span>
-                                            <span>·</span>
-                                            <span class="text-xs text-rating">★ 6.9</span>
-                                        </div>
-                                    </div>
-                                    <button class="text-placeholder hover:text-accent transition leading-none shrink-0 mt-0.5" title="Remove">✕</button>
-                                </div>
-                            </div>
+                        <div>
+                            <label for="email" class="mb-1 block text-xs font-semibold text-placeholder">Email</label>
+                            <input id="email" name="email" type="email" autocomplete="email" placeholder="email@example.com"
+                                class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                                required />
                         </div>
-
-                        <div class="border-t border-border bg-button/40 px-4 py-4 tablet:px-5 flex flex-col gap-3">
-                            <div class="flex flex-wrap gap-4 text-sm">
-                                <div class="flex items-center gap-2 text-placeholder">
-                                    <span>Sat, 28 Feb 2026</span>
-                                    <span>·</span>
-                                    <span>16:30</span>
-                                    <span>·</span>
-                                    <span>Hall A</span>
-                                </div>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2">
-                                <span class="text-xs text-placeholder font-semibold uppercase tracking-wider">Seats:</span>
-                                <span class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent">
-                      Row A · 6
-                    </span>
-                                <a href="{{ route('movies.show', 'the-squirrels-revenge') }}" class="ml-auto text-xs text-placeholder hover:text-accent transition underline underline-offset-2">
-                                    Change seats
-                                </a>
-                            </div>
-
-                            <div class="flex items-center justify-between pt-1 border-t border-border">
-                                <span class="text-xs text-placeholder">1 ticket × 9.99€</span>
-                                <span class="text-sm font-bold text-accent">9.99€</span>
-                            </div>
+                        <div>
+                            <label for="phone" class="mb-1 block text-xs font-semibold text-placeholder">Phone</label>
+                            <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+421 123 456 789"
+                                class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent" />
                         </div>
                     </div>
                 </div>
-            </section>
 
-            {{-- Souvenirs section --}}
-            <section>
-                <div class="flex items-center gap-3 mb-5">
-                    <h2 class="text-xl font-bold">Souvenirs</h2>
-                    <span class="rounded-full bg-button border border-border px-2.5 py-0.5 text-xs text-placeholder">2 items</span>
-                </div>
+                {{-- Delivery --}}
+                <div>
+                    <div class="mb-6 rounded-2xl border border-border bg-bg p-4">
+                        <h3 class="text-sm font-semibold">Delivery Method (Souvenirs)</h3>
+                        <p class="mt-1 text-xs text-placeholder">Choose how you'd like your souvenir order delivered.</p>
 
-                <div class="flex flex-col gap-4">
-                    {{-- Souvenir 1 --}}
-                    <div class="flex gap-4 rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.35)] tablet:p-5">
-                        <a href="#" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
-                            <img src="/images/SuperGrandpaSouvenir.png" alt="Supergrandpa Figure" class="w-full h-full object-cover aspect-square" />
-                        </a>
-                        <div class="flex flex-1 flex-col gap-3 min-w-0">
-                            <div class="flex items-start justify-between gap-2">
-                                <div class="min-w-0">
-                                    <a href="#" class="block line-clamp-2 font-semibold hover:text-accent transition">Mad Squirrel Figurine</a>
-                                    <p class="truncate text-xs text-placeholder mt-0.5">The Squirrel's Revenge · Figurine</p>
-                                </div>
-                                <button class="text-placeholder hover:text-accent transition leading-none shrink-0 mt-0.5" title="Remove">✕</button>
-                            </div>
-                            <div class="flex items-center justify-between mt-auto">
-                                <div class="flex items-center gap-2">
-                                    <button class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition">−</button>
-                                    <span class="text-sm font-semibold w-5 text-center">1</span>
-                                    <button class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition">+</button>
-                                </div>
-                                <span class="text-sm font-bold text-accent">9.99€</span>
-                            </div>
+                        <div class="mt-4 grid grid-cols-1 gap-3 tablet:grid-cols-3">
+                            <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                                <input type="radio" name="delivery" value="courier" class="mt-1 accent-accent" checked />
+                                <span class="min-w-0">
+                                    <span class="block text-sm font-semibold">Courier</span>
+                                    <span class="block text-xs text-placeholder">Delivery to your address.</span>
+                                </span>
+                            </label>
+
+                            <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                                <input type="radio" name="delivery" value="locker" class="mt-1 accent-accent" />
+                                <span class="min-w-0">
+                                    <span class="block text-sm font-semibold">Parcel locker</span>
+                                    <span class="block text-xs text-placeholder">Pickup from a nearby locker.</span>
+                                </span>
+                            </label>
+
+                            <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-border bg-dark p-4 transition hover:border-accent hover:bg-button">
+                                <input type="radio" name="delivery" value="pickup" class="mt-1 accent-accent" />
+                                <span class="min-w-0">
+                                    <span class="block text-sm font-semibold">Pick up myself</span>
+                                    <span class="block text-xs text-placeholder">Collect from our store.</span>
+                                </span>
+                            </label>
                         </div>
                     </div>
 
-                    {{-- Souvenir 2 --}}
-                    <div class="flex gap-4 rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.35)] tablet:p-5">
-                        <a href="#" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
-                            <img src="/images/SquirrelSouvenir.png" alt="Squirrel Sticker Pack" class="w-full h-full object-cover aspect-square" />
-                        </a>
-                        <div class="flex flex-1 flex-col gap-3 min-w-0">
-                            <div class="flex items-start justify-between gap-2">
-                                <div class="min-w-0">
-                                    <a href="#" class="block line-clamp-2 font-semibold hover:text-accent transition">Mad Squirrel Sticker Pack</a>
-                                    <p class="truncate text-xs text-placeholder mt-0.5">The Squirrel's Revenge · Sticker Pack</p>
-                                </div>
-                                <button class="text-placeholder hover:text-accent transition leading-none shrink-0 mt-0.5" title="Remove">✕</button>
+                    <h2 class="mb-4 text-lg font-bold">Delivery Address</h2>
+
+                    <div class="grid grid-cols-1 gap-4 tablet:grid-cols-2">
+                        <div class="tablet:col-span-2">
+                            <label for="address1" class="mb-1 block text-xs font-semibold text-placeholder">Street Address</label>
+                            <input id="address1" name="address1" type="text" autocomplete="address-line1" placeholder="Street address"
+                                class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                                required />
+                        </div>
+                        <div>
+                            <label for="city" class="mb-1 block text-xs font-semibold text-placeholder">City</label>
+                            <input id="city" name="city" type="text" autocomplete="address-level2" placeholder="City"
+                                class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                                required />
+                        </div>
+                        <div>
+                            <label for="postal" class="mb-1 block text-xs font-semibold text-placeholder">Postal Code</label>
+                            <input id="postal" name="postal" type="text" autocomplete="postal-code" placeholder="Postal code"
+                                class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
+                                required />
+                        </div>
+                        <div class="tablet:col-span-2">
+                            <label for="country" class="mb-1 block text-xs font-semibold text-placeholder">Country</label>
+                            <select id="country" name="country" autocomplete="country-name"
+                                class="w-full appearance-none rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                                required>
+                                <option value="" selected disabled>Select Country</option>
+                                <option>Slovakia</option>
+                                <option>United States</option>
+                                <option>Canada</option>
+                                <option>United Kingdom</option>
+                                <option>Germany</option>
+                                <option>France</option>
+                                <option>Spain</option>
+                                <option>Australia</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Payment --}}
+                <div>
+                    <h2 class="mb-4 text-lg font-bold">Payment Method</h2>
+
+                    <div class="rounded-2xl border border-border bg-bg p-4">
+                        <div class="flex flex-wrap items-center gap-4 border-b border-border pb-4">
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="radio" name="payment" value="card" class="accent-accent" checked />
+                                <span class="font-semibold">Credit Card</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-sm text-placeholder">
+                                <input type="radio" name="payment" value="paypal" class="accent-accent" />
+                                <span class="font-semibold">PayPal</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-sm text-placeholder">
+                                <input type="radio" name="payment" value="google-pay" class="accent-accent" />
+                                <span class="font-semibold">Google Pay</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-sm text-placeholder">
+                                <input type="radio" name="payment" value="apple-pay" class="accent-accent" />
+                                <span class="font-semibold">Apple Pay</span>
+                            </label>
+                        </div>
+
+                        <div class="mt-4 grid grid-cols-1 gap-4 tablet:grid-cols-2">
+                            <div class="tablet:col-span-2">
+                                <label for="cardNumber" class="mb-1 block text-xs font-semibold text-placeholder">Card Number</label>
+                                <input id="cardNumber" name="cardNumber" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="XXXX XXXX XXXX XXXX"
+                                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent" />
                             </div>
-                            <div class="flex items-center justify-between mt-auto">
-                                <div class="flex items-center gap-2">
-                                    <button class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition">−</button>
-                                    <span class="text-sm font-semibold w-5 text-center">2</span>
-                                    <button class="w-8 h-8 rounded-lg border border-border bg-button text-sm font-bold hover:border-accent transition">+</button>
-                                </div>
-                                <span class="text-sm font-bold text-accent">9.99€</span>
+                            <div>
+                                <label for="expiry" class="mb-1 block text-xs font-semibold text-placeholder">Expiry Date</label>
+                                <input id="expiry" name="expiry" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/YY"
+                                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent" />
+                            </div>
+                            <div>
+                                <label for="cvv" class="mb-1 block text-xs font-semibold text-placeholder">CVV</label>
+                                <input id="cvv" name="cvv" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="XXX"
+                                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent" />
+                            </div>
+                            <div class="tablet:col-span-2">
+                                <label for="cardName" class="mb-1 block text-xs font-semibold text-placeholder">Name on Card</label>
+                                <input id="cardName" name="cardName" type="text" autocomplete="cc-name" placeholder="Name on card"
+                                    class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent" />
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </form>
+        </section>
 
-            {{-- Back browsing links --}}
-            <div class="flex gap-3">
-                <a href="{{ route('movies.index') }}" class="rounded-xl border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent">← Browse Movies</a>
-                <a href="{{ route('souvenirs.index') }}" class="rounded-xl border border-border bg-button px-4 py-2 text-sm transition hover:border-accent hover:text-accent">← Browse Souvenirs</a>
-            </div>
-        </div>
-
-        {{-- Order Summary sidebar --}}
-        <aside class="w-full desktop:w-80 desktop:shrink-0 desktop:sticky desktop:top-6 h-fit rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden">
-            <div class="border-b border-border px-5 py-4">
-                <h2 class="font-bold text-lg">Order Summary</h2>
+        {{-- Order Summary --}}
+        <aside class="self-start rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6 desktop:sticky desktop:top-6">
+            <div class="mb-4 flex items-center justify-between">
+                <h2 class="text-lg font-bold">Order Summary</h2>
+                <span class="rounded-full border border-border bg-button px-3 py-1 text-xs font-semibold text-placeholder">2 items</span>
             </div>
 
-            <div class="px-5 py-4 flex flex-col gap-3">
-                <p class="text-[0.65rem] font-bold uppercase tracking-widest text-placeholder">Tickets</p>
+            <ul class="flex flex-col gap-4">
+                <li>
+                    <a href="{{ route('movies.show', 'supergrandpa') }}" class="flex gap-3 rounded-xl border border-border bg-bg p-3">
+                        <div class="shrink-0 w-14 overflow-hidden rounded-lg border border-border bg-button">
+                            <img src="/images/Supergrandpa.png" alt="Movie poster" class="h-full w-full object-cover aspect-[2/3]" />
+                        </div>
+                        <div class="flex min-w-0 flex-1 flex-col gap-2">
+                            <p class="line-clamp-2 font-semibold break-words">SuperGrandpa (Tickets)</p>
+                            <p class="truncate text-xs text-placeholder">Action • 118 min</p>
+                            <p class="text-xs text-placeholder">Tickets: 2</p>
+                            <div class="mt-auto text-sm font-semibold">19.98€</div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="flex gap-3 rounded-xl border border-border bg-bg p-3">
+                        <div class="shrink-0 w-14 overflow-hidden rounded-lg border border-border bg-button">
+                            <img src="/images/SuperGrandpaSouvenir.png" alt="Souvenir" class="h-full w-full object-cover aspect-square" />
+                        </div>
+                        <div class="flex min-w-0 flex-1 flex-col gap-2">
+                            <p class="line-clamp-2 font-semibold break-words">Mad Squirrel Figurine</p>
+                            <p class="truncate text-xs text-placeholder">Figurine</p>
+                            <p class="text-xs text-placeholder">Quantity: 1</p>
+                            <div class="mt-auto text-sm font-semibold">9.99€</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="mt-5 rounded-2xl border border-border bg-bg p-4">
                 <div class="flex flex-col gap-2 text-sm">
-                    <div class="flex justify-between gap-2">
-                        <span class="truncate min-w-0 text-placeholder">SuperGrandpa × 2</span>
-                        <span class="shrink-0">19.98€</span>
+                    <div class="flex justify-between">
+                        <span class="text-placeholder">Subtotal</span>
+                        <span class="font-medium">29.97€</span>
                     </div>
-                    <div class="flex justify-between gap-2">
-                        <span class="truncate min-w-0 text-placeholder">The Squirrel's Revenge × 1</span>
-                        <span class="shrink-0">9.99€</span>
+                    <div class="flex justify-between">
+                        <span class="text-placeholder">Shipping</span>
+                        <span class="font-medium">5.00€</span>
                     </div>
-                </div>
-
-                <div class="border-t border-border"></div>
-
-                <p class="text-[0.65rem] font-bold uppercase tracking-widest text-placeholder">Souvenirs</p>
-                <div class="flex flex-col gap-2 text-sm">
-                    <div class="flex justify-between gap-2">
-                        <span class="truncate min-w-0 text-placeholder">Mad Squirrel Figurine × 1</span>
-                        <span class="shrink-0">9.99€</span>
+                    <div class="flex justify-between">
+                        <span class="text-placeholder">Taxes</span>
+                        <span class="font-medium">3.28€</span>
                     </div>
-                    <div class="flex justify-between gap-2">
-                        <span class="truncate min-w-0 text-placeholder">Mad Squirrel Sticker Pack × 2</span>
-                        <span class="shrink-0">9.99€</span>
+                    <div class="mt-1 flex justify-between font-bold">
+                        <span>Total</span>
+                        <span class="text-accent">38.25€</span>
                     </div>
                 </div>
 
-                <div class="border-t border-border"></div>
-
-                <div class="flex justify-between font-bold">
-                    <span>Total</span>
-                    <span class="text-accent">49.95€</span>
-                </div>
-
-                <a href="{{ route('checkout') }}" class="block w-full rounded-xl bg-accent py-3 text-center text-sm font-semibold transition hover:brightness-110 mt-1">
-                    Proceed to Checkout
-                </a>
+                <button type="submit" form="checkout-form"
+                    class="mt-5 flex w-full items-center justify-center rounded-xl bg-accent px-6 py-3 font-semibold shadow-[0_14px_36px_rgba(0,0,0,.4)] transition hover:brightness-110">
+                    Confirm Purchase
+                </button>
             </div>
         </aside>
     </div>
