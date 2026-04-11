@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -83,6 +84,50 @@ class MovieController extends Controller
 
         return view('movie-details', [
             'movie' => $movieData,
+        ]);
+    }
+
+    public function index(Request $request): View
+    {
+        $perPage = 20;
+
+        $sort = $request->get('sort', 'most_popular');
+        $sortMap = [
+            'most_popular' => ['rating', 'desc'],
+            'highest_rated' => ['rating', 'desc'],
+            'newest' => ['release_date', 'desc'],
+            'price_asc' => ['id', 'asc'],
+            'price_desc' => ['id', 'desc'],
+        ];
+
+        [$orderBy, $direction] = $sortMap[$sort] ?? $sortMap['most_popular'];
+
+        $query = DB::table('movies')
+            ->leftJoin('movie_images', function ($join) {
+                $join->on('movies.id', '=', 'movie_images.movie_id')
+                    ->where('movie_images.is_primary', true);
+            })
+            ->select('movies.id', 'movies.title', 'movies.rating', 'movies.release_date', 'movie_images.url as image')
+            ->orderBy('movies.' . $orderBy, $direction);
+
+        $movies = $query->paginate($perPage)->withQueryString();
+
+        $movieIds = collect($movies->items())->pluck('id')->all();
+
+        $genresRows = DB::table('movie_genres')
+            ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
+            ->whereIn('movie_genres.movie_id', $movieIds)
+            ->select('movie_genres.movie_id', 'genres.name')
+            ->get()
+            ->groupBy('movie_id')
+            ->map(function ($group) {
+                return $group->pluck('name')->implode(', ');
+            })
+            ->toArray();
+
+        return view('movies', [
+            'movies' => $movies,
+            'genresByMovie' => $genresRows,
         ]);
     }
 }

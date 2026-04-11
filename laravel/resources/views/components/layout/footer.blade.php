@@ -5,8 +5,8 @@
         <a href="{{ route('home') }}" class="flex items-center rounded-xl bg-accent px-4 py-2 font-semibold w-fit">MovieMall</a>
       </div>
       <nav class="flex gap-6 text-sm">
-        <a href="movies.html" class="text-placeholder transition hover:text-accent">Movies</a>
-        <a href="souvenirs.html" class="text-placeholder transition hover:text-accent">Souvenirs</a>
+        <a href="{{ route('movies.index') }}" class="text-placeholder transition hover:text-accent">Movies</a>
+        <a href="{{ route('souvenirs.index') }}" class="text-placeholder transition hover:text-accent">Souvenirs</a>
         <a href="{{ route('cart.index') }}" class="text-placeholder transition hover:text-accent">Cart</a>
         <a href="{{ route('profile.edit') }}" class="text-placeholder transition hover:text-accent">Account</a>
       </nav>

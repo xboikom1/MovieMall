@@ -3,8 +3,8 @@
     <div class="flex items-center gap-3 tablet:gap-6">
       <a href="{{ route('home') }}" class="flex items-center rounded-xl bg-accent px-4 py-2 tablet:text-lg font-semibold">MovieMall</a>
       <nav class="tablet:flex hidden gap-2 text-sm">
-        <a href="movies.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent">Movies</a>
-        <a href="souvenirs.html" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent">Souvenirs</a>
+        <a href="{{ route('movies.index') }}" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent">Movies</a>
+        <a href="{{ route('souvenirs.index') }}" class="rounded-lg border border-border bg-button px-4 py-2 transition hover:bg-accent">Souvenirs</a>
       </nav>
     </div>
     <div class="flex items-center gap-2 tablet:gap-3 text-xs tablet:text-sm">
