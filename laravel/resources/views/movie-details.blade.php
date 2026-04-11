@@ -90,7 +90,7 @@
               <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-4">
                 @forelse ($movie['related_souvenirs'] as $souvenir)
                   <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-                    <a href="#" class="block relative h-full">
+                    <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($souvenir['title'])) }}" class="block relative h-full">
                       <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                       <div class="bg-button aspect-square overflow-hidden">
                         <img src="{{ $souvenir['image'] }}" alt="{{ $souvenir['title'] }} souvenir" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />

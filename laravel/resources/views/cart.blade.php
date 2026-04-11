@@ -151,13 +151,13 @@
                 <div class="flex flex-col gap-4">
                     {{-- Souvenir 1 --}}
                     <div class="flex gap-4 rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.35)] tablet:p-5">
-                        <a href="#" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
-                            <img src="/images/SuperGrandpaSouvenir.png" alt="Supergrandpa Figure" class="w-full h-full object-cover aspect-square" />
-                        </a>
+                            <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Mad Squirrel Figurine')) }}" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
+                                    <img src="/images/SuperGrandpaSouvenir.png" alt="Supergrandpa Figure" class="w-full h-full object-cover aspect-square" />
+                                </a>
                         <div class="flex flex-1 flex-col gap-3 min-w-0">
                             <div class="flex items-start justify-between gap-2">
                                 <div class="min-w-0">
-                                    <a href="#" class="block line-clamp-2 font-semibold hover:text-accent transition">Mad Squirrel Figurine</a>
+                                    <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Mad Squirrel Figurine')) }}" class="block line-clamp-2 font-semibold hover:text-accent transition">Mad Squirrel Figurine</a>
                                     <p class="truncate text-xs text-placeholder mt-0.5">The Squirrel's Revenge · Figurine</p>
                                 </div>
                                 <button class="text-placeholder hover:text-accent transition leading-none shrink-0 mt-0.5" title="Remove">✕</button>
@@ -175,13 +175,13 @@
 
                     {{-- Souvenir 2 --}}
                     <div class="flex gap-4 rounded-2xl border border-border bg-dark p-4 shadow-[0_14px_36px_rgba(0,0,0,.35)] tablet:p-5">
-                        <a href="#" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
+                        <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Mad Squirrel Sticker Pack')) }}" class="shrink-0 w-20 tablet:w-24 rounded-xl overflow-hidden">
                             <img src="/images/SquirrelSouvenir.png" alt="Squirrel Sticker Pack" class="w-full h-full object-cover aspect-square" />
                         </a>
                         <div class="flex flex-1 flex-col gap-3 min-w-0">
                             <div class="flex items-start justify-between gap-2">
                                 <div class="min-w-0">
-                                    <a href="#" class="block line-clamp-2 font-semibold hover:text-accent transition">Mad Squirrel Sticker Pack</a>
+                                    <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Mad Squirrel Sticker Pack')) }}" class="block line-clamp-2 font-semibold hover:text-accent transition">Mad Squirrel Sticker Pack</a>
                                     <p class="truncate text-xs text-placeholder mt-0.5">The Squirrel's Revenge · Sticker Pack</p>
                                 </div>
                                 <button class="text-placeholder hover:text-accent transition leading-none shrink-0 mt-0.5" title="Remove">✕</button>

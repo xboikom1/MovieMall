@@ -12,6 +12,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/movies', [App\Http\Controllers\MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/{slug}', [MovieController::class, 'show'])->name('movies.show');
 Route::view('/souvenirs', 'home')->name('souvenirs.index');
+Route::get('/souvenirs/{slug}', [App\Http\Controllers\SouvenirController::class, 'show'])->name('souvenirs.show');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');

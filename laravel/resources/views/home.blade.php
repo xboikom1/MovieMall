@@ -112,7 +112,7 @@
 
           <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="#" class="block relative h-full">
+              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Hiding Nemo Plush Toy')) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
                   <img src="/images/plushtoynemo.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -129,7 +129,7 @@
             </li>
 
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="#" class="block relative h-full">
+              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Blue Bulk Prop Replica')) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
                   <img src="/images/bluebulkpropreplica.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -146,7 +146,7 @@
             </li>
 
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="#" class="block relative h-full">
+              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug("Gollum's Ring")) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
                   <img src="/images/gollumring.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -163,7 +163,7 @@
             </li>
 
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="#" class="block relative h-full">
+              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Mission: Possible Print')) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
                   <img src="/images/missionpossibleprint.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -180,7 +180,7 @@
             </li>
 
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="#" class="block relative h-full">
+              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('SuperGrandpa Figurine')) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
                   <img src="/images/SuperGrandpaSouvenir.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />

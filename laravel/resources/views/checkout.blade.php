@@ -209,7 +209,7 @@
                 </li>
 
                 <li>
-                    <a href="#" class="flex gap-3 rounded-xl border border-border bg-bg p-3">
+                    <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Mad Squirrel Figurine')) }}" class="flex gap-3 rounded-xl border border-border bg-bg p-3">
                         <div class="shrink-0 w-14 overflow-hidden rounded-lg border border-border bg-button">
                             <img src="/images/SuperGrandpaSouvenir.png" alt="Souvenir" class="h-full w-full object-cover aspect-square" />
                         </div>
