@@ -9,6 +9,32 @@ use Illuminate\Support\Str;
 
 class SouvenirController extends Controller
 {
+    public function index(): View
+    {
+        $souvenirs = DB::table('souvenirs')
+            ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
+            ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
+            ->leftJoin('souvenir_images', function ($join) {
+                $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
+                    ->where('souvenir_images.is_primary', true);
+            })
+            ->select(
+                'souvenirs.id',
+                'souvenirs.name',
+                'souvenirs.price',
+                'category.name as category',
+                'movies.title as movie_title',
+                'souvenir_images.url as image'
+            )
+            ->orderBy('souvenirs.id', 'desc')
+            ->paginate(20);
+
+        $categories = DB::table('category')->orderBy('name')->get();
+        $movies = DB::table('movies')->orderBy('title')->get();
+
+        return view('souvenirs', compact('souvenirs', 'categories', 'movies'));
+    }
+
     public function show(string $slug): View
     {
         $rows = DB::table('souvenirs')
@@ -27,7 +53,7 @@ class SouvenirController extends Controller
             )
             ->get();
 
-        $souvenirRecord = $rows->first(fn ($s) => Str::slug($s->name) === $slug);
+        $souvenirRecord = $rows->first(fn($s) => Str::slug($s->name) === $slug);
 
         abort_unless($souvenirRecord !== null, 404);
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SouvenirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -11,7 +12,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/movies', [App\Http\Controllers\MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/{slug}', [MovieController::class, 'show'])->name('movies.show');
-Route::view('/souvenirs', 'home')->name('souvenirs.index');
+Route::get('/souvenirs', [SouvenirController::class, 'index'])->name('souvenirs.index');
 Route::get('/souvenirs/{slug}', [App\Http\Controllers\SouvenirController::class, 'show'])->name('souvenirs.show');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
