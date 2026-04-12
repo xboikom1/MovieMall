@@ -101,17 +101,14 @@ class MovieController extends Controller
 
     public function index(Request $request): View
     {
-        $perPage = 20;
-
         $sort = $request->get('sort', 'most_popular');
         $sortMap = [
-            'most_popular' => ['rating', 'desc'],
+            'most_popular'  => ['rating', 'desc'],
             'highest_rated' => ['rating', 'desc'],
-            'newest' => ['release_date', 'desc'],
-            'price_asc' => ['id', 'asc'],
-            'price_desc' => ['id', 'desc'],
+            'newest'        => ['release_date', 'desc'],
+            'price_asc'     => ['price', 'asc'],
+            'price_desc'    => ['price', 'desc'],
         ];
-
         [$orderBy, $direction] = $sortMap[$sort] ?? $sortMap['most_popular'];
 
         $query = DB::table('movies')
@@ -119,10 +116,42 @@ class MovieController extends Controller
                 $join->on('movies.id', '=', 'movie_images.movie_id')
                     ->where('movie_images.is_primary', true);
             })
-            ->select('movies.id', 'movies.title', 'movies.rating', 'movies.release_date', 'movie_images.url as image')
-            ->orderBy('movies.' . $orderBy, $direction);
+            ->select(
+                'movies.id',
+                'movies.title',
+                'movies.rating',
+                'movies.release_date',
+                'movies.price',
+                'movie_images.url as image'
+            );
 
-        $movies = $query->paginate($perPage)->withQueryString();
+        if ($request->filled('genres')) {
+            $query->whereIn('movies.id', function ($sub) use ($request) {
+                $sub->select('movie_id')
+                    ->from('movie_genres')
+                    ->whereIn('genre_id', (array) $request->input('genres'));
+            });
+        }
+
+        if ($request->filled('year_min')) {
+            $query->whereYear('movies.release_date', '>=', (int) $request->input('year_min'));
+        }
+        if ($request->filled('year_max')) {
+            $query->whereYear('movies.release_date', '<=', (int) $request->input('year_max'));
+        }
+        if ($request->filled('rating_min')) {
+            $query->where('movies.rating', '>=', (float) $request->input('rating_min'));
+        }
+        if ($request->filled('price_min')) {
+            $query->where('movies.price', '>=', (float) $request->input('price_min'));
+        }
+        if ($request->filled('price_max')) {
+            $query->where('movies.price', '<=', (float) $request->input('price_max'));
+        }
+
+        $query->orderBy('movies.' . $orderBy, $direction);
+
+        $movies = $query->paginate(20)->withQueryString();
 
         $movieIds = collect($movies->items())->pluck('id')->all();
 
@@ -132,14 +161,16 @@ class MovieController extends Controller
             ->select('movie_genres.movie_id', 'genres.name')
             ->get()
             ->groupBy('movie_id')
-            ->map(function ($group) {
-                return $group->pluck('name')->implode(', ');
-            })
+            ->map(fn($g) => $g->pluck('name')->implode(', '))
             ->toArray();
 
+        $allGenres = DB::table('genres')->orderBy('name')->get();
+
         return view('movies', [
-            'movies' => $movies,
+            'movies'       => $movies,
             'genresByMovie' => $genresRows,
+            'allGenres'    => $allGenres,
+            'sort'         => $sort,
         ]);
     }
 }

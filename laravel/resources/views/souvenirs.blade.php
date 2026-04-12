@@ -21,6 +21,7 @@
 
 <main class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-8">
     <form method="GET" action="{{ route('souvenirs.index') }}" id="filterForm">
+        <input type="hidden" name="sort" value="{{ $sort }}" />
 
         <div class="flex flex-col gap-6 desktop:flex-row desktop:items-start">
 
@@ -88,21 +89,13 @@
                     </p>
                     <div class="flex items-center gap-2">
                         <p class="text-sm text-placeholder">Sort:</p>
-                        <select name="sort"
-                                class="bg-button border border-border rounded-lg px-3 py-1 text-sm text-text focus:border-accent outline-none">
-                            <option value="newest" {{ $sort === 'newest'     ? 'selected' : '' }}>Newest First</option>
-                            <option value="price_asc" {{ $sort === 'price_asc'  ? 'selected' : '' }}>Price: Low to
-                                High
-                            </option>
-                            <option value="price_desc" {{ $sort === 'price_desc' ? 'selected' : '' }}>Price: High to
-                                Low
-                            </option>
-                            <option value="name_asc" {{ $sort === 'name_asc'   ? 'selected' : '' }}>Name A–Z</option>
+                        <select name="sort" class="bg-button border border-border rounded-lg px-3 py-1 text-sm text-text focus:border-accent outline-none">
+                            <option value="newest"     {{ $sort === 'newest'     ? 'selected' : '' }}>Newest First</option>
+                            <option value="price_asc"  {{ $sort === 'price_asc'  ? 'selected' : '' }}>Price: Low to High</option>
+                            <option value="price_desc" {{ $sort === 'price_desc' ? 'selected' : '' }}>Price: High to Low</option>
+                            <option value="name_asc"   {{ $sort === 'name_asc'   ? 'selected' : '' }}>Name A–Z</option>
                         </select>
-                        <button type="submit"
-                                class="rounded-lg border border-border bg-button px-3 py-1 text-sm transition hover:border-accent hover:bg-accent">
-                            Go
-                        </button>
+                        <button type="submit" class="rounded-lg border border-border bg-button px-3 py-1 text-sm transition hover:border-accent hover:bg-accent">Go</button>
                     </div>
                 </div>
 

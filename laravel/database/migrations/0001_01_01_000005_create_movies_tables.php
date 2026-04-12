@@ -15,6 +15,7 @@ return new class extends Migration
             $table->decimal('rating', 2, 1)->nullable();
             $table->date('release_date')->nullable();
             $table->integer('length_minutes')->nullable();
+            $table->decimal('price', 6, 2)->nullable();
             $table->foreignId('director_id')->nullable()->constrained('directors')->nullOnDelete();
             $table->foreignId('studio_id')->nullable()->constrained('studios')->nullOnDelete();
             $table->foreignId('language_id')->nullable()->constrained('languages')->nullOnDelete();
