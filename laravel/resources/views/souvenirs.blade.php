@@ -88,12 +88,21 @@
                     </p>
                     <div class="flex items-center gap-2">
                         <p class="text-sm text-placeholder">Sort:</p>
-                        <select class="bg-button border border-border rounded-lg px-3 py-1 text-sm text-text focus:border-accent outline-none">
-                            <option>Newest First</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
-                            <option>Name A–Z</option>
+                        <select name="sort"
+                                class="bg-button border border-border rounded-lg px-3 py-1 text-sm text-text focus:border-accent outline-none">
+                            <option value="newest" {{ $sort === 'newest'     ? 'selected' : '' }}>Newest First</option>
+                            <option value="price_asc" {{ $sort === 'price_asc'  ? 'selected' : '' }}>Price: Low to
+                                High
+                            </option>
+                            <option value="price_desc" {{ $sort === 'price_desc' ? 'selected' : '' }}>Price: High to
+                                Low
+                            </option>
+                            <option value="name_asc" {{ $sort === 'name_asc'   ? 'selected' : '' }}>Name A–Z</option>
                         </select>
+                        <button type="submit"
+                                class="rounded-lg border border-border bg-button px-3 py-1 text-sm transition hover:border-accent hover:bg-accent">
+                            Go
+                        </button>
                     </div>
                 </div>
 

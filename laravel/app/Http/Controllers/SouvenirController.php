@@ -43,11 +43,19 @@ class SouvenirController extends Controller
             $query->where('souvenirs.price', '<=', (float) $request->input('price_max'));
         }
 
-        $souvenirs  = $query->orderBy('souvenirs.id', 'desc')->paginate(20)->withQueryString();
+        $sort = $request->input('sort', 'newest');
+        match ($sort) {
+            'price_asc'  => $query->orderBy('souvenirs.price', 'asc'),
+            'price_desc' => $query->orderBy('souvenirs.price', 'desc'),
+            'name_asc'   => $query->orderBy('souvenirs.name', 'asc'),
+            default      => $query->orderBy('souvenirs.id', 'desc'),
+        };
+
+        $souvenirs  = $query->paginate(20)->withQueryString();
         $categories = DB::table('category')->orderBy('name')->get();
         $movies     = DB::table('movies')->orderBy('title')->get();
 
-        return view('souvenirs', compact('souvenirs', 'categories', 'movies'));
+        return view('souvenirs', compact('souvenirs', 'categories', 'movies', 'sort'));
     }
 
     public function show(string $slug): View
