@@ -81,6 +81,7 @@ class SouvenirController extends Controller
             })->toArray();
 
         $souvenir = [
+            'id' => $souvenirRecord->id,
             'slug' => $slug,
             'title' => $souvenirRecord->name,
             'image' => $souvenirRecord->image ?? '/images/SuperGrandpaSouvenir.png',
@@ -95,4 +96,3 @@ class SouvenirController extends Controller
         return view('souvenir-details', ['souvenir' => $souvenir]);
     }
 }
-

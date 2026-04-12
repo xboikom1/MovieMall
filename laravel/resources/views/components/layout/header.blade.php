@@ -1,3 +1,7 @@
+<script>
+    window.csrfToken = "{{ csrf_token() }}";
+    window.isLoggedIn = @json(auth()->check());
+</script>
 <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.4)]">
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
     <div class="flex items-center gap-3 tablet:gap-6">

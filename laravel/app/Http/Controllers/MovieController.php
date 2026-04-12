@@ -67,7 +67,18 @@ class MovieController extends Controller
                 ];
             })->toArray();
 
+        $scheduleSlot = DB::table('schedule_slots')->where('movie_id', $movieRecord->id)->first();
+
+        $seats = [];
+        if ($scheduleSlot) {
+            $seats = DB::table('seats')->where('hall_id', $scheduleSlot->hall_id)->get(['id', 'row_label', 'seat_number']);
+        } else {
+            $seats = DB::table('seats')->where('hall_id', 1)->get(['id', 'row_label', 'seat_number']);
+        }
+
         $movieData = [
+            'id' => $movieRecord->id,
+            'schedule_slot_id' => $scheduleSlot ? $scheduleSlot->id : 1,
             'slug' => $slug,
             'title' => $movieRecord->title,
             'poster' => $poster,
@@ -80,6 +91,7 @@ class MovieController extends Controller
             'language' => $movieRecord->language,
             'studio' => $movieRecord->studio,
             'related_souvenirs' => $relatedSouvenirs,
+            'seats' => $seats,
         ];
 
         return view('movie-details', [

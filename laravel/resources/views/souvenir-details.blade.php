@@ -67,7 +67,7 @@
                   </div>
                 </div>
 
-                <a href="{{ route('cart.index') }}" class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-xl font-semibold shadow-[0_14px_36px_rgba(0,0,0,.40)] transition hover:brightness-110 tablet:mt-0 tablet:w-[260px]">Add to Cart</a>
+                <button type="button" id="addToCartBtn" class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-xl font-semibold shadow-[0_14px_36px_rgba(0,0,0,.40)] transition hover:brightness-110 tablet:mt-0 tablet:w-[260px]">Add to Cart</button>
               </div>
 
               <div class="mt-5 rounded-xl border border-border bg-bg p-4">
@@ -116,7 +116,7 @@
 
     <x-layout.footer />
 
-    <script>
+    <script type="module">
       document.getElementById('qtyPlus')?.addEventListener('click', function () {
         const input = document.getElementById('quantityInput');
         input.value = Math.max(1, parseInt(input.value || '1') + 1);
@@ -124,6 +124,16 @@
       document.getElementById('qtyMinus')?.addEventListener('click', function () {
         const input = document.getElementById('quantityInput');
         input.value = Math.max(1, parseInt(input.value || '1') - 1);
+      });
+      document.getElementById('addToCartBtn')?.addEventListener('click', async function() {
+        const qty = parseInt(document.getElementById('quantityInput').value || '1');
+        await window.CartService.add({
+          type: 'souvenir',
+          reference_id: {{ $souvenir['id'] ?? 1 }},
+          quantity: qty,
+          options: {}
+        });
+        window.location.href = "{{ route('cart.index') }}";
       });
     </script>
   </body>
