@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 
 class SouvenirController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $souvenirs = DB::table('souvenirs')
+        $query = DB::table('souvenirs')
             ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
             ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
             ->leftJoin('souvenir_images', function ($join) {
@@ -25,14 +25,37 @@ class SouvenirController extends Controller
                 'category.name as category',
                 'movies.title as movie_title',
                 'souvenir_images.url as image'
-            )
-            ->orderBy('souvenirs.id', 'desc')
-            ->paginate(20);
+            );
 
+        if ($request->filled('categories')) {
+            $query->whereIn('souvenirs.category_id', (array) $request->input('categories'));
+        }
+
+        if ($request->filled('movies')) {
+            $query->whereIn('souvenirs.movie_id', (array) $request->input('movies'));
+        }
+
+        if ($request->filled('price_min')) {
+            $query->where('souvenirs.price', '>=', (float) $request->input('price_min'));
+        }
+
+        if ($request->filled('price_max')) {
+            $query->where('souvenirs.price', '<=', (float) $request->input('price_max'));
+        }
+
+        $sort = $request->input('sort', 'newest');
+        match ($sort) {
+            'price_asc'  => $query->orderBy('souvenirs.price', 'asc'),
+            'price_desc' => $query->orderBy('souvenirs.price', 'desc'),
+            'name_asc'   => $query->orderBy('souvenirs.name', 'asc'),
+            default      => $query->orderBy('souvenirs.id', 'desc'),
+        };
+
+        $souvenirs  = $query->paginate(20)->withQueryString();
         $categories = DB::table('category')->orderBy('name')->get();
-        $movies = DB::table('movies')->orderBy('title')->get();
+        $movies     = DB::table('movies')->orderBy('title')->get();
 
-        return view('souvenirs', compact('souvenirs', 'categories', 'movies'));
+        return view('souvenirs', compact('souvenirs', 'categories', 'movies', 'sort'));
     }
 
     public function show(string $slug): View
