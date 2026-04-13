@@ -204,7 +204,7 @@
           times: ['14:00', '16:30', '19:30', '22:00'],
           selectedDate: 'Mar 6',
           selectedTime: '19:30',
-          pricePerTicket: 9.99,
+          pricePerTicket: {{ $movie['price'] ?? 9.99 }},
 
           allSeats: @json($movie['seats']),
           layout: [],

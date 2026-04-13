@@ -72,7 +72,7 @@ class CartController extends Controller
                         ? $seats->map(function($s) { return 'Row ' . $s->row_label . ' - ' . $s->seat_number; })->toArray()
                         : (isset($opts['seats']) ? $opts['seats'] : []);
 
-                    $price = 9.99;
+                    $price = $movie->price ?? 9.99;
                     $ticketCount = count($seats) > 0 ? count($seats) : $quantity;
                     $subtotal = $price * $ticketCount;
 

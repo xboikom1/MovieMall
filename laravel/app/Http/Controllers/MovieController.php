@@ -22,6 +22,7 @@ class MovieController extends Controller
                 'movies.rating',
                 'movies.length_minutes',
                 'movies.release_date',
+                'movies.price',
                 'directors.name as director',
                 'studios.name as studio',
                 'languages.name as language'
@@ -82,6 +83,7 @@ class MovieController extends Controller
             'slug' => $slug,
             'title' => $movieRecord->title,
             'poster' => $poster,
+            'price' => $movieRecord->price,
             'genres' => $genres,
             'synopsis' => $movieRecord->synopsis,
             'rating' => $movieRecord->rating . '/10',
