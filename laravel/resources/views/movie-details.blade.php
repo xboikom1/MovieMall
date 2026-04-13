@@ -216,6 +216,21 @@
           generateLayout() {
             const seed = this.selectedDate + this.selectedTime;
 
+            const cartItems = window.CartService.getCart();
+            const seatsInCart = [];
+            cartItems.forEach(item => {
+              if (item.type === 'ticket' && String(item.reference_id) === String({{ $movie['id'] ?? 1 }})) {
+                if (item.options &&
+                    item.options.schedule_slot_id == {{ $movie['schedule_slot_id'] ?? 1 }} &&
+                    item.options.date === this.selectedDate &&
+                    item.options.time === this.selectedTime) {
+                  if (item.options.seat_ids) {
+                    seatsInCart.push(...item.options.seat_ids);
+                  }
+                }
+              }
+            });
+
             const grouped = {};
             this.allSeats.forEach(s => {
                 if(!grouped[s.row_label]) grouped[s.row_label] = [];
@@ -227,6 +242,9 @@
                 const id = s.id;
                 const label = s.row_label + s.seat_number;
                 let occ = (s.row_label.charCodeAt(0) + s.seat_number + seed.length + (seed.charCodeAt(0)||0)) % 5 === 0;
+                if (seatsInCart.includes(id)) {
+                  occ = true;
+                }
                 return {
                   id: id,
                   label: label,

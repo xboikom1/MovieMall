@@ -29,15 +29,26 @@ export const CartService = {
         } else {
             let cart = this.getCart();
             let isOptionsEmpty = (opts) => !opts || (typeof opts === 'object' && Object.keys(opts).length === 0);
-            let existing = cart.find(c =>
-                c.type === item.type &&
-                String(c.reference_id) === String(item.reference_id) &&
-                (isOptionsEmpty(c.options) ? isOptionsEmpty(item.options) : JSON.stringify(c.options) === JSON.stringify(item.options))
-            );
+            let existing = cart.find(c => {
+                if (c.type !== item.type || String(c.reference_id) !== String(item.reference_id)) return false;
+                if (item.type === 'ticket') {
+                    return c.options && item.options && c.options.date === item.options.date && c.options.time === item.options.time;
+                }
+                return isOptionsEmpty(c.options) ? isOptionsEmpty(item.options) : JSON.stringify(c.options) === JSON.stringify(item.options);
+            });
+
             if (existing) {
-                existing.quantity += item.quantity || 1;
+                if (item.type === 'ticket') {
+                    let existingSeats = existing.options.seat_ids || [];
+                    let newSeats = item.options.seat_ids || [];
+                    let merged = Array.from(new Set([...existingSeats, ...newSeats]));
+                    existing.options.seat_ids = merged;
+                    existing.quantity = merged.length;
+                } else {
+                    existing.quantity += item.quantity || 1;
+                }
             } else {
-                cart.push({ ...item, quantity: item.quantity || 1 });
+                cart.push({ ...item, quantity: item.quantity || (item.type === 'ticket' && item.options && item.options.seat_ids ? item.options.seat_ids.length : 1) });
             }
             localStorage.setItem(this.cartKey, JSON.stringify(cart));
         }

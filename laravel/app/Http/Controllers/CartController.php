@@ -55,7 +55,7 @@ class CartController extends Controller
                     $total += $souvenir->price * $quantity;
                 }
             } elseif ($type === 'ticket') {
-                $opts = $item['options'] ?? [];
+                $opts = is_string($item['options']) ? json_decode($item['options'], true) : ($item['options'] ?? []);
                 $movie = DB::table('movies')->where('id', $item['reference_id'])->first();
                 $schedule = DB::table('schedule_slots')->where('id', $opts['schedule_slot_id'] ?? null)->first();
 
@@ -88,6 +88,19 @@ class CartController extends Controller
                         }
                     }
 
+                    $scheduleStr = 'Select Date & Time';
+                    if (!empty($opts['date']) && !empty($opts['time'])) {
+                        try {
+                            $parsedDate = \Carbon\Carbon::createFromFormat('M j', $opts['date']);
+                            $parsedDate->year = 2026;
+                            $scheduleStr = $parsedDate->format('D, d M Y') . ' · ' . $opts['time'] . ' · ' . ($hall->name ?? 'Hall A');
+                        } catch (\Exception $e) {
+                            $scheduleStr = $opts['date'] . ' 2026 · ' . $opts['time'] . ' · ' . ($hall->name ?? 'Hall A');
+                        }
+                    } elseif ($schedule) {
+                        $scheduleStr = \Carbon\Carbon::parse($schedule->starts_at)->format('D, d M Y') . ' · ' . \Carbon\Carbon::parse($schedule->starts_at)->format('H:i') . ' · ' . ($hall->name ?? '');
+                    }
+
                     $enriched[] = [
                         'type' => 'ticket',
                         'cart_item_id' => $item['id'] ?? null,
@@ -95,7 +108,7 @@ class CartController extends Controller
                         'options' => $opts,
                         'name' => $movie->title,
                         'description' => 'Tickets',
-                        'schedule' => $schedule ? \Carbon\Carbon::parse($schedule->starts_at)->format('D, d M Y') . ' · ' . \Carbon\Carbon::parse($schedule->starts_at)->format('H:i') . ' · ' . ($hall->name ?? '') : 'Select Date & Time',
+                        'schedule' => $scheduleStr,
                         'seats' => $seatLabels,
                         'genre' => $genreStr,
                         'year' => $movie->release_date ? \Carbon\Carbon::parse($movie->release_date)->format('Y') : '',
@@ -126,20 +139,45 @@ class CartController extends Controller
                 'reference_id' => $request->reference_id,
             ]);
 
-            if (empty($request->options) || (is_array($request->options) && count($request->options) == 0)) {
-                $query->where(function($q) {
-                    $q->whereNull('options')
-                      ->orWhereRaw("options::text = '[]'")
-                      ->orWhereRaw("options::text = '{}'");
-                });
+            $item = null;
+
+            if ($request->type === 'ticket') {
+                $items = $query->get();
+                foreach($items as $existing_item) {
+                    $opts = is_string($existing_item->options) ? json_decode($existing_item->options, true) : $existing_item->options;
+                    if (isset($opts['date']) && isset($request->options['date']) && $opts['date'] === $request->options['date'] &&
+                        isset($opts['time']) && isset($request->options['time']) && $opts['time'] === $request->options['time']) {
+                        $item = $existing_item;
+                        break;
+                    }
+                }
             } else {
-                $query->whereJsonContains('options', $request->options);
+                if (empty($request->options) || (is_array($request->options) && count($request->options) == 0)) {
+                    $query->where(function($q) {
+                        $q->whereNull('options')
+                          ->orWhereRaw("options::text = '[]'")
+                          ->orWhereRaw("options::text = '{}'");
+                    });
+                } else {
+                    $query->whereJsonContains('options', $request->options);
+                }
+                $item = $query->first();
             }
 
-            $item = $query->first();
-
             if ($item) {
-                $item->increment('quantity', $request->quantity ?? 1);
+                if ($request->type === 'ticket') {
+                    $opts = is_string($item->options) ? json_decode($item->options, true) : ($item->options ?? []);
+                    $existingSeats = $opts['seat_ids'] ?? [];
+                    $newSeats = $request->options['seat_ids'] ?? [];
+                    $mergedSeats = array_values(array_unique(array_merge($existingSeats, $newSeats)));
+
+                    $opts['seat_ids'] = $mergedSeats;
+                    $item->options = $opts;
+                    $item->quantity = count($mergedSeats);
+                    $item->save();
+                } else {
+                    $item->increment('quantity', $request->quantity ?? 1);
+                }
             } else {
                 CartItem::create([
                     'user_id' => Auth::id(),
@@ -183,33 +221,58 @@ class CartController extends Controller
     public function sync(Request $request)
     {
         if (Auth::check() && $request->items) {
-            foreach ($request->items as $item) {
+            foreach ($request->items as $req_item) {
                 $existing_query = CartItem::where([
                     'user_id' => Auth::id(),
-                    'type' => $item['type'],
-                    'reference_id' => $item['reference_id'],
+                    'type' => $req_item['type'],
+                    'reference_id' => $req_item['reference_id'],
                 ]);
 
-                if (empty($item['options']) || (is_array($item['options']) && count($item['options']) == 0)) {
-                    $existing_query->where(function($q) {
-                        $q->whereNull('options')
-                          ->orWhereRaw("options::text = '[]'")
-                          ->orWhereRaw("options::text = '{}'");
-                    });
+                $existing = null;
+                if ($req_item['type'] === 'ticket') {
+                    $db_items = $existing_query->get();
+                    foreach($db_items as $db_item) {
+                        $opts = is_string($db_item->options) ? json_decode($db_item->options, true) : $db_item->options;
+                        if (isset($opts['date']) && isset($req_item['options']['date']) && $opts['date'] === $req_item['options']['date'] &&
+                            isset($opts['time']) && isset($req_item['options']['time']) && $opts['time'] === $req_item['options']['time']) {
+                            $existing = $db_item;
+                            break;
+                        }
+                    }
                 } else {
-                    $existing_query->whereJsonContains('options', $item['options']);
+                    if (empty($req_item['options']) || (is_array($req_item['options']) && count($req_item['options']) == 0)) {
+                        $existing_query->where(function($q) {
+                            $q->whereNull('options')
+                              ->orWhereRaw("options::text = '[]'")
+                              ->orWhereRaw("options::text = '{}'");
+                        });
+                    } else {
+                        $existing_query->whereJsonContains('options', $req_item['options']);
+                    }
+                    $existing = $existing_query->first();
                 }
-                $existing = $existing_query->first();
 
                 if ($existing) {
-                    $existing->increment('quantity', $item['quantity'] ?? 1);
+                    if ($req_item['type'] === 'ticket') {
+                        $opts = is_string($existing->options) ? json_decode($existing->options, true) : ($existing->options ?? []);
+                        $existingSeats = $opts['seat_ids'] ?? [];
+                        $newSeats = $req_item['options']['seat_ids'] ?? [];
+                        $mergedSeats = array_values(array_unique(array_merge($existingSeats, $newSeats)));
+
+                        $opts['seat_ids'] = $mergedSeats;
+                        $existing->options = $opts;
+                        $existing->quantity = count($mergedSeats);
+                        $existing->save();
+                    } else {
+                        $existing->increment('quantity', $req_item['quantity'] ?? 1);
+                    }
                 } else {
                     CartItem::create([
                         'user_id' => Auth::id(),
-                        'type' => $item['type'],
-                        'reference_id' => $item['reference_id'],
-                        'quantity' => $item['quantity'] ?? 1,
-                        'options' => (empty($item['options']) || (is_array($item['options']) && count($item['options']) == 0)) ? null : $item['options'],
+                        'type' => $req_item['type'],
+                        'reference_id' => $req_item['reference_id'],
+                        'quantity' => $req_item['quantity'] ?? 1,
+                        'options' => (empty($req_item['options']) || (is_array($req_item['options']) && count($req_item['options']) == 0)) ? null : $req_item['options'],
                     ]);
                 }
             }
