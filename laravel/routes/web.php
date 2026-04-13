@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SouvenirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
@@ -14,6 +15,7 @@ Route::post('/cart/sync', [CartController::class, 'sync'])->name('cart.sync');
 Route::post('/cart/details', [CartController::class, 'details'])->name('cart.details');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/movies', [App\Http\Controllers\MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/{slug}', [MovieController::class, 'show'])->name('movies.show');

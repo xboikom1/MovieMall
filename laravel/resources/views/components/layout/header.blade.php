@@ -12,11 +12,15 @@
       </nav>
     </div>
     <div class="flex items-center gap-2 tablet:gap-3 text-xs tablet:text-sm">
-      <input
-        type="search"
-        placeholder="Search..."
-        class="hidden tablet:block rounded-lg border border-border bg-button px-3 py-2 text-sm placeholder:text-placeholder outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 w-44"
-      />
+      <form method="GET" action="{{ route('search') }}" class="hidden tablet:block">
+        <input
+          type="search"
+          name="q"
+          value="{{ request('q') }}"
+          placeholder="Search..."
+          class="rounded-lg border border-border bg-button px-3 py-2 text-sm placeholder:text-placeholder outline-none focus:border-accent focus:ring-1 focus:ring-accent/30 w-44"
+        />
+      </form>
       <a href="{{ route('cart.index') }}" class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent">Cart</a>
       @auth
         <a href="{{ route('profile.edit') }}" class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent">Profile</a>
