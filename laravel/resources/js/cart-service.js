@@ -2,10 +2,11 @@ import axios from 'axios';
 
 export const CartService = {
     cartKey: 'moviemall_cart',
+    syncPromise: null,
 
     init() {
         if (window.isLoggedIn) {
-            this.syncCart();
+            this.syncPromise = this.syncCart();
         }
     },
 
@@ -27,7 +28,12 @@ export const CartService = {
             }
         } else {
             let cart = this.getCart();
-            let existing = cart.find(c => c.type === item.type && c.reference_id === item.reference_id && JSON.stringify(c.options) === JSON.stringify(item.options));
+            let isOptionsEmpty = (opts) => !opts || (typeof opts === 'object' && Object.keys(opts).length === 0);
+            let existing = cart.find(c =>
+                c.type === item.type &&
+                String(c.reference_id) === String(item.reference_id) &&
+                (isOptionsEmpty(c.options) ? isOptionsEmpty(item.options) : JSON.stringify(c.options) === JSON.stringify(item.options))
+            );
             if (existing) {
                 existing.quantity += item.quantity || 1;
             } else {
@@ -49,7 +55,12 @@ export const CartService = {
             }
         } else {
             let cart = this.getCart();
-            cart = cart.filter(c => !(c.type === type && c.reference_id === reference_id && JSON.stringify(c.options) === JSON.stringify(options)));
+            let isOptionsEmpty = (opts) => !opts || (typeof opts === 'object' && Object.keys(opts).length === 0);
+            cart = cart.filter(c => !(
+                c.type === type &&
+                String(c.reference_id) === String(reference_id) &&
+                (isOptionsEmpty(c.options) ? isOptionsEmpty(options) : JSON.stringify(c.options) === JSON.stringify(options))
+            ));
             localStorage.setItem(this.cartKey, JSON.stringify(cart));
             location.reload();
         }

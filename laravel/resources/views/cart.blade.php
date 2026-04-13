@@ -190,7 +190,14 @@
             tickets: [],
             souvenirs: [],
             total: 0,
+            isOptionsEmpty(opts) {
+                return !opts || Object.keys(opts).length === 0;
+            },
             async init() {
+                if (window.CartService && window.CartService.syncPromise) {
+                    await window.CartService.syncPromise;
+                }
+
                 let items = window.CartService.getCart();
                 try {
                     const response = await axios.post('{{ route('cart.details') }}', { items }, {
@@ -209,7 +216,11 @@
                 async increaseQty(item) {
                     if (!window.isLoggedIn) {
                         const cart = window.CartService.getCart();
-                        const found = cart.find(c => c.type === 'souvenir' && c.reference_id === item.reference_id && JSON.stringify(c.options) === JSON.stringify(item.options));
+                        const found = cart.find(c =>
+                            c.type === 'souvenir' &&
+                            String(c.reference_id) === String(item.reference_id) &&
+                            (this.isOptionsEmpty(c.options) ? this.isOptionsEmpty(item.options) : JSON.stringify(c.options) === JSON.stringify(item.options))
+                        );
                         if (found) {
                             found.quantity = (found.quantity || 0) + 1;
                             localStorage.setItem(window.CartService.cartKey, JSON.stringify(cart));
@@ -237,7 +248,11 @@
                 async decreaseQty(item) {
                     if (!window.isLoggedIn) {
                         const cart = window.CartService.getCart();
-                        const idx = cart.findIndex(c => c.type === 'souvenir' && c.reference_id === item.reference_id && JSON.stringify(c.options) === JSON.stringify(item.options));
+                        const idx = cart.findIndex(c =>
+                            c.type === 'souvenir' &&
+                            String(c.reference_id) === String(item.reference_id) &&
+                            (this.isOptionsEmpty(c.options) ? this.isOptionsEmpty(item.options) : JSON.stringify(c.options) === JSON.stringify(item.options))
+                        );
                         if (idx !== -1) {
                             if ((cart[idx].quantity || 1) <= 1) {
                                 cart[idx].quantity = 1;

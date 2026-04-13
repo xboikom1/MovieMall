@@ -120,11 +120,23 @@ class CartController extends Controller
     public function add(Request $request)
     {
         if (Auth::check()) {
-            $item = CartItem::where([
+            $query = CartItem::where([
                 'user_id' => Auth::id(),
                 'type' => $request->type,
                 'reference_id' => $request->reference_id,
-            ])->whereJsonContains('options', $request->options)->first();
+            ]);
+
+            if (empty($request->options) || (is_array($request->options) && count($request->options) == 0)) {
+                $query->where(function($q) {
+                    $q->whereNull('options')
+                      ->orWhereRaw("options::text = '[]'")
+                      ->orWhereRaw("options::text = '{}'");
+                });
+            } else {
+                $query->whereJsonContains('options', $request->options);
+            }
+
+            $item = $query->first();
 
             if ($item) {
                 $item->increment('quantity', $request->quantity ?? 1);
@@ -134,7 +146,7 @@ class CartController extends Controller
                     'type' => $request->type,
                     'reference_id' => $request->reference_id,
                     'quantity' => $request->quantity ?? 1,
-                    'options' => $request->options ?? null,
+                    'options' => (empty($request->options) || (is_array($request->options) && count($request->options) == 0)) ? null : $request->options,
                 ]);
             }
 
@@ -152,7 +164,13 @@ class CartController extends Controller
                 'reference_id' => $request->reference_id,
             ]);
 
-            if ($request->options) {
+            if (empty($request->options) || (is_array($request->options) && count($request->options) == 0)) {
+                $query->where(function($q) {
+                    $q->whereNull('options')
+                      ->orWhereRaw("options::text = '[]'")
+                      ->orWhereRaw("options::text = '{}'");
+                });
+            } else {
                 $query->whereJsonContains('options', $request->options);
             }
 
@@ -166,11 +184,22 @@ class CartController extends Controller
     {
         if (Auth::check() && $request->items) {
             foreach ($request->items as $item) {
-                $existing = CartItem::where([
+                $existing_query = CartItem::where([
                     'user_id' => Auth::id(),
                     'type' => $item['type'],
                     'reference_id' => $item['reference_id'],
-                ])->whereJsonContains('options', $item['options'] ?? null)->first();
+                ]);
+
+                if (empty($item['options']) || (is_array($item['options']) && count($item['options']) == 0)) {
+                    $existing_query->where(function($q) {
+                        $q->whereNull('options')
+                          ->orWhereRaw("options::text = '[]'")
+                          ->orWhereRaw("options::text = '{}'");
+                    });
+                } else {
+                    $existing_query->whereJsonContains('options', $item['options']);
+                }
+                $existing = $existing_query->first();
 
                 if ($existing) {
                     $existing->increment('quantity', $item['quantity'] ?? 1);
@@ -180,7 +209,7 @@ class CartController extends Controller
                         'type' => $item['type'],
                         'reference_id' => $item['reference_id'],
                         'quantity' => $item['quantity'] ?? 1,
-                        'options' => $item['options'] ?? null,
+                        'options' => (empty($item['options']) || (is_array($item['options']) && count($item['options']) == 0)) ? null : $item['options'],
                     ]);
                 }
             }
