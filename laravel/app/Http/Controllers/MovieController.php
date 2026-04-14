@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,14 +64,13 @@ class MovieController extends Controller
                     'title' => $s->title,
                     'image' => $s->image,
                     'movie' => $movieRecord->title,
-                    'type'  => $s->type,
+                    'type' => $s->type,
                     'price' => number_format($s->price, 2) . '€',
                 ];
             })->toArray();
 
         $scheduleSlot = DB::table('schedule_slots')->where('movie_id', $movieRecord->id)->first();
 
-        $seats = [];
         if ($scheduleSlot) {
             $seats = DB::table('seats')->where('hall_id', $scheduleSlot->hall_id)->get(['id', 'row_label', 'seat_number']);
         } else {
@@ -88,7 +88,7 @@ class MovieController extends Controller
             'synopsis' => $movieRecord->synopsis,
             'rating' => $movieRecord->rating . '/10',
             'duration' => $movieRecord->length_minutes . ' min',
-            'release_date' => \Carbon\Carbon::parse($movieRecord->release_date)->format('F j, Y'),
+            'release_date' => Carbon::parse($movieRecord->release_date)->format('F j, Y'),
             'director' => $movieRecord->director,
             'language' => $movieRecord->language,
             'studio' => $movieRecord->studio,
@@ -103,13 +103,13 @@ class MovieController extends Controller
 
     public function index(Request $request): View
     {
-        $sort = $request->get('sort', 'most_popular');
+        $sort = $request->input('sort', 'most_popular');
         $sortMap = [
-            'most_popular'  => ['rating', 'desc'],
+            'most_popular' => ['rating', 'desc'],
             'highest_rated' => ['rating', 'desc'],
-            'newest'        => ['release_date', 'desc'],
-            'price_asc'     => ['price', 'asc'],
-            'price_desc'    => ['price', 'desc'],
+            'newest' => ['release_date', 'desc'],
+            'price_asc' => ['price', 'asc'],
+            'price_desc' => ['price', 'desc'],
         ];
         [$orderBy, $direction] = $sortMap[$sort] ?? $sortMap['most_popular'];
 
@@ -169,10 +169,10 @@ class MovieController extends Controller
         $allGenres = DB::table('genres')->orderBy('name')->get();
 
         return view('movies', [
-            'movies'       => $movies,
+            'movies' => $movies,
             'genresByMovie' => $genresRows,
-            'allGenres'    => $allGenres,
-            'sort'         => $sort,
+            'allGenres' => $allGenres,
+            'sort' => $sort,
         ]);
     }
 }

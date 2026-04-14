@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Models\CartItem;
@@ -18,7 +20,6 @@ class CartController extends Controller
 
     public function details(Request $request)
     {
-        $items = [];
         if (Auth::check()) {
             $items = CartItem::where('user_id', Auth::id())->get()->toArray();
         } else {
@@ -50,7 +51,7 @@ class CartController extends Controller
                         'price' => $souvenir->price,
                         'quantity' => $quantity,
                         'subtotal' => $souvenir->price * $quantity,
-                        'url' => route('souvenirs.show', \Illuminate\Support\Str::slug($souvenir->name)),
+                        'url' => route('souvenirs.show', Str::slug($souvenir->name)),
                     ];
                     $total += $souvenir->price * $quantity;
                 }
@@ -70,7 +71,7 @@ class CartController extends Controller
                     $seats = DB::table('seats')->whereIn('id', $seatIds)->get();
                     $seatLabels = count($seats) > 0
                         ? $seats->map(function($s) { return 'Row ' . $s->row_label . ' - ' . $s->seat_number; })->toArray()
-                        : (isset($opts['seats']) ? $opts['seats'] : []);
+                        : ($opts['seats'] ?? []);
 
                     $price = $movie->price ?? 9.99;
                     $ticketCount = count($seats) > 0 ? count($seats) : $quantity;
@@ -91,14 +92,14 @@ class CartController extends Controller
                     $scheduleStr = 'Select Date & Time';
                     if (!empty($opts['date']) && !empty($opts['time'])) {
                         try {
-                            $parsedDate = \Carbon\Carbon::createFromFormat('M j', $opts['date']);
+                            $parsedDate = Carbon::createFromFormat('M j', $opts['date']);
                             $parsedDate->year = 2026;
                             $scheduleStr = $parsedDate->format('D, d M Y') . ' · ' . $opts['time'] . ' · ' . ($hall->name ?? 'Hall A');
-                        } catch (\Exception $e) {
+                        } catch (Exception) {
                             $scheduleStr = $opts['date'] . ' 2026 · ' . $opts['time'] . ' · ' . ($hall->name ?? 'Hall A');
                         }
                     } elseif ($schedule) {
-                        $scheduleStr = \Carbon\Carbon::parse($schedule->starts_at)->format('D, d M Y') . ' · ' . \Carbon\Carbon::parse($schedule->starts_at)->format('H:i') . ' · ' . ($hall->name ?? '');
+                        $scheduleStr = Carbon::parse($schedule->starts_at)->format('D, d M Y') . ' · ' . Carbon::parse($schedule->starts_at)->format('H:i') . ' · ' . ($hall->name ?? '');
                     }
 
                     $enriched[] = [
@@ -111,13 +112,13 @@ class CartController extends Controller
                         'schedule' => $scheduleStr,
                         'seats' => $seatLabels,
                         'genre' => $genreStr,
-                        'year' => $movie->release_date ? \Carbon\Carbon::parse($movie->release_date)->format('Y') : '',
+                        'year' => $movie->release_date ? Carbon::parse($movie->release_date)->format('Y') : '',
                         'rating' => $movie->rating,
                         'image' => $image,
                         'price' => $price,
                         'quantity' => $ticketCount,
                         'subtotal' => $subtotal,
-                        'url' => route('movies.show', \Illuminate\Support\Str::slug($movie->title)),
+                        'url' => route('movies.show', Str::slug($movie->title)),
                     ];
                     $total += $subtotal;
                 }
