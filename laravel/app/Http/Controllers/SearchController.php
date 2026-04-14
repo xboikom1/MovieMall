@@ -25,9 +25,9 @@ class SearchController extends Controller
                 })
                 ->leftJoin('directors', 'movies.director_id', '=', 'directors.id')
                 ->where(function ($sub) use ($like) {
-                    $sub->where('movies.title', 'like', $like)
-                        ->orWhere('movies.description', 'like', $like)
-                        ->orWhere('directors.name', 'like', $like);
+                    $sub->where('movies.title', 'ilike', $like)
+                        ->orWhere('movies.description', 'ilike', $like)
+                        ->orWhere('directors.name', 'ilike', $like);
                 })
                 ->select(
                     'movies.id',
@@ -48,9 +48,9 @@ class SearchController extends Controller
                         ->where('souvenir_images.is_primary', true);
                 })
                 ->where(function ($sub) use ($like) {
-                    $sub->where('souvenirs.name', 'like', $like)
-                        ->orWhere('category.name', 'like', $like)
-                        ->orWhere('movies.title', 'like', $like);
+                    $sub->where('souvenirs.name', 'ilike', $like)
+                        ->orWhere('category.name', 'ilike', $like)
+                        ->orWhere('movies.title', 'ilike', $like);
                 })
                 ->select(
                     'souvenirs.id',
