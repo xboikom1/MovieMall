@@ -13,7 +13,9 @@ class HomeController extends Controller
         $topMovies = $this->fetchMovies('rating', 'desc', 5);
         $newReleases = $this->fetchMovies('release_date', 'desc', 5);
 
-        return view('home', compact('topMovies', 'newReleases'));
+        $genresByName = DB::table('genres')->get()->keyBy(fn($g) => strtolower($g->name));
+
+        return view('home', compact('topMovies', 'newReleases', 'genresByName'));
     }
 
     private function fetchMovies(string $orderBy, string $direction, int $limit): array
