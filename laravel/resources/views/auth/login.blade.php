@@ -41,7 +41,7 @@
             <section
                 class="w-full max-w-xl rounded-3xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:max-w-2xl tablet:p-10"
             >
-                <h1 class="mb-6 text-2xl font-bold tablet:mb-8 tablet:text-4xl">Log in to your account</h1>
+                <h1 class="mb-6 text-2xl font-bold tablet:mb-8 tablet:text-4xl">Sign in to your account</h1>
 
                 @if (session('status'))
                     <p class="mb-4 text-sm text-green-400">{{ session('status') }}</p>
@@ -94,12 +94,6 @@
                             />
                             Remember me
                         </label>
-
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-sm text-placeholder transition hover:text-text">
-                                Forgot password?
-                            </a>
-                        @endif
                     </div>
 
                     <button
