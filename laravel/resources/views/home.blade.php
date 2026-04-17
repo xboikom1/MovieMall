@@ -39,10 +39,10 @@
       {{-- Recommendation grid --}}
       <section class="flex flex-col mx-auto max-w-7xl gap-12 px-4 py-12 tablet:px-6 tablet:py-16">
 
-        {{-- Top Movies --}}
+        {{-- Top Rated --}}
         <div>
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl tablet:text-2xl font-bold">Top Movies</h2>
+            <h2 class="text-xl tablet:text-2xl font-bold">Top Rated</h2>
             <a href="{{ route('movies.index') }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
           </div>
 
@@ -103,104 +103,67 @@
           </ul>
         </div>
 
-        {{-- Best Rated Souvenirs --}}
+        {{-- Newest Arrivals --}}
         <div>
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl tablet:text-2xl font-bold">Best Rated Souvenirs</h2>
+            <h2 class="text-xl tablet:text-2xl font-bold">Newest Arrivals</h2>
             <a href="{{ route('souvenirs.index') }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
           </div>
 
           <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+            @foreach ($newestSouvenirs as $s)
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Hiding Nemo Plush Toy')) }}" class="block relative h-full">
+              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($s->name)) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
-                  <img src="/images/plushtoynemo.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src="{{ $s->image ?? '/images/SuperGrandpaSouvenir.png' }}" alt="{{ $s->name }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 </div>
                 <div class="flex flex-col gap-1 p-3">
                   <div class="flex items-center justify-between gap-2">
-                    <span class="min-w-0 truncate font-semibold">Hiding Nemo Plush Toy</span>
-                    <span class="shrink-0 text-sm font-semibold text-accent">9.99€</span>
+                    <span class="min-w-0 truncate font-semibold">{{ $s->name }}</span>
+                    <span class="shrink-0 text-sm font-semibold text-accent">{{ number_format($s->price, 2) }}€</span>
                   </div>
-                  <span class="truncate text-xs text-placeholder">Hiding Nemo</span>
-                  <span class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder">Plush Toy</span>
+                  <span class="truncate text-xs text-placeholder">{{ $s->movie_title ?? '—' }}</span>
+                  <span class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder">{{ $s->category ?? '—' }}</span>
                 </div>
               </a>
             </li>
+            @endforeach
+          </ul>
+        </div>
 
-            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Blue Bulk Prop Replica')) }}" class="block relative h-full">
-                <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                <div class="bg-button aspect-square overflow-hidden">
-                  <img src="/images/bluebulkpropreplica.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                </div>
-                <div class="flex flex-col gap-1 p-3">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="min-w-0 truncate font-semibold">Blue Bulk Prop Replica</span>
-                    <span class="shrink-0 text-sm font-semibold text-accent">9.99€</span>
-                  </div>
-                  <span class="truncate text-xs text-placeholder">The Ordinary Blue Bulk</span>
-                  <span class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder">Prop Replica</span>
-                </div>
-              </a>
-            </li>
+        {{-- Best Value --}}
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl tablet:text-2xl font-bold">Best Value</h2>
+            <a href="{{ route('souvenirs.index', ['sort' => 'price_asc']) }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
+          </div>
 
+          <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+            @foreach ($bestValueSouvenirs as $s)
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug("Gollum's Ring")) }}" class="block relative h-full">
+              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($s->name)) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
-                  <img src="/images/gollumring.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src="{{ $s->image ?? '/images/SuperGrandpaSouvenir.png' }}" alt="{{ $s->name }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 </div>
                 <div class="flex flex-col gap-1 p-3">
                   <div class="flex items-center justify-between gap-2">
-                    <span class="min-w-0 truncate font-semibold">Gollum's Ring</span>
-                    <span class="shrink-0 text-sm font-semibold text-accent">9.99€</span>
+                    <span class="min-w-0 truncate font-semibold">{{ $s->name }}</span>
+                    <span class="shrink-0 text-sm font-semibold text-accent">{{ number_format($s->price, 2) }}€</span>
                   </div>
-                  <span class="truncate text-xs text-placeholder">Gollum: Steal The Ring</span>
-                  <span class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder">Accessory</span>
+                  <span class="truncate text-xs text-placeholder">{{ $s->movie_title ?? '—' }}</span>
+                  <span class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder">{{ $s->category ?? '—' }}</span>
                 </div>
               </a>
             </li>
-
-            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('Mission: Possible Print')) }}" class="block relative h-full">
-                <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                <div class="bg-button aspect-square overflow-hidden">
-                  <img src="/images/missionpossibleprint.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                </div>
-                <div class="flex flex-col gap-1 p-3">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="min-w-0 truncate font-semibold">Mission: Possible Print</span>
-                    <span class="shrink-0 text-sm font-semibold text-accent">9.99€</span>
-                  </div>
-                  <span class="truncate text-xs text-placeholder">Mission: Possible</span>
-                  <span class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder">Print</span>
-                </div>
-              </a>
-            </li>
-
-            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
-              <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug('SuperGrandpa Figurine')) }}" class="block relative h-full">
-                <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                <div class="bg-button aspect-square overflow-hidden">
-                  <img src="/images/SuperGrandpaSouvenir.png" alt="Souvenir image" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                </div>
-                <div class="flex flex-col gap-1 p-3">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="min-w-0 truncate font-semibold">SuperGrandpa Figurine</span>
-                    <span class="shrink-0 text-sm font-semibold text-accent">9.99€</span>
-                  </div>
-                  <span class="truncate text-xs text-placeholder">SuperGrandpa</span>
-                  <span class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder">Figurine</span>
-                </div>
-              </a>
-            </li>
+            @endforeach
           </ul>
         </div>
 
       </section>
 
-      {{-- Browse By Genre --}}
+{{--       Browse By Genre --}}
       <section class="bg-dark px-4 py-12 tablet:px-6 tablet:py-16 border-t border-border">
         <div class="mx-auto max-w-7xl">
           <h2 class="text-xl tablet:text-2xl font-bold mb-6">Browse By Genre</h2>

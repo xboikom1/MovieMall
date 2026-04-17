@@ -10,12 +10,37 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $topMovies = $this->fetchMovies('rating', 'desc', 5);
+        $topMovies   = $this->fetchMovies('rating', 'desc', 5);
         $newReleases = $this->fetchMovies('release_date', 'desc', 5);
 
         $genresByName = DB::table('genres')->get()->keyBy(fn($g) => strtolower($g->name));
 
-        return view('home', compact('topMovies', 'newReleases', 'genresByName'));
+        $newestSouvenirs   = $this->fetchSouvenirs('souvenirs.id', 'desc');
+        $bestValueSouvenirs = $this->fetchSouvenirs('souvenirs.price', 'asc');
+
+        return view('home', compact('topMovies', 'newReleases', 'genresByName', 'newestSouvenirs', 'bestValueSouvenirs'));
+    }
+
+    private function fetchSouvenirs(string $orderBy, string $direction, int $limit = 5)
+    {
+        return DB::table('souvenirs')
+            ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
+            ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
+            ->leftJoin('souvenir_images', function ($join) {
+                $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
+                     ->where('souvenir_images.is_primary', true);
+            })
+            ->select(
+                'souvenirs.id',
+                'souvenirs.name',
+                'souvenirs.price',
+                'category.name as category',
+                'movies.title as movie_title',
+                'souvenir_images.url as image'
+            )
+            ->orderBy($orderBy, $direction)
+            ->limit($limit)
+            ->get();
     }
 
     private function fetchMovies(string $orderBy, string $direction, int $limit): array
