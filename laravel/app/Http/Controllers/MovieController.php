@@ -58,6 +58,7 @@ class MovieController extends Controller
                 'category.name as type',
                 'souvenir_images.url as image'
             )
+            ->limit(4)
             ->get()
             ->map(function ($s) use ($movieRecord) {
                 return [
@@ -93,6 +94,7 @@ class MovieController extends Controller
             'language' => $movieRecord->language,
             'studio' => $movieRecord->studio,
             'related_souvenirs' => $relatedSouvenirs,
+            'movie_id' => $movieRecord->id,
             'seats' => $seats,
         ];
 

@@ -85,7 +85,7 @@
             <div>
               <div class="mb-4 flex items-center justify-between">
                 <h2 class="text-lg font-bold tablet:text-xl">Related Souvenirs</h2>
-                <a href="{{ route('souvenirs.index') }}" class="text-sm text-placeholder transition hover:text-accent">See More</a>
+                <a href="{{ route('souvenirs.index') }}?movies[]={{ $movie['movie_id'] }}" class="text-sm text-placeholder transition hover:text-accent">See More</a>
               </div>
               <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-4">
                 @forelse ($movie['related_souvenirs'] as $souvenir)
