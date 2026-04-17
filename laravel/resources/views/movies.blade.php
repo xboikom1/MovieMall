@@ -70,11 +70,11 @@
                     <!-- price range -->
                     <h3 class="text-placeholder text-xs font-bold mt-4 mb-2">PRICE RANGE</h3>
                     <div class="flex items-center gap-2 mb-5">
-                        <input type="number" name="price_min" min="0" max="50" step="0.01" placeholder="Min"
+                        <input type="number" name="price_min" min="{{ $priceMin }}" max="{{ $priceMax }}" step="0.01" placeholder="{{ $priceMin }}"
                                value="{{ request('price_min') }}"
                                class="w-full rounded-lg border border-border bg-button px-2 py-1.5 text-sm text-text outline-none focus:border-accent" />
                         <span class="text-placeholder text-xs shrink-0">–</span>
-                        <input type="number" name="price_max" min="0" max="50" step="0.01" placeholder="Max"
+                        <input type="number" name="price_max" min="{{ $priceMin }}" max="{{ $priceMax }}" step="0.01" placeholder="{{ $priceMax }}"
                                value="{{ request('price_max') }}"
                                class="w-full rounded-lg border border-border bg-button px-2 py-1.5 text-sm text-text outline-none focus:border-accent" />
                         <span class="text-placeholder text-xs shrink-0">€</span>

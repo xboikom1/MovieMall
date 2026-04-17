@@ -55,7 +55,10 @@ class SouvenirController extends Controller
         $categories = DB::table('category')->orderBy('name')->get();
         $movies     = DB::table('movies')->orderBy('title')->get();
 
-        return view('souvenirs', compact('souvenirs', 'categories', 'movies', 'sort'));
+        $priceMin = (float) DB::table('souvenirs')->min('price');
+        $priceMax = (float) DB::table('souvenirs')->max('price');
+
+        return view('souvenirs', compact('souvenirs', 'categories', 'movies', 'sort', 'priceMin', 'priceMax'));
     }
 
     public function show(string $slug): View

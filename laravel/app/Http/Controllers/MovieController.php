@@ -168,11 +168,16 @@ class MovieController extends Controller
 
         $allGenres = DB::table('genres')->orderBy('name')->get();
 
+        $priceMin = (float) DB::table('movies')->min('price');
+        $priceMax = (float) DB::table('movies')->max('price');
+
         return view('movies', [
             'movies' => $movies,
             'genresByMovie' => $genresRows,
             'allGenres' => $allGenres,
             'sort' => $sort,
+            'priceMin' => $priceMin,
+            'priceMax' => $priceMax,
         ]);
     }
 }
