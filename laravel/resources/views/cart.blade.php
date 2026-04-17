@@ -98,14 +98,17 @@
                                         <button @click="removeItem(item)" class="text-placeholder hover:text-accent transition leading-none shrink-0 mt-0.5" title="Remove">✕</button>
                                     </div>
                                     <div class="flex items-center justify-between mt-auto">
-                                        <div class="flex items-center gap-3">
-                                            <button @click="decreaseQty(item)" type="button" :disabled="item.quantity <= 1" :class="{'opacity-50 cursor-not-allowed': item.quantity <= 1}" class="rounded-md border border-border bg-button/30 px-3 py-1 text-sm hover:bg-button">
-                                                −
-                                            </button>
-                                            <div class="min-w-[2rem] text-center font-bold"> <span x-text="item.quantity"></span> </div>
-                                            <button @click="increaseQty(item)" type="button" class="rounded-md border border-border bg-button/30 px-3 py-1 text-sm hover:bg-button">
-                                                +
-                                            </button>
+                                        <div class="inline-flex h-9 items-center overflow-hidden rounded-xl border border-border bg-bg">
+                                            <button @click="decreaseQty(item)" type="button"
+                                                    :disabled="item.quantity <= 1" :class="{'opacity-50 cursor-not-allowed': item.quantity <= 1}"
+                                                    class="h-full px-3 text-sm font-semibold text-placeholder transition hover:text-accent">−</button>
+                                            <input type="text" inputmode="numeric" pattern="[0-9]*"
+                                                   :value="item.quantity"
+                                                   @change="setQty(item, $event.target.value)"
+                                                   @blur="setQty(item, $event.target.value)"
+                                                   class="h-full w-10 bg-transparent border-none p-0 text-center text-sm font-bold outline-none focus:ring-0 text-text" />
+                                            <button @click="increaseQty(item)" type="button"
+                                                    class="h-full px-3 text-sm font-semibold text-placeholder transition hover:text-accent">+</button>
                                         </div>
                                         <span class="text-sm font-bold text-accent" x-text="(parseFloat(item.subtotal).toFixed(2)) + '€'"></span>
                                     </div>
@@ -238,6 +241,38 @@
                             reference_id: item.reference_id,
                             quantity: 1,
                             options: item.options
+                        }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
+                        await this.init();
+                    } catch (e) {
+                        console.error(e);
+                    }
+                },
+
+                async setQty(item, value) {
+                    const qty = Math.max(1, parseInt(value) || 1);
+                    if (qty === item.quantity) return;
+
+                    if (!window.isLoggedIn) {
+                        const cart = window.CartService.getCart();
+                        const found = cart.find(c =>
+                            c.type === 'souvenir' &&
+                            String(c.reference_id) === String(item.reference_id) &&
+                            (this.isOptionsEmpty(c.options) ? this.isOptionsEmpty(item.options) : JSON.stringify(c.options) === JSON.stringify(item.options))
+                        );
+                        if (found) {
+                            found.quantity = qty;
+                            localStorage.setItem(window.CartService.cartKey, JSON.stringify(cart));
+                        }
+                        await this.init();
+                        return;
+                    }
+
+                    try {
+                        await axios.post('{{ route('cart.remove') }}', {
+                            type: 'souvenir', reference_id: item.reference_id, options: item.options
+                        }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
+                        await axios.post('{{ route('cart.add') }}', {
+                            type: 'souvenir', reference_id: item.reference_id, quantity: qty, options: item.options
                         }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
                         await this.init();
                     } catch (e) {
