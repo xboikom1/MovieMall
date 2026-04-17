@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movies | MovieMall</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        @media (max-width: 1023px) {
+            .filter-body { display: none; }
+            #filter-toggle:checked ~ .filter-body { display: block; }
+            #filter-toggle:checked ~ .filter-label .filter-chevron { transform: rotate(180deg); }
+        }
+    </style>
 </head>
 <body class="min-h-screen bg-bg text-text">
 <x-layout.header />
@@ -25,11 +32,28 @@
         <div class="flex flex-col gap-6 desktop:flex-row desktop:items-start">
 
             <!-- filters -->
-            <aside
-                class="desktop:sticky desktop:top-4 desktop:w-56 desktop:shrink-0 bg-dark rounded-2xl border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)]">
-                <div class="text-text px-4 py-4">
-                    <div class="flex items-center justify-between mb-4">
+            <aside class="desktop:sticky desktop:top-4 desktop:w-56 desktop:shrink-0 bg-dark rounded-2xl border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)]">
+
+                <!-- hidden filter mobile-only -->
+                <input type="checkbox" id="filter-toggle" class="sr-only">
+                <label for="filter-toggle"
+                       class="filter-label desktop:hidden flex items-center justify-between px-4 py-3 text-sm font-semibold cursor-pointer select-none">
+                    <span>Filters</span>
+                    <svg class="filter-chevron w-4 h-4 text-placeholder transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </label>
+
+                <div class="filter-body text-text px-4 pb-4 pt-0 desktop:pt-4">
+                    <!-- desktop header -->
+                    <div class="hidden desktop:flex items-center justify-between mb-4">
                         <h2 class="font-semibold">Filters</h2>
+                        <a href="{{ route('movies.index') }}"
+                           class="bg-button border border-border px-2.5 py-1 rounded-lg text-placeholder text-xs hover:text-text transition">Reset</a>
+                    </div>
+
+                    <!-- mobile reset -->
+                    <div class="flex desktop:hidden items-center justify-end mb-3">
                         <a href="{{ route('movies.index') }}"
                            class="bg-button border border-border px-2.5 py-1 rounded-lg text-placeholder text-xs hover:text-text transition">Reset</a>
                     </div>
@@ -99,19 +123,20 @@
                         <p class="text-sm text-placeholder">Sort:</p>
                         <select name="sort"
                                 class="bg-button border border-border rounded-lg px-3 py-1 text-sm text-text focus:border-accent outline-none">
-                            <option value="most_popular" {{ $sort === 'most_popular' ? 'selected' : '' }}>Most
-                                Popular
+                            <option value="most_popular" {{$sort === 'most_popular' ? 'selected' : ''}}>
+                                Most Popular
                             </option>
-                            <option value="highest_rated" {{ $sort === 'highest_rated' ? 'selected' : '' }}>Highest
-                                Rated
+                            <option value="highest_rated" {{$sort === 'highest_rated' ? 'selected' : ''}}>
+                                Highest Rated
                             </option>
-                            <option value="newest" {{ $sort === 'newest' ? 'selected' : '' }}>Newest First
+                            <option value="newest" {{$sort === 'newest' ? 'selected' : ''}}>
+                                Newest First
                             </option>
-                            <option value="price_asc" {{ $sort === 'price_asc' ? 'selected' : '' }}>Price: Low to
-                                High
+                            <option value="price_asc" {{$sort === 'price_asc' ? 'selected' : ''}}>
+                                Price: Low to High
                             </option>
-                            <option value="price_desc" {{ $sort === 'price_desc' ? 'selected' : '' }}>Price: High to
-                                Low
+                            <option value="price_desc" {{$sort === 'price_desc' ? 'selected' : ''}}>
+                                Price: High to Low
                             </option>
                         </select>
                         <button type="submit"
