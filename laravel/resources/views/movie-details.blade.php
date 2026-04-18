@@ -210,19 +210,37 @@
           allSeats: @json($movie['seats']),
           layout: [],
 
-          init() {
+          async init() {
             try {
               const editRaw = localStorage.getItem('moviemall_edit_item');
-              if (editRaw) {
+              const urlParams = new URLSearchParams(window.location.search);
+              const isEditParam = urlParams.get('edit') === '1';
+
+              if (editRaw && isEditParam) {
                 const edit = JSON.parse(editRaw);
-                if (String(edit.reference_id) === String({{ $movie['id'] ?? 1 }})) {
-                  if (edit.options && edit.options.date) this.selectedDate = edit.options.date;
-                  if (edit.options && edit.options.time) this.selectedTime = edit.options.time;
-                  window.__editingCartItem = edit;
+
+                const ts = parseInt((edit && typeof edit.ts !== 'undefined') ? edit.ts : NaN, 10);
+                if (Number.isFinite(ts) && Date.now() - ts > 30 * 60 * 1000) {
+                  try { localStorage.removeItem('moviemall_edit_item'); } catch (e) {}
+                } else {
+                  const currentMovieId = String({{ $movie['id'] ?? $movie['movie_id'] ?? 1 }});
+                  if (String(edit.reference_id) === currentMovieId) {
+                    if (edit.options && edit.options.date) this.selectedDate = edit.options.date;
+                    if (edit.options && edit.options.time) this.selectedTime = edit.options.time;
+                    window.__editingCartItem = edit;
+                  }
                 }
+
+                try {
+                    sessionStorage.removeItem('moviemall_edit_active');
+                } catch (e) {}
               }
+
+              const response = await axios.post('{{ route('cart.details') }}', { items: window.CartService.getCart() }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
+              this.cartDetails = response.data.items || [];
             } catch (e) {
               console.error(e);
+              this.cartDetails = [];
             }
 
             this.generateLayout();
@@ -230,9 +248,9 @@
             try {
               const edit = window.__editingCartItem;
               if (edit && edit.options && Array.isArray(edit.options.seat_ids)) {
-                const seatIds = edit.options.seat_ids;
+                const seatIds = edit.options.seat_ids.map(String);
                 this.layout.forEach(r => r.seats.forEach(s => {
-                  if (seatIds.includes(s.id)) s.status = 'selected';
+                  if (seatIds.includes(String(s.id))) s.status = 'selected';
                 }));
               }
             } catch (e) { console.error(e); }
@@ -241,17 +259,41 @@
           generateLayout() {
             const seed = this.selectedDate + this.selectedTime;
 
-            const cartItems = window.CartService.getCart();
+            const cartItems = (this.cartDetails && this.cartDetails.length > 0) ? this.cartDetails : window.CartService.getCart();
             const seatsInCart = [];
+            const editing = window.__editingCartItem || null;
+
+            const optionsMatch = (a, b) => {
+              if (!a || !b) return false;
+              if (String(a.schedule_slot_id || '') !== String(b.schedule_slot_id || '')) return false;
+              if (String(a.date || '') !== String(b.date || '')) return false;
+              if (String(a.time || '') !== String(b.time || '')) return false;
+              const aSeats = Array.isArray(a.seat_ids) ? [...a.seat_ids].map(String).sort() : [];
+              const bSeats = Array.isArray(b.seat_ids) ? [...b.seat_ids].map(String).sort() : [];
+              if (aSeats.length !== bSeats.length) return false;
+              for (let i = 0; i < aSeats.length; i++) if (aSeats[i] !== bSeats[i]) return false;
+              return true;
+            };
+
             cartItems.forEach(item => {
-              if (item.type === 'ticket' && String(item.reference_id) === String({{ $movie['id'] ?? 1 }})) {
-                if (item.options &&
-                    item.options.schedule_slot_id == {{ $movie['schedule_slot_id'] ?? 1 }} &&
-                    item.options.date === this.selectedDate &&
-                    item.options.time === this.selectedTime) {
-                  if (item.options.seat_ids) {
-                    seatsInCart.push(...item.options.seat_ids);
+              if (item.type === 'ticket' && String(item.reference_id) === String({{ $movie['id'] ?? $movie['movie_id'] ?? 1 }})) {
+                if (editing) {
+                  if (editing.cart_item_id && item.cart_item_id && String(item.cart_item_id) === String(editing.cart_item_id)) {
+                    return;
                   }
+                  if (item.type === editing.type && String(item.reference_id) === String(editing.reference_id) && optionsMatch(item.options || {}, editing.options || {})) {
+                    return;
+                  }
+                }
+
+                if (item.options &&
+                    String(item.options.schedule_slot_id ?? '') === String({{ $movie['schedule_slot_id'] ?? 1 }}) &&
+                    String(item.options.date ?? '') === String(this.selectedDate) &&
+                    String(item.options.time ?? '') === String(this.selectedTime)) {
+                  if (item.options.seat_ids) {
+                    seatsInCart.push(...item.options.seat_ids.map(sid => String(sid)));
+                  }
+                  return;
                 }
               }
             });
@@ -267,13 +309,13 @@
                 const id = s.id;
                 const label = s.row_label + s.seat_number;
                 let occ = (s.row_label.charCodeAt(0) + s.seat_number + seed.length + (seed.charCodeAt(0)||0)) % 5 === 0;
-                if (seatsInCart.includes(id)) {
+                if (seatsInCart.includes(String(id))) {
                   occ = true;
                 }
                 return {
                   id: id,
                   label: label,
-                  status: occ ? 'occupied' : 'available'
+                  status: (occ || seatsInCart.includes(String(id))) ? 'occupied' : 'available'
                 };
               });
               return { label: r, seats: seats };
@@ -355,6 +397,7 @@
               }
 
               localStorage.removeItem('moviemall_edit_item');
+              sessionStorage.removeItem('moviemall_edit_active');
               window.__editingCartItem = null;
               window.location.href = "{{ route('cart.index') }}";
               return;

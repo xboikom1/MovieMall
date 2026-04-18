@@ -224,9 +224,27 @@
 
                 changeSeats(item) {
                     try {
-                        const payload = { type: item.type || 'ticket', reference_id: item.reference_id, options: item.options || {}, quantity: item.quantity || 1 };
+                        const payload = {
+                            type: item.type || 'ticket',
+                            reference_id: item.reference_id,
+                            cart_item_id: item.cart_item_id || null,
+                            options: item.options || {},
+                            quantity: item.quantity || 1,
+                            ts: Date.now(),
+                        };
                         localStorage.setItem('moviemall_edit_item', JSON.stringify(payload));
-                        window.location.href = item.url;
+
+                        try {
+                            sessionStorage.setItem('moviemall_edit_active', '1');
+                        } catch (e) {}
+                        try {
+                            const target = new URL(item.url, window.location.origin);
+                            target.searchParams.set('edit', '1');
+                            window.location.href = target.toString();
+                        } catch (e) {
+                            const sep = item.url.includes('?') ? '&' : '?';
+                            window.location.href = item.url + sep + 'edit=1';
+                        }
                     } catch (e) {
                         console.error(e);
                     }
@@ -244,7 +262,6 @@
                             found.quantity = (found.quantity || 0) + 1;
                             localStorage.setItem(window.CartService.cartKey, JSON.stringify(cart));
                         } else {
-                            // fallback: add new
                             await window.CartService.add({ type: 'souvenir', reference_id: item.reference_id, quantity: 1, options: item.options });
                         }
                         await this.init();
