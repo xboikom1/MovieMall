@@ -173,9 +173,10 @@
               </div>
 
               <div class="flex flex-col gap-2 border-t border-border pt-4 text-sm">
-                <div class="flex justify-between">
-                  <span class="text-placeholder" x-text="`Seats ${selectedSeatsCount}`">Seats (0)</span>
-                  <span class="font-medium" x-text="selectedSeatLabels"></span>
+                <div class="flex items-center gap-3">
+                  <span class="text-placeholder flex-shrink-0 whitespace-nowrap" x-text="`Seats ${selectedSeatsCount}`">Seats (0)</span>
+
+                  <span class="font-medium break-words min-w-0" x-text="selectedSeatLabels"></span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-placeholder">Price per ticket</span>
@@ -210,7 +211,31 @@
           layout: [],
 
           init() {
+            try {
+              const editRaw = localStorage.getItem('moviemall_edit_item');
+              if (editRaw) {
+                const edit = JSON.parse(editRaw);
+                if (String(edit.reference_id) === String({{ $movie['id'] ?? 1 }})) {
+                  if (edit.options && edit.options.date) this.selectedDate = edit.options.date;
+                  if (edit.options && edit.options.time) this.selectedTime = edit.options.time;
+                  window.__editingCartItem = edit;
+                }
+              }
+            } catch (e) {
+              console.error(e);
+            }
+
             this.generateLayout();
+
+            try {
+              const edit = window.__editingCartItem;
+              if (edit && edit.options && Array.isArray(edit.options.seat_ids)) {
+                const seatIds = edit.options.seat_ids;
+                this.layout.forEach(r => r.seats.forEach(s => {
+                  if (seatIds.includes(s.id)) s.status = 'selected';
+                }));
+              }
+            } catch (e) { console.error(e); }
           },
 
           generateLayout() {
@@ -294,7 +319,7 @@
           async addToCart() {
             if (this.selectedSeats.length === 0) return;
 
-            await window.CartService.add({
+            const newItem = {
               type: 'ticket',
               reference_id: {{ $movie['id'] ?? 1 }},
               quantity: this.selectedSeats.length,
@@ -304,7 +329,38 @@
                 time: this.selectedTime,
                 seat_ids: this.selectedSeats.map(s => s.id)
               }
-            });
+            };
+
+            let editing = window.__editingCartItem;
+            if (!editing) {
+              try {
+                const raw = localStorage.getItem('moviemall_edit_item');
+                if (raw) editing = JSON.parse(raw);
+              } catch (e) {}
+            }
+
+            if (editing && String(editing.reference_id) === String({{ $movie['id'] ?? 1 }})) {
+              if (!window.isLoggedIn) {
+                const cart = window.CartService.getCart();
+                const idx = cart.findIndex(c => c.type === editing.type && String(c.reference_id) === String(editing.reference_id) && JSON.stringify(c.options) === JSON.stringify(editing.options));
+                if (idx !== -1) cart.splice(idx, 1);
+                cart.push({ ...newItem, quantity: newItem.quantity });
+                localStorage.setItem(window.CartService.cartKey, JSON.stringify(cart));
+              } else {
+                try {
+                  await axios.post('{{ route('cart.remove') }}', { type: editing.type, reference_id: editing.reference_id, options: editing.options }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
+                } catch (e) { console.error(e); }
+
+                await window.CartService.add(newItem);
+              }
+
+              localStorage.removeItem('moviemall_edit_item');
+              window.__editingCartItem = null;
+              window.location.href = "{{ route('cart.index') }}";
+              return;
+            }
+
+            await window.CartService.add(newItem);
             window.location.href = "{{ route('cart.index') }}";
           }
         }))

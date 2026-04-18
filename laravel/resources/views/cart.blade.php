@@ -60,11 +60,17 @@
                                             <span x-text="item.schedule"></span>
                                         </div>
                                     </div>
-                                    <div class="flex flex-wrap items-center gap-2">
-                                        <span class="text-xs text-placeholder font-semibold uppercase tracking-wider">Seats:</span>
-                                        <template x-for="seat in item.seats">
-                                            <span class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent" x-text="seat"></span>
-                                        </template>
+                                    <div class="grid grid-cols-[1fr_auto] items-center gap-4">
+                                        <div class="flex flex-wrap items-center gap-2 min-w-0">
+                                            <span class="text-xs text-placeholder font-semibold uppercase tracking-wider">Seats:</span>
+                                            <template x-for="seat in item.seats">
+                                                <span class="flex items-center gap-1.5 rounded-lg border border-accent/50 bg-accent/10 px-3 py-1 text-xs font-bold text-accent" x-text="seat"></span>
+                                            </template>
+                                        </div>
+
+                                        <div class="flex-shrink-0 flex justify-end">
+                                            <button @click="changeSeats(item)" class="text-sm text-placeholder underline hover:text-accent">Change seats</button>
+                                        </div>
                                     </div>
                                     <div class="flex items-center justify-between pt-1 border-t border-border">
                                         <span class="text-xs text-placeholder" x-text="item.quantity + ' tickets × ' + item.price + '€'"></span>
@@ -215,6 +221,16 @@
                     console.error(e);
                 }
             },
+
+                changeSeats(item) {
+                    try {
+                        const payload = { type: item.type || 'ticket', reference_id: item.reference_id, options: item.options || {}, quantity: item.quantity || 1 };
+                        localStorage.setItem('moviemall_edit_item', JSON.stringify(payload));
+                        window.location.href = item.url;
+                    } catch (e) {
+                        console.error(e);
+                    }
+                },
 
                 async increaseQty(item) {
                     if (!window.isLoggedIn) {
