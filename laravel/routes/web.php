@@ -24,6 +24,8 @@ Route::get('/souvenirs/{slug}', [App\Http\Controllers\SouvenirController::class,
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout/submit', [CheckoutController::class, 'submit'])->name('checkout.submit');
+Route::get('/confirmation', function () { return view('confirmation'); })->name('confirmation');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
