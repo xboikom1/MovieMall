@@ -171,7 +171,7 @@
           <ul class="grid auto-rows-[120px] grid-cols-2 gap-3 tablet:auto-rows-[140px] tablet:grid-cols-4">
             <li class="tablet:col-span-2 tablet:row-span-2">
               <a href="{{ route('movies.index', isset($genresByName['action']) ? ['genres[]' => $genresByName['action']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 tablet:p-5 text-lg tablet:text-xl font-bold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/action.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/action.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Action</span>
@@ -180,7 +180,7 @@
 
             <li>
               <a href="{{ route('movies.index', isset($genresByName['comedy']) ? ['genres[]' => $genresByName['comedy']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/comedy.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/comedy.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Comedy</span>
@@ -189,7 +189,7 @@
 
             <li>
               <a href="{{ route('movies.index', isset($genresByName['drama']) ? ['genres[]' => $genresByName['drama']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/drama.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/drama.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Drama</span>
@@ -198,7 +198,7 @@
 
             <li class="tablet:col-span-2">
               <a href="{{ route('movies.index', isset($genresByName['sci-fi']) ? ['genres[]' => $genresByName['sci-fi']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/scifi.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/scifi.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Sci-Fi</span>
@@ -207,7 +207,7 @@
 
             <li class="tablet:col-span-2">
               <a href="{{ route('movies.index', isset($genresByName['thriller']) ? ['genres[]' => $genresByName['thriller']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/thrillerr.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/thrillerr.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Thriller</span>
@@ -216,7 +216,7 @@
 
             <li>
               <a href="{{ route('movies.index', isset($genresByName['fantasy']) ? ['genres[]' => $genresByName['fantasy']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/fantasy.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/fantasy.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Fantasy</span>
@@ -225,7 +225,7 @@
 
             <li>
               <a href="{{ route('movies.index', isset($genresByName['horror']) ? ['genres[]' => $genresByName['horror']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/horror.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/horror.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Horror</span>
@@ -234,7 +234,7 @@
 
             <li>
               <a href="{{ route('movies.index', isset($genresByName['romance']) ? ['genres[]' => $genresByName['romance']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/romance.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/romance.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Romance</span>
@@ -243,7 +243,7 @@
 
             <li class="tablet:col-span-2">
               <a href="{{ route('movies.index', isset($genresByName['documentary']) ? ['genres[]' => $genresByName['documentary']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/documentary.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/documentary.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Documentary</span>
@@ -252,7 +252,7 @@
 
             <li>
               <a href="{{ route('movies.index', isset($genresByName['apocalypse']) ? ['genres[]' => $genresByName['apocalypse']->id] : []) }}" class="group relative flex rounded-2xl h-full items-end overflow-hidden p-4 font-semibold border border-border transition-colors duration-300 hover:border-accent">
-                <img src="/images/apocalypse.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
+                <img src="/images/genres/apocalypse.jpg" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 <span class="relative z-10 truncate w-full block">Apocalypse</span>
