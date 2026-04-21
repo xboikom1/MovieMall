@@ -87,20 +87,21 @@ class SouvenirController extends Controller
 
         $related = DB::table('souvenirs')
             ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
+            ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
                     ->where('souvenir_images.is_primary', true);
             })
             ->where('souvenirs.id', '!=', $souvenirRecord->id)
-            ->select('souvenirs.name as title', 'souvenirs.price', 'category.name as type', 'souvenir_images.url as image')
+            ->select('souvenirs.name as title', 'souvenirs.price', 'category.name as type', 'souvenir_images.url as image', 'movies.title as movie_title')
             ->inRandomOrder()
             ->limit(8)
             ->get()
-            ->map(function ($s) use ($movieTitle) {
+            ->map(function ($s) {
                 return [
                     'title' => $s->title,
                     'image' => $s->image ?? '/images/SuperGrandpaSouvenir.png',
-                    'movie' => $movieTitle,
+                    'movie' => $s->movie_title,
                     'type' => $s->type,
                     'price' => number_format($s->price, 2) . '€',
                 ];
