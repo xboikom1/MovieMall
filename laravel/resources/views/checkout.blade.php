@@ -427,7 +427,24 @@
                     }
                 } catch (err) {
                     console.error('Checkout submit failed', err);
-                    alert('Checkout failed. Please try again.');
+                    document.querySelectorAll('.field-error').forEach((e) => e.remove());
+
+                    if (err.response && err.response.status === 422 && err.response.data && err.response.data.errors) {
+                        const errors = err.response.data.errors;
+
+                        for (const [field, msgs] of Object.entries(errors)) {
+                            let input = document.querySelector('[name="' + field + '"]') || document.getElementById(field);
+                            let container = input ? input.parentElement : form;
+                            const el = document.createElement('div');
+                            el.className = 'field-error mt-1 text-sm text-red-400';
+                            el.innerText = Array.isArray(msgs) ? msgs.join(' ') : String(msgs);
+                            container.appendChild(el);
+                        }
+                        const firstErr = document.querySelector('.field-error');
+                        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        alert('Checkout failed. Please try again.');
+                    }
                 }
             });
         });

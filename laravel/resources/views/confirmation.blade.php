@@ -121,8 +121,12 @@
                 order_email: '{{ session('order_email', 'email@example.com') }}',
                 delivery_method: '{{ session('delivery_method', 'Courier') }}',
                 delivery_address: '{{ session('delivery_address', '123 Main Street, Bratislava, 81101, Slovakia') }}',
-                items: {!! json_encode(session('order_items', [])) !!}
-            };
+                items: {
+                    !! json_encode(session('order_items', [])) !!
+                },
+                items_json: {
+                    !! session('order_items_json') ? session('order_items_json') : 'null' !!
+                };
 
             return {
                 items: [],
@@ -141,20 +145,47 @@
                 async init() {
                     if (server.items && server.items.length > 0) {
                         this.items = server.items;
+                        console.log('confirmation: loaded items from session array', this.items);
+                        try {
+                            if (window.CartService) localStorage.removeItem(window.CartService.cartKey);
+                        } catch (e) {
+                            console.error('confirmation: failed to clear client cart', e);
+                        }
                         return;
+                    }
+
+                    if (server.items_json) {
+                        try {
+                            this.items = server.items_json || [];
+                            console.log('confirmation: loaded items from session JSON backup', this.items);
+                            try {
+                                if (window.CartService) localStorage.removeItem(window.CartService.cartKey);
+                            } catch (e) {
+                                console.error('confirmation: failed to clear client cart', e);
+                            }
+                            return;
+                        } catch (e) {
+                            console.error('confirmation: failed to use items_json', e);
+                        }
                     }
 
                     try {
                         const raw = window.CartService ? window.CartService.getCart() : [];
                         const response = await axios.post('{{ route('cart.details') }}', { items: raw }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
                         this.items = response.data.items || [];
+                        console.log('confirmation: loaded items from cart.details', this.items);
                     } catch (e) {
                         console.error('Failed to load order items', e);
                         this.items = [];
                     }
-                }
-            };
-        }
+
+                    try {
+                        if (window.CartService) localStorage.removeItem(window.CartService.cartKey);
+                    } catch (e) {
+                        console.error('Failed to clear cart', e);
+                    }
+                };
+            }
     </script>
 </body>
 </html>
