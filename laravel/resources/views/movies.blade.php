@@ -152,9 +152,9 @@
                         <p class="text-sm mt-1">Try adjusting your filters.</p>
                     </div>
                 @else
-                    <ul class="grid grid-cols-2 gap-3 tablet:grid-cols-3 desktop:grid-cols-5">
+                    <ul class="grid grid-cols-2 gap-x-3 gap-y-6 tablet:grid-cols-3 desktop:grid-cols-5">
                         @foreach ($movies as $movie)
-                            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
+                            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]">
                                 <a href="{{ route('movies.show', \Illuminate\Support\Str::slug($movie->title)) }}"
                                    class="block relative h-full">
                                     <div

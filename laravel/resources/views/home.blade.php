@@ -46,9 +46,9 @@
             <a href="{{ route('movies.index') }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
           </div>
 
-          <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-7 tablet:grid-cols-3 tablet:gap-x-5 tablet:gap-y-8 desktop:grid-cols-5">
             @foreach ($topMovies as $movie)
-            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
+            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]">
               <a href="{{ route('movies.show', $movie['slug']) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -78,9 +78,9 @@
             <a href="{{ route('movies.index') }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
           </div>
 
-          <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-7 tablet:grid-cols-3 tablet:gap-x-5 tablet:gap-y-8 desktop:grid-cols-5">
             @foreach ($newReleases as $movie)
-            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
+            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]">
               <a href="{{ route('movies.show', $movie['slug']) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-[2/3] overflow-hidden">
@@ -110,9 +110,9 @@
             <a href="{{ route('souvenirs.index') }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
           </div>
 
-          <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-7 tablet:grid-cols-3 tablet:gap-x-5 tablet:gap-y-8 desktop:grid-cols-5">
             @foreach ($newestSouvenirs as $s)
-            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
+            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]">
               <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($s->name)) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
@@ -139,9 +139,9 @@
             <a href="{{ route('souvenirs.index', ['sort' => 'price_asc']) }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
           </div>
 
-          <ul class="grid grid-cols-2 gap-4 tablet:grid-cols-3 tablet:gap-5 desktop:grid-cols-5">
+          <ul class="grid grid-cols-2 gap-x-4 gap-y-7 tablet:grid-cols-3 tablet:gap-x-5 tablet:gap-y-8 desktop:grid-cols-5">
             @foreach ($bestValueSouvenirs as $s)
-            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-105">
+            <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]">
               <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($s->name)) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                 <div class="bg-button aspect-square overflow-hidden">
