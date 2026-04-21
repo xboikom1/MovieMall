@@ -162,7 +162,7 @@
                                     <div class="bg-button aspect-[2/3] overflow-hidden">
                                         <img src="{{ $movie->image ?? '/images/moviemall.jpg' }}"
                                              alt="{{ $movie->title }}"
-                                             class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                             class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" />
                                     </div>
                                     <div class="flex flex-col gap-1 p-3">
                                         <div class="flex items-center justify-between gap-3">
