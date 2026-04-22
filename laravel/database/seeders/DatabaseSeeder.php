@@ -19,6 +19,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        User::factory()->create([
+            'first_name' => 'Admin',
+            'last_name' => 'User',
+            'email' => 'admin@moviemall.com',
+            'password' => 'admin123',
+            'is_admin' => true,
+        ]);
+
         $directors = ['John Smith', 'Ava Knight', 'Mia Stone', 'Evan Lee', 'Noah Grant', 'Liam Carter', 'Sophie Hall'];
         foreach ($directors as $name) {
             DB::table('directors')->insert(['name' => $name]);
