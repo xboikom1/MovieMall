@@ -43,6 +43,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/product/edit/{type}/{id}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'edit'])
+            ->whereNumber('id')
+            ->name('product.edit');
+        Route::put('/product/edit/{type}/{id}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'update'])
+            ->whereNumber('id')
+            ->name('product.update');
+        Route::delete('/product/{type}/{id}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'destroy'])
+            ->whereNumber('id')
+            ->name('product.destroy');
         Route::post('/logout', [\App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('logout');
     });
 });

@@ -3,12 +3,282 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        return view('admin.dashboard');
+        $filter = $this->normalizeFilter($request->query('filter', 'all'));
+        $perPage = 10;
+
+        if ($filter === 'movies') {
+            $products = $this->movieBaseQuery()
+                ->orderByDesc('movies.updated_at')
+                ->paginate($perPage)
+                ->withQueryString()
+                ->through(fn (object $row) => $this->mapMovieRow($row));
+        } elseif ($filter === 'souvenirs') {
+            $products = $this->souvenirBaseQuery()
+                ->orderByDesc('souvenirs.updated_at')
+                ->paginate($perPage)
+                ->withQueryString()
+                ->through(fn (object $row) => $this->mapSouvenirRow($row));
+        } else {
+            $movies = $this->movieBaseQuery()->get()->map(fn (object $row) => $this->mapMovieRow($row));
+            $souvenirs = $this->souvenirBaseQuery()->get()->map(fn (object $row) => $this->mapSouvenirRow($row));
+            $merged = $movies->concat($souvenirs)
+                ->sortByDesc(fn (object $product) => $product->updated_at)
+                ->values();
+
+            $currentPage = (int) max(1, LengthAwarePaginator::resolveCurrentPage());
+            $total = $merged->count();
+            $offset = ($currentPage - 1) * $perPage;
+            $items = $merged->slice($offset, $perPage)->values();
+
+            $products = new LengthAwarePaginator(
+                $items,
+                $total,
+                $perPage,
+                $currentPage,
+                [
+                    'path' => LengthAwarePaginator::resolveCurrentPath(),
+                    'query' => $request->query(),
+                ]
+            );
+        }
+
+        return view('admin.dashboard', [
+            'products' => $products,
+            'filter' => $filter,
+        ]);
+    }
+
+    public function edit(string $type, int $id): View
+    {
+        $productType = $this->normalizeType($type);
+        abort_unless($productType !== null, 404);
+
+        if ($productType === 'movie') {
+            $product = DB::table('movies')
+                ->leftJoin('movie_images', function ($join) {
+                    $join->on('movies.id', '=', 'movie_images.movie_id')
+                        ->where('movie_images.is_primary', true);
+                })
+                ->select(
+                    'movies.id',
+                    'movies.title',
+                    'movies.description',
+                    'movies.price',
+                    'movies.rating',
+                    'movies.release_date',
+                    'movies.length_minutes',
+                    'movie_images.url as image'
+                )
+                ->where('movies.id', $id)
+                ->first();
+
+            abort_unless($product !== null, 404);
+
+            return view('admin.product.edit', [
+                'type' => 'movie',
+                'product' => $product,
+            ]);
+        }
+
+        $product = DB::table('souvenirs')
+            ->leftJoin('souvenir_images', function ($join) {
+                $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
+                    ->where('souvenir_images.is_primary', true);
+            })
+            ->select(
+                'souvenirs.id',
+                'souvenirs.name as title',
+                'souvenirs.price',
+                'souvenirs.quantity',
+                'souvenirs.category_id',
+                'souvenirs.movie_id',
+                'souvenirs.status_id',
+                'souvenir_images.url as image'
+            )
+            ->where('souvenirs.id', $id)
+            ->first();
+
+        abort_unless($product !== null, 404);
+
+        return view('admin.product.edit', [
+            'type' => 'souvenir',
+            'product' => $product,
+            'categories' => DB::table('category')->orderBy('name')->get(['id', 'name']),
+            'movies' => DB::table('movies')->orderBy('title')->get(['id', 'title']),
+            'statuses' => DB::table('souvenir_status')->orderBy('name')->get(['id', 'name']),
+        ]);
+    }
+
+    public function update(Request $request, string $type, int $id): RedirectResponse
+    {
+        $productType = $this->normalizeType($type);
+        abort_unless($productType !== null, 404);
+
+        if ($productType === 'movie') {
+            $validated = $request->validate([
+                'title' => ['required', 'string', 'max:200'],
+                'description' => ['nullable', 'string'],
+                'price' => ['nullable', 'numeric', 'min:0'],
+                'rating' => ['nullable', 'numeric', 'between:0,10'],
+                'release_date' => ['nullable', 'date'],
+                'length_minutes' => ['nullable', 'integer', 'min:1'],
+            ]);
+
+            $updated = DB::table('movies')
+                ->where('id', $id)
+                ->update([
+                    'title' => $validated['title'],
+                    'description' => $validated['description'] ?? null,
+                    'price' => $validated['price'] ?? null,
+                    'rating' => $validated['rating'] ?? null,
+                    'release_date' => $validated['release_date'] ?? null,
+                    'length_minutes' => $validated['length_minutes'] ?? null,
+                    'updated_at' => now(),
+                ]);
+
+            abort_unless($updated > 0 || DB::table('movies')->where('id', $id)->exists(), 404);
+
+            return redirect()
+                ->route('admin.product.edit', ['type' => 'movie', 'id' => $id])
+                ->with('status', 'Movie updated successfully.');
+        }
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:150'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'quantity' => ['required', 'integer', 'min:0'],
+            'category_id' => ['nullable', 'integer', 'exists:category,id'],
+            'movie_id' => ['nullable', 'integer', 'exists:movies,id'],
+            'status_id' => ['nullable', 'integer', 'exists:souvenir_status,id'],
+        ]);
+
+        $updated = DB::table('souvenirs')
+            ->where('id', $id)
+            ->update([
+                'name' => $validated['title'],
+                'price' => $validated['price'],
+                'quantity' => $validated['quantity'],
+                'category_id' => $validated['category_id'] ?? null,
+                'movie_id' => $validated['movie_id'] ?? null,
+                'status_id' => $validated['status_id'] ?? null,
+                'updated_at' => now(),
+            ]);
+
+        abort_unless($updated > 0 || DB::table('souvenirs')->where('id', $id)->exists(), 404);
+
+        return redirect()
+            ->route('admin.product.edit', ['type' => 'souvenir', 'id' => $id])
+            ->with('status', 'Souvenir updated successfully.');
+    }
+
+    public function destroy(Request $request, string $type, int $id): RedirectResponse
+    {
+        $productType = $this->normalizeType($type);
+        abort_unless($productType !== null, 404);
+
+        $deleted = $productType === 'movie'
+            ? DB::table('movies')->where('id', $id)->delete()
+            : DB::table('souvenirs')->where('id', $id)->delete();
+
+        abort_unless($deleted > 0, 404);
+
+        $redirectParams = array_filter([
+            'filter' => $this->normalizeFilter($request->input('filter', 'all')),
+            'page' => $request->input('page'),
+        ], fn ($value) => $value !== null && $value !== '');
+
+        return redirect()
+            ->route('admin.dashboard', $redirectParams)
+            ->with('status', ucfirst($productType) . ' deleted successfully.');
+    }
+
+    private function normalizeFilter(string $filter): string
+    {
+        return in_array($filter, ['all', 'movies', 'souvenirs'], true) ? $filter : 'all';
+    }
+
+    private function normalizeType(string $type): ?string
+    {
+        return match ($type) {
+            'movie', 'movies' => 'movie',
+            'souvenir', 'souvenirs' => 'souvenir',
+            default => null,
+        };
+    }
+
+    private function movieBaseQuery(): Builder
+    {
+        return DB::table('movies')
+            ->leftJoin('movie_images', function ($join) {
+                $join->on('movies.id', '=', 'movie_images.movie_id')
+                    ->where('movie_images.is_primary', true);
+            })
+            ->select(
+                'movies.id',
+                'movies.title',
+                'movies.description',
+                'movies.price',
+                'movies.updated_at',
+                'movie_images.url as image'
+            );
+    }
+
+    private function souvenirBaseQuery(): Builder
+    {
+        return DB::table('souvenirs')
+            ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
+            ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
+            ->leftJoin('souvenir_images', function ($join) {
+                $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
+                    ->where('souvenir_images.is_primary', true);
+            })
+            ->select(
+                'souvenirs.id',
+                'souvenirs.name as title',
+                'souvenirs.price',
+                'souvenirs.updated_at',
+                'souvenir_images.url as image',
+                'category.name as category_name',
+                'movies.title as movie_title'
+            );
+    }
+
+    private function mapMovieRow(object $row): object
+    {
+        return (object) [
+            'id' => $row->id,
+            'type' => 'movie',
+            'title' => $row->title,
+            'description' => $row->description,
+            'price' => $row->price,
+            'image' => $row->image,
+            'updated_at' => $row->updated_at,
+        ];
+    }
+
+    private function mapSouvenirRow(object $row): object
+    {
+        $parts = array_filter([$row->category_name ?? null, $row->movie_title ?? null]);
+
+        return (object) [
+            'id' => $row->id,
+            'type' => 'souvenir',
+            'title' => $row->title,
+            'description' => count($parts) > 0 ? implode(' | ', $parts) : null,
+            'price' => $row->price,
+            'image' => $row->image,
+            'updated_at' => $row->updated_at,
+        ];
     }
 }
