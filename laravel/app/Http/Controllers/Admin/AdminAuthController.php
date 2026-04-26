@@ -3,39 +3,38 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class AdminAuthController extends Controller
 {
-    public function showLogin()
+    public function showLogin(): View
     {
         return view('admin.login');
     }
 
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if (! Auth::attempt($credentials, $request->boolean('remember'))) {
-            return back()->withErrors(['email' => 'These credentials do not match our records.'])->withInput();
+        if (Auth::attempt($credentials) && Auth::user()->is_admin) {
+            $request->session()->regenerate();
+            return redirect()->route('admin.dashboard');
         }
 
-        $request->session()->regenerate();
+        Auth::logout();
 
-        $user = Auth::user();
-        if (! $user->is_admin) {
-            Auth::logout();
-            return back()->withErrors(['email' => 'You are not authorized as an administrator.']);
-        }
-
-        return redirect()->route('admin.dashboard');
+        return back()->withErrors([
+            'email' => 'Invalid credentials or insufficient permissions.',
+        ])->onlyInput('email');
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
         $request->session()->invalidate();

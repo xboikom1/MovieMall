@@ -1,17 +1,229 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Admin Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard — MovieMall</title>
+    @vite (['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <h1>Admin Dashboard</h1>
-    <p>Welcome, {{ auth()->user()->first_name ?? auth()->user()->email }}.</p>
 
-    <form method="POST" action="{{ route('admin.logout') }}">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
+<body class="min-h-screen bg-bg text-text">
+    <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)]">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
+            <div class="flex items-center gap-3 tablet:gap-5">
+                <a href="{{ route('home') }}" class="flex items-center rounded-xl bg-accent px-4 py-2 font-semibold">MovieMall</a>
+                <span class="hidden tablet:block text-xs font-semibold text-placeholder uppercase tracking-widest">Admin Panel</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <form method="POST" action="{{ route('admin.logout') }}">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="flex items-center gap-2 rounded-lg border border-border bg-button px-3 py-2 text-sm transition hover:border-accent hover:text-accent"
+                    >
+                        Log Out
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-8 tablet:px-6">
+        <div class="rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden">
+            <div class="flex items-center justify-between px-5 py-4 border-b border-border">
+                <h2 class="font-bold text-lg">Products</h2>
+                <a href="#" class="flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-semibold transition hover:brightness-110">
+                    + Add Product
+                </a>
+            </div>
+
+            <div class="flex gap-2 px-5 py-3 border-b border-border text-sm">
+                <button class="rounded-lg bg-accent px-3 py-1.5 font-semibold text-xs">All</button>
+                <button class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-accent">Movies</button>
+                <button class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-accent">Souvenirs</button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-border text-left text-xs text-placeholder">
+                            <th class="px-5 py-3 font-semibold">Product</th>
+                            <th class="px-5 py-3 font-semibold hidden tablet:table-cell">Category</th>
+                            <th class="px-5 py-3 font-semibold hidden tablet:table-cell">Price</th>
+                            <th class="px-5 py-3 font-semibold hidden desktop:table-cell">Description</th>
+                            <th class="px-5 py-3 font-semibold text-right">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="border-b border-border transition hover:bg-button/40">
+                            <td class="px-5 py-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-12 w-8 shrink-0 overflow-hidden rounded-lg bg-button">
+                                        <img src="/images/Supergrandpa.png" alt="" class="h-full w-full object-cover" />
+                                    </div>
+                                    <span class="font-medium">SuperGrandpa</span>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell">
+                                <span class="rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">Movie</span>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell font-semibold text-accent">14.99€</td>
+                            <td class="px-5 py-3 hidden desktop:table-cell max-w-xs truncate text-placeholder">
+                                An action-packed adventure for the whole family.
+                            </td>
+                            <td class="px-5 py-3 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a
+                                        href="#"
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-accent hover:text-accent"
+                                        >Edit</a
+                                    >
+                                    <button
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-red-500 hover:text-red-500"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="border-b border-border transition hover:bg-button/40">
+                            <td class="px-5 py-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-12 w-8 shrink-0 overflow-hidden rounded-lg bg-button">
+                                        <img src="/images/Supergrandpa.png" alt="" class="h-full w-full object-cover" />
+                                    </div>
+                                    <span class="font-medium">SuperGrandpa</span>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell">
+                                <span class="rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">Movie</span>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell font-semibold text-accent">14.99€</td>
+                            <td class="px-5 py-3 hidden desktop:table-cell max-w-xs truncate text-placeholder">
+                                An action-packed adventure for the whole family.
+                            </td>
+                            <td class="px-5 py-3 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a
+                                        href="#"
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-accent hover:text-accent"
+                                        >Edit</a
+                                    >
+                                    <button
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-red-500 hover:text-red-500"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="border-b border-border transition hover:bg-button/40">
+                            <td class="px-5 py-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-12 w-8 shrink-0 overflow-hidden rounded-lg bg-button">
+                                        <img src="/images/Supergrandpa.png" alt="" class="h-full w-full object-cover" />
+                                    </div>
+                                    <span class="font-medium">SuperGrandpa</span>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell">
+                                <span class="rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent">Movie</span>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell font-semibold text-accent">14.99€</td>
+                            <td class="px-5 py-3 hidden desktop:table-cell max-w-xs truncate text-placeholder">
+                                An action-packed adventure for the whole family.
+                            </td>
+                            <td class="px-5 py-3 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a
+                                        href="#"
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-accent hover:text-accent"
+                                        >Edit</a
+                                    >
+                                    <button
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-red-500 hover:text-red-500"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="border-b border-border transition hover:bg-button/40">
+                            <td class="px-5 py-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-button">
+                                        <img src="/images/SuperGrandpaSouvenir.png" alt="" class="h-full w-full object-cover" />
+                                    </div>
+                                    <span class="font-medium">SuperGrandpa Souvenir</span>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell">
+                                <span class="rounded-full bg-button px-2 py-0.5 text-xs text-placeholder border border-border">Souvenir</span>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell font-semibold text-accent">24.99€</td>
+                            <td class="px-5 py-3 hidden desktop:table-cell max-w-xs truncate text-placeholder">Official figurine of SuperGrandpa</td>
+                            <td class="px-5 py-3 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a
+                                        href="#"
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-accent hover:text-accent"
+                                        >Edit</a
+                                    >
+                                    <button
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-red-500 hover:text-red-500"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr class="border-b border-border transition hover:bg-button/40">
+                            <td class="px-5 py-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-button">
+                                        <img src="/images/SuperGrandpaSouvenir.png" alt="" class="h-full w-full object-cover" />
+                                    </div>
+                                    <span class="font-medium">SuperGrandpa Souvenir</span>
+                                </div>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell">
+                                <span class="rounded-full bg-button px-2 py-0.5 text-xs text-placeholder border border-border">Souvenir</span>
+                            </td>
+                            <td class="px-5 py-3 hidden tablet:table-cell font-semibold text-accent">24.99€</td>
+                            <td class="px-5 py-3 hidden desktop:table-cell max-w-xs truncate text-placeholder">Official figurine of SuperGrandpa</td>
+                            <td class="px-5 py-3 text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a
+                                        href="#"
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-accent hover:text-accent"
+                                        >Edit</a
+                                    >
+                                    <button
+                                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-red-500 hover:text-red-500"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex items-center justify-between px-5 py-3 border-t border-border text-xs text-placeholder">
+                <span>Showing 5 of 40 products</span>
+                <div class="flex gap-1">
+                    <button class="rounded-lg border border-accent bg-button px-3 py-1.5 text-accent">1</button>
+                    <button class="rounded-lg border border-border bg-button px-3 py-1.5 transition hover:border-accent hover:text-accent">2</button>
+                    <button class="rounded-lg border border-border bg-button px-3 py-1.5 transition hover:border-accent hover:text-accent">3</button>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
