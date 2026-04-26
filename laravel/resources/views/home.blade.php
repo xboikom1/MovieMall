@@ -51,8 +51,8 @@
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]">
               <a href="{{ route('movies.show', $movie['slug']) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                <div class="bg-button aspect-[2/3] overflow-hidden">
-                  <img src="{{ $movie['image'] }}" alt="{{ $movie['title'] }}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" />
+                <div class="relative bg-button aspect-[2/3] overflow-hidden">
+                  <img src="{{ $movie['image'] }}" alt="{{ $movie['title'] }}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" />
                 </div>
                 <div class="flex flex-col gap-1 p-3">
                   <span class="min-w-0 truncate font-semibold">{{ $movie['title'] }}</span>
@@ -83,8 +83,8 @@
             <li class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]">
               <a href="{{ route('movies.show', $movie['slug']) }}" class="block relative h-full">
                 <div class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                <div class="bg-button aspect-[2/3] overflow-hidden">
-                  <img src="{{ $movie['image'] }}" alt="{{ $movie['title'] }}" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" />
+                <div class="relative bg-button aspect-[2/3] overflow-hidden">
+                  <img src="{{ $movie['image'] }}" alt="{{ $movie['title'] }}" class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.06]" />
                 </div>
                 <div class="flex flex-col gap-1 p-3">
                   <span class="min-w-0 truncate font-semibold">{{ $movie['title'] }}</span>
