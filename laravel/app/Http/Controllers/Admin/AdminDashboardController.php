@@ -8,10 +8,75 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
 {
+    public function create(): View
+    {
+        return view('admin.product.new');
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:200'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'type' => ['required', 'in:movie,souvenir'],
+            'quantity' => ['nullable', 'numeric', 'min:0'],
+            'images' => ['required', 'array', 'min:2'],
+            'images.*' => ['image', 'max:5120'],
+        ]);
+
+        DB::transaction(function () use ($validated, $request) {
+            if ($validated['type'] === 'movie') {
+                $id = DB::table('movies')->insertGetId([
+                    'title' => $validated['title'],
+                    'description' => $validated['description'],
+                    'price' => $validated['price'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                foreach ($validated['images'] as $index => $image) {
+                    $path = $image->store('public/images');
+                    $url = str_replace('public/', '/storage/', $path);
+                    
+                    DB::table('movie_images')->insert([
+                        'movie_id' => $id,
+                        'url' => $url,
+                        'is_primary' => $index === 0,
+                        'created_at' => now(),
+                    ]);
+                }
+            } else {
+                $id = DB::table('souvenirs')->insertGetId([
+                    'name' => $validated['title'],
+                    'price' => $validated['price'],
+                    'quantity' => $validated['quantity'] ?? 1,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                foreach ($validated['images'] as $index => $image) {
+                    $path = $image->store('public/images');
+                    $url = str_replace('public/', '/storage/', $path);
+                    
+                    DB::table('souvenir_images')->insert([
+                        'souvenir_id' => $id,
+                        'url' => $url,
+                        'is_primary' => $index === 0,
+                        'created_at' => now(),
+                    ]);
+                }
+            }
+        });
+
+        return redirect()->route('admin.dashboard')->with('status', 'Product created successfully!');
+    }
+
     public function index(Request $request): View
     {
         $filter = $this->normalizeFilter($request->query('filter', 'all'));

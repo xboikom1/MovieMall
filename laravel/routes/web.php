@@ -43,6 +43,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'index'])->name('dashboard');
+        
+        Route::get('/product/new', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'create'])->name('product.new');
+        Route::post('/product/new', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'store'])->name('product.store');
+
         Route::get('/product/edit/{type}/{id}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'edit'])
             ->whereNumber('id')
             ->name('product.edit');

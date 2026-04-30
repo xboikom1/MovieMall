@@ -36,7 +36,10 @@
         <div class="rounded-2xl border border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,.35)] overflow-hidden">
             <div class="flex items-center justify-between px-5 py-4 border-b border-border">
                 <h2 class="font-bold text-lg">Products</h2>
-                <a href="#" class="flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-semibold transition hover:brightness-110">
+                <a
+                    href="{{ route('admin.product.new') }}"
+                    class="flex items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-semibold transition hover:brightness-110"
+                >
                     + Add Product
                 </a>
             </div>
