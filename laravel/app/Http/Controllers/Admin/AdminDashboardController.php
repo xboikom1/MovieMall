@@ -41,8 +41,8 @@ class AdminDashboardController extends Controller
                 ]);
 
                 foreach ($validated['images'] as $index => $image) {
-                    $path = $image->store('public/images');
-                    $url = str_replace('public/', '/storage/', $path);
+                    $path = $image->store('images', 'public');
+                    $url = '/storage/' . $path;
                     
                     DB::table('movie_images')->insert([
                         'movie_id' => $id,
@@ -61,8 +61,8 @@ class AdminDashboardController extends Controller
                 ]);
 
                 foreach ($validated['images'] as $index => $image) {
-                    $path = $image->store('public/images');
-                    $url = str_replace('public/', '/storage/', $path);
+                    $path = $image->store('images', 'public');
+                    $url = '/storage/' . $path;
                     
                     DB::table('souvenir_images')->insert([
                         'souvenir_id' => $id,
