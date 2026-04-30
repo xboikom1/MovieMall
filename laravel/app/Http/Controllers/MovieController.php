@@ -34,10 +34,13 @@ class MovieController extends Controller
 
         abort_unless($movieRecord, 404);
 
-        $poster = DB::table('movie_images')
+        $images = DB::table('movie_images')
             ->where('movie_id', $movieRecord->id)
-            ->where('is_primary', true)
-            ->value('url');
+            ->orderByDesc('is_primary')
+            ->pluck('url')
+            ->toArray();
+
+        $poster = $images[0] ?? null;
 
         $genres = DB::table('movie_genres')
             ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
@@ -83,6 +86,7 @@ class MovieController extends Controller
             'schedule_slot_id' => $scheduleSlot ? $scheduleSlot->id : 1,
             'slug' => $slug,
             'title' => $movieRecord->title,
+            'images' => $images,
             'poster' => $poster,
             'price' => $movieRecord->price,
             'genres' => $genres,

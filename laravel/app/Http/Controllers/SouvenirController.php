@@ -85,6 +85,12 @@ class SouvenirController extends Controller
 
         $movieTitle = DB::table('movies')->where('id', $souvenirRecord->movie_id)->value('title');
 
+        $souvenirImages = DB::table('souvenir_images')
+            ->where('souvenir_id', $souvenirRecord->id)
+            ->orderByDesc('is_primary')
+            ->pluck('url')
+            ->toArray();
+
         $related = DB::table('souvenirs')
             ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
             ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
@@ -111,6 +117,7 @@ class SouvenirController extends Controller
             'id' => $souvenirRecord->id,
             'slug' => $slug,
             'title' => $souvenirRecord->name,
+            'images' => !empty($souvenirImages) ? $souvenirImages : [$souvenirRecord->image ?? '/images/SuperGrandpaSouvenir.png'],
             'image' => $souvenirRecord->image ?? '/images/SuperGrandpaSouvenir.png',
             'price' => number_format($souvenirRecord->price, 2) . '€',
             'in_stock' => true,
