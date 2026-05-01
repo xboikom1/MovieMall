@@ -351,6 +351,20 @@ class DatabaseSeeder extends Seeder
                 'is_primary'  => true,
                 'created_at'  => now(),
             ]);
+
+            $movieImage = DB::table('movie_images')
+                ->where('movie_id', $souvenirData['movie_id'])
+                ->where('is_primary', true)
+                ->value('url');
+
+            if ($movieImage) {
+                DB::table('souvenir_images')->insert([
+                    'souvenir_id' => $souvenirId,
+                    'url'         => $movieImage,
+                    'is_primary'  => false,
+                    'created_at'  => now(),
+                ]);
+            }
         }
     }
 }
