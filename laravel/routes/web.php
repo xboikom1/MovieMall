@@ -56,6 +56,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/product/{type}/{id}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'destroy'])
             ->whereNumber('id')
             ->name('product.destroy');
+
+        Route::post('/product/image/{type}/{id}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'addImage'])
+            ->whereNumber('id')
+            ->name('product.image.add');
+        Route::delete('/product/image/{type}/{imageId}', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'removeImage'])
+            ->whereNumber('imageId')
+            ->name('product.image.remove');
+        Route::put('/product/image/{type}/{imageId}/primary', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'setPrimaryImage'])
+            ->whereNumber('imageId')
+            ->name('product.image.primary');
         Route::post('/logout', [\App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('logout');
     });
 });

@@ -150,9 +150,15 @@ class AdminDashboardController extends Controller
 
             abort_unless($product !== null, 404);
 
+            $images = DB::table('movie_images')
+                ->where('movie_id', $id)
+                ->orderByDesc('is_primary')
+                ->get(['id', 'url', 'is_primary']);
+
             return view('admin.product.edit', [
                 'type' => 'movie',
                 'product' => $product,
+                'images' => $images,
             ]);
         }
 
@@ -176,13 +182,94 @@ class AdminDashboardController extends Controller
 
         abort_unless($product !== null, 404);
 
+        $images = DB::table('souvenir_images')
+            ->where('souvenir_id', $id)
+            ->orderByDesc('is_primary')
+            ->get(['id', 'url', 'is_primary']);
+
         return view('admin.product.edit', [
             'type' => 'souvenir',
             'product' => $product,
+            'images' => $images,
             'categories' => DB::table('category')->orderBy('name')->get(['id', 'name']),
             'movies' => DB::table('movies')->orderBy('title')->get(['id', 'title']),
             'statuses' => DB::table('souvenir_status')->orderBy('name')->get(['id', 'name']),
         ]);
+    }
+
+    public function addImage(Request $request, string $type, int $id): RedirectResponse
+    {
+        $productType = $this->normalizeType($type);
+        abort_unless($productType !== null, 404);
+
+        $request->validate(['image' => ['required', 'image', 'max:5120']]);
+
+        $path = $request->file('image')->store('images', 'public');
+        $url = '/storage/' . $path;
+
+        if ($productType === 'movie') {
+            abort_unless(DB::table('movies')->where('id', $id)->exists(), 404);
+            DB::table('movie_images')->insert([
+                'movie_id' => $id,
+                'url' => $url,
+                'is_primary' => false,
+                'created_at' => now(),
+            ]);
+        } else {
+            abort_unless(DB::table('souvenirs')->where('id', $id)->exists(), 404);
+            DB::table('souvenir_images')->insert([
+                'souvenir_id' => $id,
+                'url' => $url,
+                'is_primary' => false,
+                'created_at' => now(),
+            ]);
+        }
+
+        return redirect()
+            ->route('admin.product.edit', ['type' => $productType, 'id' => $id])
+            ->with('status', 'Image added successfully.');
+    }
+
+    public function removeImage(Request $request, string $type, int $imageId): RedirectResponse
+    {
+        $productType = $this->normalizeType($type);
+        abort_unless($productType !== null, 404);
+
+        $productId = (int) $request->input('product_id');
+
+        if ($productType === 'movie') {
+            DB::table('movie_images')->where('id', $imageId)->delete();
+        } else {
+            DB::table('souvenir_images')->where('id', $imageId)->delete();
+        }
+
+        return redirect()
+            ->route('admin.product.edit', ['type' => $productType, 'id' => $productId])
+            ->with('status', 'Image removed.');
+    }
+
+    public function setPrimaryImage(Request $request, string $type, int $imageId): RedirectResponse
+    {
+        $productType = $this->normalizeType($type);
+        abort_unless($productType !== null, 404);
+
+        $productId = (int) $request->input('product_id');
+
+        if ($productType === 'movie') {
+            $image = DB::table('movie_images')->where('id', $imageId)->first();
+            abort_unless($image !== null, 404);
+            DB::table('movie_images')->where('movie_id', $image->movie_id)->update(['is_primary' => false]);
+            DB::table('movie_images')->where('id', $imageId)->update(['is_primary' => true]);
+        } else {
+            $image = DB::table('souvenir_images')->where('id', $imageId)->first();
+            abort_unless($image !== null, 404);
+            DB::table('souvenir_images')->where('souvenir_id', $image->souvenir_id)->update(['is_primary' => false]);
+            DB::table('souvenir_images')->where('id', $imageId)->update(['is_primary' => true]);
+        }
+
+        return redirect()
+            ->route('admin.product.edit', ['type' => $productType, 'id' => $productId])
+            ->with('status', 'Main image updated.');
     }
 
     public function update(Request $request, string $type, int $id): RedirectResponse
