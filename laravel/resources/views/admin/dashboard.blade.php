@@ -44,25 +44,43 @@
                 </a>
             </div>
 
-            <div class="flex gap-2 px-5 py-3 border-b border-border text-sm">
-                <a
-                    href="{{ route('admin.dashboard', ['filter' => 'all']) }}"
-                    class="rounded-lg px-3 py-1.5 text-xs transition {{ $filter === 'all' ? 'bg-accent font-semibold' : 'border border-border bg-button hover:border-accent' }}"
-                >
-                    All
-                </a>
-                <a
-                    href="{{ route('admin.dashboard', ['filter' => 'movies']) }}"
-                    class="rounded-lg px-3 py-1.5 text-xs transition {{ $filter === 'movies' ? 'bg-accent font-semibold' : 'border border-border bg-button hover:border-accent' }}"
-                >
-                    Movies
-                </a>
-                <a
-                    href="{{ route('admin.dashboard', ['filter' => 'souvenirs']) }}"
-                    class="rounded-lg px-3 py-1.5 text-xs transition {{ $filter === 'souvenirs' ? 'bg-accent font-semibold' : 'border border-border bg-button hover:border-accent' }}"
-                >
-                    Souvenirs
-                </a>
+            <div class="flex items-center justify-between gap-4 px-5 py-3 border-b border-border text-sm">
+                <div class="flex gap-2">
+                    <a
+                        href="{{ route('admin.dashboard', array_filter(['filter' => 'all', 'search' => $search])) }}"
+                        class="rounded-lg px-3 py-1.5 text-xs transition {{ $filter === 'all' ? 'bg-accent font-semibold' : 'border border-border bg-button hover:border-accent' }}"
+                    >
+                        All
+                    </a>
+                    <a
+                        href="{{ route('admin.dashboard', array_filter(['filter' => 'movies', 'search' => $search])) }}"
+                        class="rounded-lg px-3 py-1.5 text-xs transition {{ $filter === 'movies' ? 'bg-accent font-semibold' : 'border border-border bg-button hover:border-accent' }}"
+                    >
+                        Movies
+                    </a>
+                    <a
+                        href="{{ route('admin.dashboard', array_filter(['filter' => 'souvenirs', 'search' => $search])) }}"
+                        class="rounded-lg px-3 py-1.5 text-xs transition {{ $filter === 'souvenirs' ? 'bg-accent font-semibold' : 'border border-border bg-button hover:border-accent' }}"
+                    >
+                        Souvenirs
+                    </a>
+                </div>
+                <form method="GET" action="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
+                    <input type="hidden" name="filter" value="{{ $filter }}" />
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ $search }}"
+                        placeholder="Search products..."
+                        class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs placeholder:text-placeholder focus:border-accent focus:outline-none w-48"
+                    />
+                    @if ($search)
+                        <a
+                            href="{{ route('admin.dashboard', ['filter' => $filter]) }}"
+                            class="text-xs text-placeholder hover:text-accent"
+                        >Clear</a>
+                    @endif
+                </form>
             </div>
 
             <div class="overflow-x-auto">
@@ -124,6 +142,7 @@
                                             @method ('DELETE')
                                             <input type="hidden" name="filter" value="{{ $filter }}" />
                                             <input type="hidden" name="page" value="{{ $products->currentPage() }}" />
+                                            <input type="hidden" name="search" value="{{ $search }}" />
                                             <button
                                                 type="submit"
                                                 class="rounded-lg border border-border bg-button px-3 py-1.5 text-xs transition hover:border-red-500 hover:text-red-500"

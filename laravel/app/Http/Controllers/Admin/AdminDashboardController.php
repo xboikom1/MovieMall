@@ -80,23 +80,38 @@ class AdminDashboardController extends Controller
     public function index(Request $request): View
     {
         $filter = $this->normalizeFilter($request->query('filter', 'all'));
+        $search = trim($request->query('search', ''));
         $perPage = 10;
 
         if ($filter === 'movies') {
-            $products = $this->movieBaseQuery()
+            $query = $this->movieBaseQuery();
+            if ($search !== '') {
+                $query->where('movies.title', 'like', '%' . $search . '%');
+            }
+            $products = $query
                 ->orderByDesc('movies.updated_at')
                 ->paginate($perPage)
                 ->withQueryString()
                 ->through(fn (object $row) => $this->mapMovieRow($row));
         } elseif ($filter === 'souvenirs') {
-            $products = $this->souvenirBaseQuery()
+            $query = $this->souvenirBaseQuery();
+            if ($search !== '') {
+                $query->where('souvenirs.name', 'like', '%' . $search . '%');
+            }
+            $products = $query
                 ->orderByDesc('souvenirs.updated_at')
                 ->paginate($perPage)
                 ->withQueryString()
                 ->through(fn (object $row) => $this->mapSouvenirRow($row));
         } else {
-            $movies = $this->movieBaseQuery()->get()->map(fn (object $row) => $this->mapMovieRow($row));
-            $souvenirs = $this->souvenirBaseQuery()->get()->map(fn (object $row) => $this->mapSouvenirRow($row));
+            $movieQuery = $this->movieBaseQuery();
+            $souvenirQuery = $this->souvenirBaseQuery();
+            if ($search !== '') {
+                $movieQuery->where('movies.title', 'like', '%' . $search . '%');
+                $souvenirQuery->where('souvenirs.name', 'like', '%' . $search . '%');
+            }
+            $movies = $movieQuery->get()->map(fn (object $row) => $this->mapMovieRow($row));
+            $souvenirs = $souvenirQuery->get()->map(fn (object $row) => $this->mapSouvenirRow($row));
             $merged = $movies->concat($souvenirs)
                 ->sortByDesc(fn (object $product) => $product->updated_at)
                 ->values();
@@ -121,6 +136,7 @@ class AdminDashboardController extends Controller
         return view('admin.dashboard', [
             'products' => $products,
             'filter' => $filter,
+            'search' => $search,
         ]);
     }
 
@@ -348,6 +364,7 @@ class AdminDashboardController extends Controller
         $redirectParams = array_filter([
             'filter' => $this->normalizeFilter($request->input('filter', 'all')),
             'page' => $request->input('page'),
+            'search' => $request->input('search', ''),
         ], fn ($value) => $value !== null && $value !== '');
 
         return redirect()
