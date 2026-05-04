@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile/addresses/{address}', [ProfileController::class, 'destroyAddress'])->name('profile.address.destroy');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('xj7qr2')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [\App\Http\Controllers\Admin\AdminAuthController::class, 'showLogin'])->name('login');
         Route::post('/login', [\App\Http\Controllers\Admin\AdminAuthController::class, 'login']);

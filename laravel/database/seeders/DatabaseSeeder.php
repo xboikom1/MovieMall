@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Admin',
             'last_name' => 'User',
             'email' => 'admin@moviemall.com',
-            'password' => 'admin123',
+            'password' => 'MM$ecure#2026!',
             'is_admin' => true,
         ]);
 
