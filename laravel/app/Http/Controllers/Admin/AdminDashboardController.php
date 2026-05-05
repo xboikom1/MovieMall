@@ -372,6 +372,44 @@ class AdminDashboardController extends Controller
             ->with('status', ucfirst($productType) . ' deleted successfully.');
     }
 
+    public function orders(Request $request): View
+    {
+        $search = trim($request->query('search', ''));
+        $status = $request->query('status', 'all');
+
+        $query = DB::table('orders')
+            ->leftJoin('users', 'orders.user_id', '=', 'users.id')
+            ->leftJoin('invoices', 'invoices.order_id', '=', 'orders.id')
+            ->select(
+                'orders.id',
+                'orders.status',
+                'orders.delivery_type',
+                'orders.total_amount',
+                'orders.created_at',
+                DB::raw("COALESCE(users.first_name || ' ' || users.last_name, orders.guest_first_name || ' ' || orders.guest_last_name) as customer_name"),
+                DB::raw("COALESCE(users.email, orders.guest_email) as customer_email"),
+                'invoices.invoice_number'
+            )
+            ->orderByDesc('orders.created_at');
+
+        if ($search !== '') {
+            $like = '%' . strtolower($search) . '%';
+            $query->where(function ($q) use ($like) {
+                $q->whereRaw("LOWER(COALESCE(users.first_name || ' ' || users.last_name, orders.guest_first_name || ' ' || orders.guest_last_name)) LIKE ?", [$like])
+                  ->orWhereRaw("LOWER(COALESCE(users.email, orders.guest_email)) LIKE ?", [$like])
+                  ->orWhereRaw("LOWER(invoices.invoice_number) LIKE ?", [$like]);
+            });
+        }
+
+        if ($status !== 'all') {
+            $query->where('orders.status', $status);
+        }
+
+        $orders = $query->paginate(20)->withQueryString();
+
+        return view('admin.orders', compact('orders', 'search', 'status'));
+    }
+
     private function normalizeFilter(string $filter): string
     {
         return in_array($filter, ['all', 'movies', 'souvenirs'], true) ? $filter : 'all';
