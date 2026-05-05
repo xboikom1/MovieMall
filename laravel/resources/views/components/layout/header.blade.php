@@ -23,6 +23,7 @@
       </form>
       <a href="{{ route('cart.index') }}" class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent">Cart</a>
       @auth
+        <a href="{{ route('orders.index') }}" class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent">Orders</a>
         <a href="{{ route('profile.edit') }}" class="rounded-lg border border-border bg-button px-3 tablet:px-4 py-2 transition hover:bg-accent">Profile</a>
         <form method="POST" action="{{ route('logout') }}">
           @csrf

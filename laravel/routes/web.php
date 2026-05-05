@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/addresses', [ProfileController::class, 'storeAddress'])->name('profile.address.store');
     Route::delete('/profile/addresses/{address}', [ProfileController::class, 'destroyAddress'])->name('profile.address.destroy');
+    Route::post('/profile/avatar', [ProfileController::class, 'avatarUpdate'])->name('profile.avatar.update');
+    Route::delete('/profile/avatar', [ProfileController::class, 'avatarDelete'])->name('profile.avatar.delete');
+    Route::get('/orders', [\App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
 });
 
 Route::prefix('xj7qr2')->name('admin.')->group(function () {
@@ -66,6 +69,7 @@ Route::prefix('xj7qr2')->name('admin.')->group(function () {
         Route::put('/product/image/{type}/{imageId}/primary', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'setPrimaryImage'])
             ->whereNumber('imageId')
             ->name('product.image.primary');
+        Route::get('/orders', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'orders'])->name('orders');
         Route::post('/logout', [\App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('logout');
     });
 });
