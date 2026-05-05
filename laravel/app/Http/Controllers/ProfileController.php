@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -23,11 +24,6 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
@@ -63,6 +59,31 @@ class ProfileController extends Controller
         $address->delete();
 
         return Redirect::route('profile.edit')->with('status', 'address-deleted');
+    }
+
+    public function avatarUpdate(Request $request): RedirectResponse
+    {
+        $request->validate(['avatar' => ['required', 'image', 'max:2048']]);
+
+        $user = $request->user();
+        $ext  = $request->file('avatar')->getClientOriginalExtension();
+        $path = $request->file('avatar')->storeAs('avatars', $user->id . '.' . $ext, 'public');
+        $user->avatar_url = '/storage/' . $path;
+        $user->save();
+
+        return Redirect::route('profile.edit')->with('status', 'avatar-updated');
+    }
+
+    public function avatarDelete(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+        if ($user->avatar_url) {
+            Storage::disk('public')->delete(str_replace('/storage/', '', $user->avatar_url));
+            $user->avatar_url = null;
+            $user->save();
+        }
+
+        return Redirect::route('profile.edit')->with('status', 'avatar-deleted');
     }
 
     public function destroy(Request $request): RedirectResponse

@@ -18,17 +18,15 @@
 
       {{-- Flash messages --}}
       @if (session('status') === 'profile-updated')
-        <div class="mb-6 rounded-xl border border-green-600 bg-green-800/30 px-4 py-3 text-sm text-green-300">
-          Profile updated successfully.
-        </div>
+        <div class="mb-6 rounded-xl border border-green-600 bg-green-800/30 px-4 py-3 text-sm text-green-300">Profile updated successfully.</div>
       @elseif (session('status') === 'address-added')
-        <div class="mb-6 rounded-xl border border-green-600 bg-green-800/30 px-4 py-3 text-sm text-green-300">
-          Address added successfully.
-        </div>
+        <div class="mb-6 rounded-xl border border-green-600 bg-green-800/30 px-4 py-3 text-sm text-green-300">Address added successfully.</div>
       @elseif (session('status') === 'address-deleted')
-        <div class="mb-6 rounded-xl border border-green-600 bg-green-800/30 px-4 py-3 text-sm text-green-300">
-          Address removed.
-        </div>
+        <div class="mb-6 rounded-xl border border-green-600 bg-green-800/30 px-4 py-3 text-sm text-green-300">Address removed.</div>
+      @elseif (session('status') === 'avatar-updated')
+        <div class="mb-6 rounded-xl border border-green-600 bg-green-800/30 px-4 py-3 text-sm text-green-300">Avatar updated.</div>
+      @elseif (session('status') === 'avatar-deleted')
+        <div class="mb-6 rounded-xl border border-green-600 bg-green-800/30 px-4 py-3 text-sm text-green-300">Avatar removed.</div>
       @endif
 
       {{-- Profile card --}}
@@ -48,14 +46,23 @@
             </div>
 
             <div class="mt-1 flex flex-wrap items-center justify-center gap-3">
-              <label class="cursor-pointer rounded-xl border border-border bg-bg px-4 py-2 text-sm font-semibold transition hover:border-accent hover:text-accent">
-                Upload New
-                <input type="file" class="sr-only" accept="image/*" />
-              </label>
-              <button type="button"
-                class="rounded-xl border border-border bg-bg px-4 py-2 text-sm font-semibold transition hover:border-accent hover:text-accent">
-                Delete Avatar
-              </button>
+              <form method="POST" action="{{ route('profile.avatar.update') }}" enctype="multipart/form-data" id="avatar-upload-form">
+                @csrf
+                <label class="cursor-pointer rounded-xl border border-border bg-bg px-4 py-2 text-sm font-semibold transition hover:border-accent hover:text-accent">
+                  Upload New
+                  <input type="file" name="avatar" class="sr-only" accept="image/*" onchange="document.getElementById('avatar-upload-form').submit()" />
+                </label>
+                @error('avatar') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
+              </form>
+              @if ($user->avatar_url)
+                <form method="POST" action="{{ route('profile.avatar.delete') }}">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="rounded-xl border border-border bg-bg px-4 py-2 text-sm font-semibold transition hover:border-red-500 hover:text-red-400">
+                    Delete Avatar
+                  </button>
+                </form>
+              @endif
             </div>
           </aside>
 
