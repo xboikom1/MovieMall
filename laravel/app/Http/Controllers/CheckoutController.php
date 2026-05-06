@@ -72,31 +72,6 @@ class CheckoutController extends Controller
             }
         }
 
-        // Availability checks (pre-transaction)
-        foreach ($cartItems as $item) {
-            $opts = is_string($item['options'] ?? null) ? json_decode($item['options'], true) : ($item['options'] ?? []);
-
-            if ($item['type'] === 'souvenir') {
-                $souvenir = DB::table('souvenirs')->where('id', $item['reference_id'])->first();
-                if ($souvenir->quantity < ($item['quantity'] ?? 1)) {
-                    return response()->json(['status' => 'error', 'message' => "\"$souvenir->name\" is out of stock."], 422);
-                }
-            } elseif ($item['type'] === 'ticket') {
-                $slotId  = $opts['schedule_slot_id'];
-                $seatIds = $opts['seat_ids'];
-                $taken   = DB::table('tickets')
-                    ->join('order_tickets', 'tickets.id', '=', 'order_tickets.ticket_id')
-                    ->join('orders', 'order_tickets.order_id', '=', 'orders.id')
-                    ->where('orders.status', 'paid')
-                    ->where('tickets.schedule_slot_id', $slotId)
-                    ->whereIn('tickets.seat_id', $seatIds)
-                    ->count();
-                if ($taken > 0) {
-                    return response()->json(['status' => 'error', 'message' => 'One or more selected seats are no longer available.'], 422);
-                }
-            }
-        }
-
         // Calculate totals server-side
         $subtotal = 0;
         foreach ($cartItems as $item) {
@@ -118,70 +93,104 @@ class CheckoutController extends Controller
 
         $orderId = null;
 
-        DB::transaction(function () use ($request, $cartItems, $subtotal, $shippingCost, $total, &$orderId) {
-            $orderId = DB::table('orders')->insertGetId([
-                'user_id'              => Auth::id(),
-                'guest_email'          => Auth::check() ? null : $request->email,
-                'guest_first_name'     => Auth::check() ? null : $request->firstName,
-                'guest_last_name'      => Auth::check() ? null : $request->lastName,
-                'guest_phone'          => $request->phone,
-                'status'               => 'paid',
-                'delivery_type'        => $request->delivery,
-                'shipping_street'      => $request->address1,
-                'shipping_city'        => $request->city,
-                'shipping_postal_code' => $request->postal,
-                'shipping_country'     => $request->country,
-                'subtotal'             => $subtotal,
-                'shipping_cost'        => $shippingCost,
-                'tax'                  => 0,
-                'total_amount'         => $total,
-                'created_at'           => now(),
-                'updated_at'           => now(),
-            ]);
+        try {
+            DB::transaction(function () use ($request, $cartItems, $subtotal, $shippingCost, $total, &$orderId) {
+                $orderId = DB::table('orders')->insertGetId([
+                    'user_id'              => Auth::id(),
+                    'guest_email'          => Auth::check() ? null : $request->email,
+                    'guest_first_name'     => Auth::check() ? null : $request->firstName,
+                    'guest_last_name'      => Auth::check() ? null : $request->lastName,
+                    'guest_phone'          => $request->phone,
+                    'status'               => 'paid',
+                    'delivery_type'        => $request->delivery,
+                    'shipping_street'      => $request->address1,
+                    'shipping_city'        => $request->city,
+                    'shipping_postal_code' => $request->postal,
+                    'shipping_country'     => $request->country,
+                    'subtotal'             => $subtotal,
+                    'shipping_cost'        => $shippingCost,
+                    'tax'                  => 0,
+                    'total_amount'         => $total,
+                    'created_at'           => now(),
+                    'updated_at'           => now(),
+                ]);
 
-            foreach ($cartItems as $item) {
-                $opts = is_string($item['options'] ?? null) ? json_decode($item['options'], true) : ($item['options'] ?? []);
+                foreach ($cartItems as $item) {
+                    $opts = is_string($item['options'] ?? null) ? json_decode($item['options'], true) : ($item['options'] ?? []);
 
-                if ($item['type'] === 'souvenir') {
-                    $souvenir = DB::table('souvenirs')->where('id', $item['reference_id'])->first();
-                    DB::table('order_souvenirs')->insert([
-                        'order_id'    => $orderId,
-                        'souvenir_id' => $souvenir->id,
-                        'quantity'    => $item['quantity'] ?? 1,
-                        'price'       => $souvenir->price,
-                    ]);
-                    DB::table('souvenirs')->where('id', $souvenir->id)->decrement('quantity', $item['quantity'] ?? 1);
-                } elseif ($item['type'] === 'ticket') {
-                    $slotId  = $opts['schedule_slot_id'];
-                    $seatIds = $opts['seat_ids'];
-                    $price   = (float) (DB::table('movies')->where('id', $item['reference_id'])->value('price') ?? 9.99);
+                    if ($item['type'] === 'souvenir') {
+                        // Lock the row to prevent concurrent overselling
+                        $souvenir = DB::table('souvenirs')
+                            ->where('id', $item['reference_id'])
+                            ->lockForUpdate()
+                            ->first();
 
-                    foreach ($seatIds as $seatId) {
-                        $ticketId = DB::table('tickets')->insertGetId([
-                            'seat_id'          => $seatId,
-                            'schedule_slot_id' => $slotId,
-                            'price'            => $price,
-                            'created_at'       => now(),
+                        if (!$souvenir || $souvenir->quantity < ($item['quantity'] ?? 1)) {
+                            throw new \RuntimeException('out_of_stock:' . ($souvenir->name ?? 'item'));
+                        }
+
+                        DB::table('order_souvenirs')->insert([
+                            'order_id'    => $orderId,
+                            'souvenir_id' => $souvenir->id,
+                            'quantity'    => $item['quantity'] ?? 1,
+                            'price'       => $souvenir->price,
                         ]);
-                        DB::table('order_tickets')->insert([
-                            'order_id'  => $orderId,
-                            'ticket_id' => $ticketId,
-                        ]);
+                        DB::table('souvenirs')->where('id', $souvenir->id)->decrement('quantity', $item['quantity'] ?? 1);
+
+                    } elseif ($item['type'] === 'ticket') {
+                        $slotId  = $opts['schedule_slot_id'];
+                        $seatIds = $opts['seat_ids'];
+                        $price   = (float) (DB::table('movies')->where('id', $item['reference_id'])->value('price') ?? 9.99);
+
+                        // Re-check seat availability inside the transaction to close the race window
+                        $taken = DB::table('tickets')
+                            ->join('order_tickets', 'tickets.id', '=', 'order_tickets.ticket_id')
+                            ->join('orders', 'order_tickets.order_id', '=', 'orders.id')
+                            ->where('orders.status', 'paid')
+                            ->where('tickets.schedule_slot_id', $slotId)
+                            ->whereIn('tickets.seat_id', $seatIds)
+                            ->count();
+
+                        if ($taken > 0) {
+                            throw new \RuntimeException('seats_taken');
+                        }
+
+                        foreach ($seatIds as $seatId) {
+                            $ticketId = DB::table('tickets')->insertGetId([
+                                'seat_id'          => $seatId,
+                                'schedule_slot_id' => $slotId,
+                                'price'            => $price,
+                                'created_at'       => now(),
+                            ]);
+                            DB::table('order_tickets')->insert([
+                                'order_id'  => $orderId,
+                                'ticket_id' => $ticketId,
+                            ]);
+                        }
                     }
                 }
-            }
 
-            $invoiceNumber = 'INV-MM-' . now()->format('Ymd') . '-' . str_pad($orderId, 4, '0', STR_PAD_LEFT);
-            DB::table('invoices')->insert([
-                'order_id'       => $orderId,
-                'invoice_number' => $invoiceNumber,
-                'issued_at'      => now(),
-            ]);
+                $invoiceNumber = 'INV-MM-' . now()->format('Ymd') . '-' . str_pad($orderId, 4, '0', STR_PAD_LEFT);
+                DB::table('invoices')->insert([
+                    'order_id'       => $orderId,
+                    'invoice_number' => $invoiceNumber,
+                    'issued_at'      => now(),
+                ]);
 
-            if (Auth::check()) {
-                CartItem::where('user_id', Auth::id())->delete();
+                if (Auth::check()) {
+                    CartItem::where('user_id', Auth::id())->delete();
+                }
+            });
+        } catch (\RuntimeException $e) {
+            if (str_starts_with($e->getMessage(), 'out_of_stock:')) {
+                $name = substr($e->getMessage(), 13);
+                return response()->json(['status' => 'error', 'message' => "\"$name\" is out of stock."], 422);
             }
-        });
+            if ($e->getMessage() === 'seats_taken') {
+                return response()->json(['status' => 'error', 'message' => 'One or more selected seats are no longer available.'], 422);
+            }
+            throw $e;
+        }
 
         $paymentDisplay = match ($request->payment) {
             'card'       => 'Credit Card •••• ' . substr(str_replace(' ', '', $request->cardNumber ?? '0000'), -4),
