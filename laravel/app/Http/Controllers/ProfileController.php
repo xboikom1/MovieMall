@@ -66,6 +66,10 @@ class ProfileController extends Controller
         $request->validate(['avatar' => ['required', 'image', 'max:2048']]);
 
         $user = $request->user();
+        if ($user->avatar_url) {
+            Storage::disk('public')->delete(str_replace('/storage/', '', $user->avatar_url));
+        }
+
         $ext  = $request->file('avatar')->getClientOriginalExtension();
         $path = $request->file('avatar')->storeAs('avatars', $user->id . '.' . $ext, 'public');
         $user->avatar_url = '/storage/' . $path;
