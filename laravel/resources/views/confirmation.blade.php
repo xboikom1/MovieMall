@@ -121,12 +121,9 @@
                 order_email: '{{ session('order_email', 'email@example.com') }}',
                 delivery_method: '{{ session('delivery_method', 'Courier') }}',
                 delivery_address: '{{ session('delivery_address', '123 Main Street, Bratislava, 81101, Slovakia') }}',
-                items: {
-                    !! json_encode(session('order_items', [])) !!
-                },
-                items_json: {
-                    !! session('order_items_json') ? session('order_items_json') : 'null' !!
-                };
+                items: {!! json_encode(session('order_items', [])) !!},
+                items_json: {!! session('order_items_json') ? session('order_items_json') : 'null' !!}
+            };
 
             return {
                 items: [],
@@ -184,7 +181,7 @@
                     } catch (e) {
                         console.error('Failed to clear cart', e);
                     }
-                };
+                }
             }
     </script>
 </body>
