@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <p class="mt-5 text-xs text-placeholder">A confirmation email has been sent to <span class="text-text font-medium">{{ session('order_email', 'email@example.com') }}</span></p>
+                <p class="mt-5 text-xs text-placeholder">Order placed for <span class="text-text font-medium">{{ session('order_email', 'email@example.com') }}</span></p>
             </div>
 
             <div
