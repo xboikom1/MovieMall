@@ -13,9 +13,9 @@ class MovieController extends Controller
     public function show(string $slug): View
     {
         $movies = DB::table('movies')
-            ->join('directors', 'movies.director_id', '=', 'directors.id')
-            ->join('studios', 'movies.studio_id', '=', 'studios.id')
-            ->join('languages', 'movies.language_id', '=', 'languages.id')
+            ->leftJoin('directors', 'movies.director_id', '=', 'directors.id')
+            ->leftJoin('studios', 'movies.studio_id', '=', 'studios.id')
+            ->leftJoin('languages', 'movies.language_id', '=', 'languages.id')
             ->select(
                 'movies.id',
                 'movies.title',
