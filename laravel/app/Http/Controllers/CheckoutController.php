@@ -39,7 +39,6 @@ class CheckoutController extends Controller
             'items' => 'nullable|array',
         ]);
 
-        // Load cart items
         if (Auth::check()) {
             $cartItems = CartItem::where('user_id', Auth::id())->get()->toArray();
         } else {
@@ -55,30 +54,45 @@ class CheckoutController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Your cart is empty.'], 422);
         }
 
-        // Validate availability before touching the DB
+        // Structural validation: reject carts with missing slot/seat data or non-existent products
+        foreach ($cartItems as $item) {
+            $opts = is_string($item['options'] ?? null) ? json_decode($item['options'], true) : ($item['options'] ?? []);
+
+            if ($item['type'] === 'ticket') {
+                if (empty($opts['schedule_slot_id']) || empty($opts['seat_ids'])) {
+                    return response()->json(['status' => 'error', 'message' => 'Please select a showtime and seats before checking out.'], 422);
+                }
+                if (!DB::table('movies')->where('id', $item['reference_id'])->exists()) {
+                    return response()->json(['status' => 'error', 'message' => 'Invalid item in cart.'], 422);
+                }
+            } elseif ($item['type'] === 'souvenir') {
+                if (!DB::table('souvenirs')->where('id', $item['reference_id'])->exists()) {
+                    return response()->json(['status' => 'error', 'message' => 'Invalid item in cart.'], 422);
+                }
+            }
+        }
+
+        // Availability checks (pre-transaction)
         foreach ($cartItems as $item) {
             $opts = is_string($item['options'] ?? null) ? json_decode($item['options'], true) : ($item['options'] ?? []);
 
             if ($item['type'] === 'souvenir') {
                 $souvenir = DB::table('souvenirs')->where('id', $item['reference_id'])->first();
-                if (!$souvenir || $souvenir->quantity < ($item['quantity'] ?? 1)) {
-                    $name = $souvenir->name ?? 'A souvenir';
-                    return response()->json(['status' => 'error', 'message' => "\"$name\" is out of stock."], 422);
+                if ($souvenir->quantity < ($item['quantity'] ?? 1)) {
+                    return response()->json(['status' => 'error', 'message' => "\"$souvenir->name\" is out of stock."], 422);
                 }
             } elseif ($item['type'] === 'ticket') {
-                $slotId  = $opts['schedule_slot_id'] ?? null;
-                $seatIds = $opts['seat_ids'] ?? [];
-                if ($slotId && !empty($seatIds)) {
-                    $taken = DB::table('tickets')
-                        ->join('order_tickets', 'tickets.id', '=', 'order_tickets.ticket_id')
-                        ->join('orders', 'order_tickets.order_id', '=', 'orders.id')
-                        ->where('orders.status', 'paid')
-                        ->where('tickets.schedule_slot_id', $slotId)
-                        ->whereIn('tickets.seat_id', $seatIds)
-                        ->count();
-                    if ($taken > 0) {
-                        return response()->json(['status' => 'error', 'message' => 'One or more selected seats are no longer available.'], 422);
-                    }
+                $slotId  = $opts['schedule_slot_id'];
+                $seatIds = $opts['seat_ids'];
+                $taken   = DB::table('tickets')
+                    ->join('order_tickets', 'tickets.id', '=', 'order_tickets.ticket_id')
+                    ->join('orders', 'order_tickets.order_id', '=', 'orders.id')
+                    ->where('orders.status', 'paid')
+                    ->where('tickets.schedule_slot_id', $slotId)
+                    ->whereIn('tickets.seat_id', $seatIds)
+                    ->count();
+                if ($taken > 0) {
+                    return response()->json(['status' => 'error', 'message' => 'One or more selected seats are no longer available.'], 422);
                 }
             }
         }
@@ -88,12 +102,10 @@ class CheckoutController extends Controller
         foreach ($cartItems as $item) {
             $opts = is_string($item['options'] ?? null) ? json_decode($item['options'], true) : ($item['options'] ?? []);
             if ($item['type'] === 'souvenir') {
-                $price     = (float) DB::table('souvenirs')->where('id', $item['reference_id'])->value('price');
-                $subtotal += $price * ($item['quantity'] ?? 1);
+                $subtotal += (float) DB::table('souvenirs')->where('id', $item['reference_id'])->value('price') * ($item['quantity'] ?? 1);
             } elseif ($item['type'] === 'ticket') {
                 $price     = (float) (DB::table('movies')->where('id', $item['reference_id'])->value('price') ?? 9.99);
-                $count     = count($opts['seat_ids'] ?? []) ?: ($item['quantity'] ?? 1);
-                $subtotal += $price * $count;
+                $subtotal += $price * count($opts['seat_ids'] ?? []);
             }
         }
 
@@ -105,6 +117,7 @@ class CheckoutController extends Controller
         $total = round($subtotal + $shippingCost, 2);
 
         $orderId = null;
+
         DB::transaction(function () use ($request, $cartItems, $subtotal, $shippingCost, $total, &$orderId) {
             $orderId = DB::table('orders')->insertGetId([
                 'user_id'              => Auth::id(),
@@ -139,8 +152,8 @@ class CheckoutController extends Controller
                     ]);
                     DB::table('souvenirs')->where('id', $souvenir->id)->decrement('quantity', $item['quantity'] ?? 1);
                 } elseif ($item['type'] === 'ticket') {
-                    $slotId  = $opts['schedule_slot_id'] ?? null;
-                    $seatIds = $opts['seat_ids'] ?? [];
+                    $slotId  = $opts['schedule_slot_id'];
+                    $seatIds = $opts['seat_ids'];
                     $price   = (float) (DB::table('movies')->where('id', $item['reference_id'])->value('price') ?? 9.99);
 
                     foreach ($seatIds as $seatId) {
@@ -178,22 +191,21 @@ class CheckoutController extends Controller
             default      => ucfirst($request->payment),
         };
 
-        $orderNumber = 'MM-' . now()->format('Ymd') . '-' . str_pad($orderId, 4, '0', STR_PAD_LEFT);
-
+        $orderNumber    = 'MM-' . now()->format('Ymd') . '-' . str_pad($orderId, 4, '0', STR_PAD_LEFT);
         $cartController = new CartController();
         $enrichedItems  = $cartController->details(new Request(['items' => $cartItems]))->getData(true)['items'] ?? [];
 
         session([
-            'order_number'    => '#' . $orderNumber,
-            'order_date'      => now()->format('F j, Y'),
-            'order_total'     => number_format($total, 2) . '€',
-            'order_email'     => Auth::check() ? Auth::user()->email : $request->email,
-            'payment_display' => $paymentDisplay,
-            'delivery_method' => ucfirst($request->delivery),
+            'order_number'     => '#' . $orderNumber,
+            'order_date'       => now()->format('F j, Y'),
+            'order_total'      => number_format($total, 2) . '€',
+            'order_email'      => Auth::check() ? Auth::user()->email : $request->email,
+            'payment_display'  => $paymentDisplay,
+            'delivery_method'  => ucfirst($request->delivery),
             'delivery_address' => $request->delivery !== 'pickup'
                 ? implode(', ', array_filter([$request->address1, $request->city, $request->postal, $request->country]))
                 : 'In-store pickup',
-            'order_items'     => $enrichedItems,
+            'order_items'      => $enrichedItems,
             'order_items_json' => json_encode($enrichedItems),
         ]);
 
