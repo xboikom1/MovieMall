@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('xj7qr2')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [\App\Http\Controllers\Admin\AdminAuthController::class, 'showLogin'])->name('login');
-        Route::post('/login', [\App\Http\Controllers\Admin\AdminAuthController::class, 'login']);
+        Route::post('/login', [\App\Http\Controllers\Admin\AdminAuthController::class, 'login'])->middleware('throttle:5,1');
     });
 
     Route::middleware(['auth', 'admin'])->group(function () {
