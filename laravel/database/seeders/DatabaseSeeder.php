@@ -216,44 +216,52 @@ class DatabaseSeeder extends Seeder
         }
 
         $hallAId = DB::table('halls')->where('name', 'Hall A')->value('id');
-        $supergrandpaId = DB::table('movies')->where('title', 'SuperGrandpa')->value('id');
-        $squirrelId = DB::table('movies')->where('title', "The Squirrel's Revenge")->value('id');
+        $hallBId = DB::table('halls')->where('name', 'Hall B')->value('id');
 
-        $slots = [
-            [
-                'movie_id' => $supergrandpaId,
-                'hall_id' => $hallAId,
-                'starts_at' => '2026-03-06 14:00:00',
-                'ends_at' => '2026-03-06 15:58:00',
-            ],
-            [
-                'movie_id' => $supergrandpaId,
-                'hall_id' => $hallAId,
-                'starts_at' => '2026-03-06 16:30:00',
-                'ends_at' => '2026-03-06 18:28:00',
-            ],
-            [
-                'movie_id' => $supergrandpaId,
-                'hall_id' => $hallAId,
-                'starts_at' => '2026-03-06 19:30:00',
-                'ends_at' => '2026-03-06 21:28:00',
-            ],
-            [
-                'movie_id' => $supergrandpaId,
-                'hall_id' => $hallAId,
-                'starts_at' => '2026-03-07 18:30:00',
-                'ends_at' => '2026-03-07 20:28:00',
-            ],
-            [
-                'movie_id' => $squirrelId,
-                'hall_id' => $hallAId,
-                'starts_at' => '2026-03-08 16:30:00',
-                'ends_at' => '2026-03-08 18:11:00',
-            ],
+        $slotDefs = [
+            // SuperGrandpa — Hall A
+            ['title' => 'SuperGrandpa',            'hall' => $hallAId, 'starts_at' => '2026-05-10 14:00:00', 'length' => 118],
+            ['title' => 'SuperGrandpa',            'hall' => $hallAId, 'starts_at' => '2026-05-10 17:30:00', 'length' => 118],
+            ['title' => 'SuperGrandpa',            'hall' => $hallAId, 'starts_at' => '2026-05-11 19:00:00', 'length' => 118],
+            ['title' => 'SuperGrandpa',            'hall' => $hallAId, 'starts_at' => '2026-05-13 15:00:00', 'length' => 118],
+            // Gollum — Hall B
+            ['title' => 'Gollum: Steal The Ring',  'hall' => $hallBId, 'starts_at' => '2026-05-10 13:00:00', 'length' => 132],
+            ['title' => 'Gollum: Steal The Ring',  'hall' => $hallBId, 'starts_at' => '2026-05-11 16:00:00', 'length' => 132],
+            ['title' => 'Gollum: Steal The Ring',  'hall' => $hallBId, 'starts_at' => '2026-05-12 20:00:00', 'length' => 132],
+            ['title' => 'Gollum: Steal The Ring',  'hall' => $hallBId, 'starts_at' => '2026-05-14 14:30:00', 'length' => 132],
+            // Mission: Possible — Hall A
+            ['title' => 'Mission: Possible',       'hall' => $hallAId, 'starts_at' => '2026-05-09 11:00:00', 'length' => 109],
+            ['title' => 'Mission: Possible',       'hall' => $hallAId, 'starts_at' => '2026-05-11 13:30:00', 'length' => 109],
+            ['title' => 'Mission: Possible',       'hall' => $hallAId, 'starts_at' => '2026-05-13 18:00:00', 'length' => 109],
+            // Hiding Nemo — Hall B
+            ['title' => 'Hiding Nemo',             'hall' => $hallBId, 'starts_at' => '2026-05-09 15:00:00', 'length' => 103],
+            ['title' => 'Hiding Nemo',             'hall' => $hallBId, 'starts_at' => '2026-05-10 19:00:00', 'length' => 103],
+            ['title' => 'Hiding Nemo',             'hall' => $hallBId, 'starts_at' => '2026-05-12 12:00:00', 'length' => 103],
+            // The Ordinary Blue Bulk — Hall A
+            ['title' => 'The Ordinary Blue Bulk',  'hall' => $hallAId, 'starts_at' => '2026-05-09 17:00:00', 'length' => 124],
+            ['title' => 'The Ordinary Blue Bulk',  'hall' => $hallAId, 'starts_at' => '2026-05-11 20:00:00', 'length' => 124],
+            ['title' => 'The Ordinary Blue Bulk',  'hall' => $hallAId, 'starts_at' => '2026-05-14 16:00:00', 'length' => 124],
+            // The Squirrel's Revenge — Hall B
+            ["title" => "The Squirrel's Revenge",  'hall' => $hallBId, 'starts_at' => '2026-05-09 13:00:00', 'length' => 101],
+            ["title" => "The Squirrel's Revenge",  'hall' => $hallBId, 'starts_at' => '2026-05-10 16:00:00', 'length' => 101],
+            ["title" => "The Squirrel's Revenge",  'hall' => $hallBId, 'starts_at' => '2026-05-12 19:30:00', 'length' => 101],
+            ["title" => "The Squirrel's Revenge",  'hall' => $hallBId, 'starts_at' => '2026-05-15 14:00:00', 'length' => 101],
+            // Dr. Normal — Hall A
+            ['title' => 'Dr. Normal',              'hall' => $hallAId, 'starts_at' => '2026-05-09 12:00:00', 'length' => 116],
+            ['title' => 'Dr. Normal',              'hall' => $hallAId, 'starts_at' => '2026-05-11 15:00:00', 'length' => 116],
+            ['title' => 'Dr. Normal',              'hall' => $hallAId, 'starts_at' => '2026-05-13 20:00:00', 'length' => 116],
+            ['title' => 'Dr. Normal',              'hall' => $hallAId, 'starts_at' => '2026-05-15 17:30:00', 'length' => 116],
         ];
 
-        foreach ($slots as $slot) {
-            DB::table('schedule_slots')->insert($slot);
+        foreach ($slotDefs as $def) {
+            $movieId = DB::table('movies')->where('title', $def['title'])->value('id');
+            $ends = \Carbon\Carbon::parse($def['starts_at'])->addMinutes($def['length'] + 15)->format('Y-m-d H:i:s');
+            DB::table('schedule_slots')->insert([
+                'movie_id'  => $movieId,
+                'hall_id'   => $def['hall'],
+                'starts_at' => $def['starts_at'],
+                'ends_at'   => $ends,
+            ]);
         }
 
         $availableId   = $statusId('available');
