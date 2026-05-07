@@ -73,17 +73,65 @@ class MovieController extends Controller
                 ];
             })->toArray();
 
-        $scheduleSlot = DB::table('schedule_slots')->where('movie_id', $movieRecord->id)->first();
+        $allSlots = DB::table('schedule_slots')
+            ->where('movie_id', $movieRecord->id)
+            ->orderBy('starts_at')
+            ->get();
 
-        if ($scheduleSlot) {
-            $seats = DB::table('seats')->where('hall_id', $scheduleSlot->hall_id)->get(['id', 'row_label', 'seat_number']);
+        $firstSlot = $allSlots->first();
+
+        if ($firstSlot) {
+            $seats = DB::table('seats')->where('hall_id', $firstSlot->hall_id)->get(['id', 'row_label', 'seat_number']);
         } else {
             $seats = DB::table('seats')->where('hall_id', 1)->get(['id', 'row_label', 'seat_number']);
         }
 
+        $editingItem = session('editing_cart_item');
+        if ($editingItem && (
+            request()->query('edit') !== '1' ||
+            (string) ($editingItem['reference_id'] ?? '') !== (string) $movieRecord->id
+        )) {
+            $editingItem = null;
+        }
+
+        $slotsForView = $allSlots->map(fn($slot) => [
+            'id'   => $slot->id,
+            'date' => Carbon::parse($slot->starts_at)->format('M j'),
+            'time' => Carbon::parse($slot->starts_at)->format('H:i'),
+        ])->values()->toArray();
+
+        $uniqueDates  = array_values(array_unique(array_column($slotsForView, 'date')));
+        $initialDate  = $editingItem['options']['date'] ?? ($uniqueDates[0] ?? null);
+        $initialTimes = array_values(array_column(
+            array_filter($slotsForView, fn($s) => $s['date'] === $initialDate),
+            'time'
+        ));
+        $initialTime  = $editingItem['options']['time'] ?? ($initialTimes[0] ?? null);
+
+        // Use editing item's slot if present, otherwise first slot (null if no slots exist)
+        $initialSlotId = $firstSlot?->id;
+        if ($editingItem && !empty($editingItem['options']['schedule_slot_id'])) {
+            $initialSlotId = (int) $editingItem['options']['schedule_slot_id'];
+        }
+
+        $bookedSeatIds = $initialSlotId
+            ? DB::table('tickets')
+                ->join('order_tickets', 'tickets.id', '=', 'order_tickets.ticket_id')
+                ->join('orders', 'order_tickets.order_id', '=', 'orders.id')
+                ->where('orders.status', 'paid')
+                ->where('tickets.schedule_slot_id', $initialSlotId)
+                ->pluck('tickets.seat_id')
+                ->map(fn($id) => (string) $id)->all()
+            : [];
+
         $movieData = [
-            'id' => $movieRecord->id,
-            'schedule_slot_id' => $scheduleSlot ? $scheduleSlot->id : 1,
+            'id'               => $movieRecord->id,
+            'schedule_slots'   => $slotsForView,
+            'schedule_slot_id' => $initialSlotId,
+            'unique_dates'     => $uniqueDates,
+            'initial_date'     => $initialDate,
+            'initial_times'    => $initialTimes,
+            'initial_time'     => $initialTime,
             'slug' => $slug,
             'title' => $movieRecord->title,
             'images' => $images,
@@ -98,13 +146,29 @@ class MovieController extends Controller
             'language' => $movieRecord->language,
             'studio' => $movieRecord->studio,
             'related_souvenirs' => $relatedSouvenirs,
-            'movie_id' => $movieRecord->id,
-            'seats' => $seats,
+            'movie_id'          => $movieRecord->id,
+            'seats'             => $seats,
+            'booked_seat_ids'   => $bookedSeatIds,
+            'editing_item'      => $editingItem,
         ];
 
         return view('movie-details', [
             'movie' => $movieData,
         ]);
+    }
+
+    public function bookedSeats(int $id, Request $request)
+    {
+        $slotId = $request->input('slot_id');
+        $ids = DB::table('tickets')
+            ->join('order_tickets', 'tickets.id', '=', 'order_tickets.ticket_id')
+            ->join('orders', 'order_tickets.order_id', '=', 'orders.id')
+            ->where('orders.status', 'paid')
+            ->where('tickets.schedule_slot_id', $slotId)
+            ->pluck('tickets.seat_id')
+            ->map(fn($id) => (string) $id)
+            ->all();
+        return response()->json(['booked_seat_ids' => $ids]);
     }
 
     public function index(Request $request): View

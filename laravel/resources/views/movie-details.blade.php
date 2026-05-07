@@ -163,7 +163,7 @@
 
                     <p class="mb-2 text-xs font-semibold uppercase tracking-widest text-placeholder">1. Select Date</p>
                     <div class="mb-5 flex gap-2 text-sm font-semibold">
-                        <template x-for="date in dates" :key="date">
+                        <template x-for="date in uniqueDates" :key="date">
                             <button
                                 @click="setDate(date)"
                                 :class="selectedDate === date
@@ -177,7 +177,7 @@
 
                     <p class="mb-2 text-xs font-semibold uppercase tracking-widest text-placeholder">2. Select Time</p>
                     <div class="mb-5 grid grid-cols-2 gap-2 text-sm font-semibold">
-                        <template x-for="time in times" :key="time">
+                        <template x-for="time in timesForDate" :key="time">
                             <button
                                 @click="setTime(time)"
                                 :class="selectedTime === time
@@ -253,241 +253,175 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('movieBooking', () => ({
-                dates: ['Mar 6', 'Mar 7', 'Mar 8'],
-                times: ['14:00', '16:30', '19:30', '22:00'],
-                selectedDate: 'Mar 6',
-                selectedTime: '19:30',
+                scheduleSlots: @json($movie['schedule_slots'] ?? []),
                 pricePerTicket: {{ $movie['price'] ?? 9.99 }},
+                movieId: {{ $movie['id'] ?? 1 }},
 
-                allSeats: @json ($movie['seats']),
+                selectedDate: @json($movie['initial_date'] ?? null),
+                selectedTime: @json($movie['initial_time'] ?? null),
+                selectedSlotId: null,
+
+                uniqueDates: @json($movie['unique_dates'] ?? []),
+                timesForDate: @json($movie['initial_times'] ?? []),
+
+                allSeats: @json($movie['seats']),
+                allBookedSeatIds: @json($movie['booked_seat_ids'] ?? []),
+                editing: @json($movie['editing_item']),
+                cartSeatIds: [],
                 layout: [],
 
+                computeTimesForDate() {
+                    this.timesForDate = this.scheduleSlots
+                        .filter(s => s.date === this.selectedDate)
+                        .map(s => s.time);
+                },
+
+                computeSlotId() {
+                    const slot = this.scheduleSlots.find(
+                        s => s.date === this.selectedDate && s.time === this.selectedTime
+                    );
+                    this.selectedSlotId = slot?.id ?? null;
+                },
+
                 async init() {
+                    this.computeSlotId();
+
+                    if (window.cartSyncPromise) await window.cartSyncPromise;
+
                     try {
-                        const editRaw = localStorage.getItem('moviemall_edit_item');
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const isEditParam = urlParams.get('edit') === '1';
-
-                        if (editRaw && isEditParam) {
-                            const edit = JSON.parse(editRaw);
-
-                            const ts = parseInt(edit && typeof edit.ts !== 'undefined' ? edit.ts : NaN, 10);
-                            if (Number.isFinite(ts) && Date.now() - ts > 30 * 60 * 1000) {
-                                try {
-                                    localStorage.removeItem('moviemall_edit_item');
-                                } catch (e) {}
-                            } else {
-                                const currentMovieId = String({{ $movie['id'] ?? $movie['movie_id'] ?? 1 }});
-                                if (String(edit.reference_id) === currentMovieId) {
-                                    if (edit.options && edit.options.date) this.selectedDate = edit.options.date;
-                                    if (edit.options && edit.options.time) this.selectedTime = edit.options.time;
-                                    window.__editingCartItem = edit;
-                                }
-                            }
-
-                            try {
-                                sessionStorage.removeItem('moviemall_edit_active');
-                            } catch (e) {}
-                        }
-
-                        const response = await axios.post(
-                            '{{ route('cart.details') }}',
-                            { items: window.CartService.getCart() },
-                            { headers: { 'X-CSRF-TOKEN': window.csrfToken } }
-                        );
-                        this.cartDetails = response.data.items || [];
+                        const response = await axios.get('{{ route('cart.details') }}', {
+                            headers: { 'X-CSRF-TOKEN': window.csrfToken }
+                        });
+                        this.updateCartSeats(response.data.items || []);
                     } catch (e) {
                         console.error(e);
-                        this.cartDetails = [];
                     }
 
                     this.generateLayout();
 
-                    try {
-                        const edit = window.__editingCartItem;
-                        if (edit && edit.options && Array.isArray(edit.options.seat_ids)) {
-                            const seatIds = edit.options.seat_ids.map(String);
-                            this.layout.forEach((r) =>
-                                r.seats.forEach((s) => {
-                                    if (seatIds.includes(String(s.id))) s.status = 'selected';
-                                })
-                            );
-                        }
-                    } catch (e) {
-                        console.error(e);
+                    if (this.editing?.options?.seat_ids) {
+                        const editIds = this.editing.options.seat_ids.map(String);
+                        this.layout.forEach(r =>
+                            r.seats.forEach(s => {
+                                if (editIds.includes(String(s.id))) s.status = 'selected';
+                            })
+                        );
                     }
                 },
 
-                generateLayout() {
-                    const seed = this.selectedDate + this.selectedTime;
-
-                    const cartItems = this.cartDetails && this.cartDetails.length > 0 ? this.cartDetails : window.CartService.getCart();
-                    const seatsInCart = [];
-                    const editing = window.__editingCartItem || null;
-
-                    const optionsMatch = (a, b) => {
-                        if (!a || !b) return false;
-                        if (String(a.schedule_slot_id || '') !== String(b.schedule_slot_id || '')) return false;
-                        if (String(a.date || '') !== String(b.date || '')) return false;
-                        if (String(a.time || '') !== String(b.time || '')) return false;
-                        const aSeats = Array.isArray(a.seat_ids) ? [...a.seat_ids].map(String).sort() : [];
-                        const bSeats = Array.isArray(b.seat_ids) ? [...b.seat_ids].map(String).sort() : [];
-                        if (aSeats.length !== bSeats.length) return false;
-                        for (let i = 0; i < aSeats.length; i++) if (aSeats[i] !== bSeats[i]) return false;
-                        return true;
-                    };
-
-                    cartItems.forEach((item) => {
-                        if (item.type === 'ticket' && String(item.reference_id) === String({{ $movie['id'] ?? $movie['movie_id'] ?? 1 }})) {
-                            if (editing) {
-                                if (editing.cart_item_id && item.cart_item_id && String(item.cart_item_id) === String(editing.cart_item_id)) {
-                                    return;
-                                }
-                                if (
-                                    item.type === editing.type &&
-                                    String(item.reference_id) === String(editing.reference_id) &&
-                                    optionsMatch(item.options || {}, editing.options || {})
-                                ) {
-                                    return;
-                                }
-                            }
-
-                            if (
-                                item.options &&
-                                String(item.options.schedule_slot_id ?? '') === String({{ $movie['schedule_slot_id'] ?? 1 }}) &&
-                                String(item.options.date ?? '') === String(this.selectedDate) &&
-                                String(item.options.time ?? '') === String(this.selectedTime)
-                            ) {
-                                if (item.options.seat_ids) {
-                                    seatsInCart.push(...item.options.seat_ids.map((sid) => String(sid)));
-                                }
-                                return;
-                            }
+                updateCartSeats(cartItems) {
+                    const slotId = this.selectedSlotId;
+                    this.cartSeatIds = [];
+                    cartItems.forEach(item => {
+                        if (item.type !== 'ticket' || String(item.reference_id) !== String(this.movieId)) return;
+                        if (this.editing?.cart_item_id && String(item.cart_item_id) === String(this.editing.cart_item_id)) return;
+                        const opts = item.options || {};
+                        if (String(opts.schedule_slot_id ?? '') === String(slotId)) {
+                            this.cartSeatIds.push(...(opts.seat_ids || []).map(String));
                         }
                     });
+                },
 
+                generateLayout() {
                     const grouped = {};
-                    this.allSeats.forEach((s) => {
+                    this.allSeats.forEach(s => {
                         if (!grouped[s.row_label]) grouped[s.row_label] = [];
                         grouped[s.row_label].push(s);
                     });
 
-                    this.layout = Object.keys(grouped)
-                        .sort()
-                        .map((r) => {
-                            const seats = grouped[r]
-                                .sort((a, b) => a.seat_number - b.seat_number)
-                                .map((s) => {
-                                    const id = s.id;
-                                    const label = s.row_label + s.seat_number;
-                                    let occ = (s.row_label.charCodeAt(0) + s.seat_number + seed.length + (seed.charCodeAt(0) || 0)) % 5 === 0;
-                                    if (seatsInCart.includes(String(id))) {
-                                        occ = true;
-                                    }
-                                    return {
-                                        id: id,
-                                        label: label,
-                                        status: occ || seatsInCart.includes(String(id)) ? 'occupied' : 'available'
-                                    };
-                                });
-                            return { label: r, seats: seats };
-                        });
+                    this.layout = Object.keys(grouped).sort().map(r => {
+                        const seats = grouped[r]
+                            .sort((a, b) => a.seat_number - b.seat_number)
+                            .map(s => ({
+                                id:     s.id,
+                                label:  s.row_label + s.seat_number,
+                                status: (
+                                    this.allBookedSeatIds.includes(String(s.id)) ||
+                                    this.cartSeatIds.includes(String(s.id))
+                                ) ? 'occupied' : 'available'
+                            }));
+                        return { label: r, seats };
+                    });
                 },
 
-                setDate(date) {
+                async fetchBookedSeats() {
+                    if (!this.selectedSlotId) return;
+                    try {
+                        const res = await axios.get(`/movies/${this.movieId}/booked-seats?slot_id=${this.selectedSlotId}`, {
+                            headers: { 'X-CSRF-TOKEN': window.csrfToken }
+                        });
+                        this.allBookedSeatIds = (res.data.booked_seat_ids || []).map(String);
+                    } catch (e) {
+                        console.error(e);
+                    }
+                },
+
+                async setDate(date) {
                     this.selectedDate = date;
+                    this.computeTimesForDate();
+                    if (!this.timesForDate.includes(this.selectedTime)) {
+                        this.selectedTime = this.timesForDate[0] ?? null;
+                    }
+                    this.computeSlotId();
+                    await this.fetchBookedSeats();
                     this.generateLayout();
                 },
 
-                setTime(time) {
+                async setTime(time) {
                     this.selectedTime = time;
+                    this.computeSlotId();
+                    await this.fetchBookedSeats();
                     this.generateLayout();
                 },
 
                 toggleSeat(seat) {
                     if (seat.status === 'occupied') return;
-                    if (seat.status === 'available') {
-                        seat.status = 'selected';
-                    } else {
-                        seat.status = 'available';
-                    }
+                    seat.status = seat.status === 'available' ? 'selected' : 'available';
                 },
 
-                get selectedSeats() {
-                    return this.layout.flatMap((r) => r.seats.filter((s) => s.status === 'selected'));
-                },
-
-                get selectedSeatsCount() {
-                    let count = this.selectedSeats.length;
-                    return count > 0 ? `(${count})` : '';
-                },
-
-                get selectedSeatLabels() {
-                    return this.selectedSeats.map((s) => s.label).join(', ');
-                },
-
-                get totalPrice() {
-                    return (this.selectedSeats.length * this.pricePerTicket).toFixed(2);
-                },
+                get selectedSeats()      { return this.layout.flatMap(r => r.seats.filter(s => s.status === 'selected')); },
+                get selectedSeatsCount() { const n = this.selectedSeats.length; return n > 0 ? `(${n})` : ''; },
+                get selectedSeatLabels() { return this.selectedSeats.map(s => s.label).join(', '); },
+                get totalPrice()         { return (this.selectedSeats.length * this.pricePerTicket).toFixed(2); },
 
                 async addToCart() {
-                    if (this.selectedSeats.length === 0) return;
+                    if (this.selectedSeats.length === 0 || !this.selectedSlotId) return;
 
                     const newItem = {
-                        type: 'ticket',
-                        reference_id: {{ $movie['id'] ?? 1 }},
-                        quantity: this.selectedSeats.length,
+                        type:         'ticket',
+                        reference_id: this.movieId,
+                        quantity:     this.selectedSeats.length,
                         options: {
-                            schedule_slot_id: {{ $movie['schedule_slot_id'] ?? 1 }},
-                            date: this.selectedDate,
-                            time: this.selectedTime,
-                            seat_ids: this.selectedSeats.map((s) => s.id)
+                            schedule_slot_id: this.selectedSlotId,
+                            date:     this.selectedDate,
+                            time:     this.selectedTime,
+                            seat_ids: this.selectedSeats.map(s => s.id)
                         }
                     };
 
-                    let editing = window.__editingCartItem;
-                    if (!editing) {
+                    if (this.editing && String(this.editing.reference_id) === String(this.movieId)) {
                         try {
-                            const raw = localStorage.getItem('moviemall_edit_item');
-                            if (raw) editing = JSON.parse(raw);
-                        } catch (e) {}
+                            await axios.post('{{ route('cart.remove') }}', {
+                                type:         this.editing.type,
+                                reference_id: this.editing.reference_id,
+                                options:      this.editing.options
+                            }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
+                        } catch (e) { console.error(e); }
                     }
 
-                    if (editing && String(editing.reference_id) === String({{ $movie['id'] ?? 1 }})) {
-                        if (!window.isLoggedIn) {
-                            const cart = window.CartService.getCart();
-                            const idx = cart.findIndex(
-                                (c) =>
-                                    c.type === editing.type &&
-                                    String(c.reference_id) === String(editing.reference_id) &&
-                                    JSON.stringify(c.options) === JSON.stringify(editing.options)
-                            );
-                            if (idx !== -1) cart.splice(idx, 1);
-                            cart.push({ ...newItem, quantity: newItem.quantity });
-                            localStorage.setItem(window.CartService.cartKey, JSON.stringify(cart));
-                        } else {
-                            try {
-                                await axios.post(
-                                    '{{ route('cart.remove') }}',
-                                    { type: editing.type, reference_id: editing.reference_id, options: editing.options },
-                                    { headers: { 'X-CSRF-TOKEN': window.csrfToken } }
-                                );
-                            } catch (e) {
-                                console.error(e);
-                            }
-
-                            await window.CartService.add(newItem);
+                    try {
+                        await axios.post('{{ route('cart.add') }}', newItem, {
+                            headers: { 'X-CSRF-TOKEN': window.csrfToken }
+                        });
+                        if (this.editing) {
+                            await axios.post('{{ route('cart.edit-end') }}', {}, {
+                                headers: { 'X-CSRF-TOKEN': window.csrfToken }
+                            });
                         }
-
-                        localStorage.removeItem('moviemall_edit_item');
-                        sessionStorage.removeItem('moviemall_edit_active');
-                        window.__editingCartItem = null;
                         window.location.href = '{{ route('cart.index') }}';
-                        return;
+                    } catch (e) {
+                        console.error(e);
                     }
-
-                    await window.CartService.add(newItem);
-                    window.location.href = '{{ route('cart.index') }}';
                 }
             }));
         });
