@@ -13,7 +13,27 @@ class CheckoutController extends Controller
 {
     public function index(): View
     {
-        return view('checkout');
+        $cartController = new CartController();
+
+        if (Auth::check()) {
+            $items = CartItem::where('user_id', Auth::id())->get()->toArray();
+        } else {
+            $items = session('cart', []);
+            foreach ($items as $i => &$item) {
+                $item['id'] ??= $i + 1;
+            }
+            unset($item);
+        }
+
+        $enriched  = $cartController->enrichItems($items);
+        $tickets   = array_values(array_filter($enriched['items'], fn($i) => $i['type'] === 'ticket'));
+        $souvenirs = array_values(array_filter($enriched['items'], fn($i) => $i['type'] === 'souvenir'));
+        $subtotal  = $enriched['total'];
+        $shipping  = count($souvenirs) > 0 ? 5.00 : 0.00;
+        $taxes     = round($subtotal * 0.11, 2);
+        $grandTotal = round($subtotal + $shipping + $taxes, 2);
+
+        return view('checkout', compact('tickets', 'souvenirs', 'subtotal', 'shipping', 'taxes', 'grandTotal'));
     }
 
     public function submit(Request $request): JsonResponse
@@ -35,19 +55,12 @@ class CheckoutController extends Controller
             'expiry'     => ['required_if:payment,card', 'nullable', 'regex:/^(0[1-9]|1[0-2])\/?([0-9]{2})$/'],
             'cvv'        => 'required_if:payment,card|nullable|digits_between:3,4',
             'cardName'   => 'required_if:payment,card|nullable|string|max:100',
-
-            'items' => 'nullable|array',
         ]);
 
         if (Auth::check()) {
             $cartItems = CartItem::where('user_id', Auth::id())->get()->toArray();
         } else {
-            $cartItems = array_map(function ($item) {
-                if (isset($item['options']) && is_string($item['options'])) {
-                    $item['options'] = json_decode($item['options'], true);
-                }
-                return $item;
-            }, $request->input('items', []));
+            $cartItems = session('cart', []);
         }
 
         if (empty($cartItems)) {
@@ -179,6 +192,8 @@ class CheckoutController extends Controller
 
                 if (Auth::check()) {
                     CartItem::where('user_id', Auth::id())->delete();
+                } else {
+                    session()->forget('cart');
                 }
             });
         } catch (\RuntimeException $e) {
@@ -202,7 +217,7 @@ class CheckoutController extends Controller
 
         $orderNumber    = 'MM-' . now()->format('Ymd') . '-' . str_pad($orderId, 4, '0', STR_PAD_LEFT);
         $cartController = new CartController();
-        $enrichedItems  = $cartController->details(new Request(['items' => $cartItems]))->getData(true)['items'] ?? [];
+        $enrichedItems  = $cartController->enrichItems($cartItems)['items'] ?? [];
 
         session([
             'order_number'     => '#' . $orderNumber,
