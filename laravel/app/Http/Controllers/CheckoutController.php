@@ -32,7 +32,7 @@ class CheckoutController extends Controller
 
             'payment'    => 'required|in:card,paypal,google-pay,apple-pay',
             'cardNumber' => 'required_if:payment,card|nullable|regex:/^[0-9 ]{12,19}$/',
-            'expiry'     => 'required_if:payment,card|nullable|regex:/^(0[1-9]|1[0-2])\/?([0-9]{2})$/',
+            'expiry'     => ['required_if:payment,card', 'nullable', 'regex:/^(0[1-9]|1[0-2])\/?([0-9]{2})$/'],
             'cvv'        => 'required_if:payment,card|nullable|digits_between:3,4',
             'cardName'   => 'required_if:payment,card|nullable|string|max:100',
 
