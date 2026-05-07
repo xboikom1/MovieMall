@@ -25,75 +25,78 @@
                 <div class="mt-6 rounded-xl border border-border bg-bg px-6 py-4 text-sm">
                     <div class="flex items-center justify-between gap-4">
                         <span class="text-placeholder">Order number</span>
-                        <span class="font-semibold tracking-wide">{{ session('order_number', '#MM-20260420-7070') }}</span>
+                        <span class="font-semibold tracking-wide">{{ session('order_number') }}</span>
                     </div>
                     <div class="mt-2 flex items-center justify-between gap-4">
                         <span class="text-placeholder">Date</span>
-                        <span class="font-semibold">{{ session('order_date', 'April 20, 2026') }}</span>
+                        <span class="font-semibold">{{ session('order_date') }}</span>
                     </div>
                     <div class="mt-2 flex items-center justify-between gap-4">
                         <span class="text-placeholder">Payment</span>
-                        <span class="font-semibold">{{ session('payment_display', 'Credit Card •••• 4242') }}</span>
+                        <span class="font-semibold">{{ session('payment_display') }}</span>
                     </div>
                     <div class="mt-3 border-t border-border pt-4 flex items-center justify-between gap-4">
                         <span class="font-bold">Total Paid</span>
-                        <span class="font-bold text-accent">{{ session('order_total', '–') }}</span>
+                        <span class="font-bold text-accent">{{ session('order_total') }}</span>
                     </div>
                 </div>
 
-                <p class="mt-5 text-xs text-placeholder">Order placed for <span class="text-text font-medium">{{ session('order_email', 'email@example.com') }}</span></p>
+                <p class="mt-5 text-xs text-placeholder">Order placed for <span class="text-text font-medium">{{ session('order_email') }}</span></p>
             </div>
 
-            <div
-                x-data="confirmationInit()"
-                x-init="init()"
-                class="w-full max-w-2xl rounded-2xl border border-border bg-dark p-4 tablet:p-6 shadow-[0_14px_36px_rgba(0,0,0,.4)]"
-            >
+            <div class="w-full max-w-2xl rounded-2xl border border-border bg-dark p-4 tablet:p-6 shadow-[0_14px_36px_rgba(0,0,0,.4)]">
                 <h2 class="mb-4 text-lg font-bold">Items Ordered</h2>
 
-                <template x-if="items.length === 0">
-                    <p class="text-sm text-placeholder">No items found in the order.</p>
-                </template>
+                @php $orderItems = session('order_items', []); @endphp
 
-                <ul class="flex flex-col gap-4">
-                    <template x-for="itm in items" :key="itm.reference_id">
+                @if(count($orderItems) === 0)
+                    <p class="text-sm text-placeholder">No items found in the order.</p>
+                @else
+                    <ul class="flex flex-col gap-4">
+                        @foreach($orderItems as $itm)
                         <li>
                             <div class="flex gap-4 rounded-xl border border-border bg-bg p-4 items-center">
                                 <div class="h-28 w-20 shrink-0 overflow-hidden rounded-lg border border-border bg-button flex items-center justify-center">
                                     <img
-                                        :src="itm.image || itm.poster || itm.thumb || '/images/placeholder.png'"
-                                        alt="Poster"
+                                        src="{{ $itm['image'] ?? '/images/placeholder.png' }}"
+                                        alt="{{ $itm['name'] ?? '' }}"
                                         class="h-full w-full object-cover"
                                     />
                                 </div>
                                 <div class="flex flex-1 flex-col justify-between gap-1 py-1">
                                     <div>
-                                        <p class="font-semibold" x-text="itm.name || itm.title || itm.name"></p>
-                                        <p
-                                            class="text-xs text-placeholder"
-                                            x-text="itm.genre ? itm.genre + ' • ' + (itm.year || '') : itm.description || ''"
-                                        ></p>
-                                        <p class="text-xs text-placeholder" x-text="itm.type === 'ticket' ? 'Tickets: ' + (itm.quantity || 1) : ''"></p>
+                                        <p class="font-semibold">{{ $itm['name'] ?? '' }}</p>
+                                        <p class="text-xs text-placeholder">
+                                            @if(!empty($itm['genre']))
+                                                {{ $itm['genre'] }}{{ !empty($itm['year']) ? ' · ' . $itm['year'] : '' }}
+                                            @else
+                                                {{ $itm['description'] ?? '' }}
+                                            @endif
+                                        </p>
+                                        @if(($itm['type'] ?? '') === 'ticket')
+                                            <p class="text-xs text-placeholder">Tickets: {{ $itm['quantity'] ?? 1 }}</p>
+                                        @endif
                                     </div>
-                                    <p
-                                        class="text-sm font-semibold"
-                                        x-text="
-                                            formatPrice(itm.subtotal || (itm.price && itm.quantity ? itm.price * itm.quantity : itm.price) || itm.line_total)
-                                        "
-                                    ></p>
+                                    <p class="text-sm font-semibold">
+                                        @php
+                                            $subtotal = $itm['subtotal'] ?? ($itm['price'] ?? 0) * ($itm['quantity'] ?? 1);
+                                        @endphp
+                                        {{ number_format($subtotal, 2) }}€
+                                    </p>
                                 </div>
                             </div>
                         </li>
-                    </template>
-                </ul>
+                        @endforeach
+                    </ul>
+                @endif
 
                 <div class="mt-5 rounded-xl border border-border bg-bg p-4 text-sm">
                     <h3 class="mb-3 font-semibold">Delivery Details</h3>
                     <div class="flex flex-col gap-1 text-placeholder">
-                        <p><span class="text-text font-medium">Method:</span> <span x-text="meta.delivery_method"></span></p>
-                        <p
-                            x-show="(meta.delivery_method || '').toLowerCase() !== 'pickup'"
-                        ><span class="text-text font-medium">Address:</span> <span x-text="meta.delivery_address"></span></p>
+                        <p><span class="text-text font-medium">Method:</span> {{ session('delivery_method') }}</p>
+                        @if(strtolower(session('delivery_method', '')) !== 'pickup')
+                            <p><span class="text-text font-medium">Address:</span> {{ session('delivery_address') }}</p>
+                        @endif
                         <p class="mt-2 text-xs">Estimated delivery: <span class="text-text font-medium">3–5 business days</span></p>
                     </div>
                 </div>
@@ -110,79 +113,5 @@
     </main>
 
     <x-layout.footer />
-
-    <script>
-        function confirmationInit() {
-            const server = {
-                order_number: '{{ session('order_number', '#MM-20260420-7070') }}',
-                order_date: '{{ session('order_date', 'April 20, 2026') }}',
-                payment_display: '{{ session('payment_display', 'Credit Card •••• 4242') }}',
-                order_total: '{{ session('order_total', '–') }}',
-                order_email: '{{ session('order_email', 'email@example.com') }}',
-                delivery_method: '{{ session('delivery_method', 'Courier') }}',
-                delivery_address: '{{ session('delivery_address', '123 Main Street, Bratislava, 81101, Slovakia') }}',
-                items: {!! json_encode(session('order_items', [])) !!},
-                items_json: {!! session('order_items_json') ? session('order_items_json') : 'null' !!}
-            };
-
-            return {
-                items: [],
-                meta: {
-                    delivery_method: server.delivery_method,
-                    delivery_address: server.delivery_address
-                },
-
-                formatPrice(v) {
-                    if (v === undefined || v === null) return '–';
-                    const n = parseFloat(v);
-                    if (isNaN(n)) return v;
-                    return n.toFixed(2) + '€';
-                },
-
-                async init() {
-                    if (server.items && server.items.length > 0) {
-                        this.items = server.items;
-                        console.log('confirmation: loaded items from session array', this.items);
-                        try {
-                            if (window.CartService) localStorage.removeItem(window.CartService.cartKey);
-                        } catch (e) {
-                            console.error('confirmation: failed to clear client cart', e);
-                        }
-                        return;
-                    }
-
-                    if (server.items_json) {
-                        try {
-                            this.items = server.items_json || [];
-                            console.log('confirmation: loaded items from session JSON backup', this.items);
-                            try {
-                                if (window.CartService) localStorage.removeItem(window.CartService.cartKey);
-                            } catch (e) {
-                                console.error('confirmation: failed to clear client cart', e);
-                            }
-                            return;
-                        } catch (e) {
-                            console.error('confirmation: failed to use items_json', e);
-                        }
-                    }
-
-                    try {
-                        const raw = window.CartService ? window.CartService.getCart() : [];
-                        const response = await axios.post('{{ route('cart.details') }}', { items: raw }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
-                        this.items = response.data.items || [];
-                        console.log('confirmation: loaded items from cart.details', this.items);
-                    } catch (e) {
-                        console.error('Failed to load order items', e);
-                        this.items = [];
-                    }
-
-                    try {
-                        if (window.CartService) localStorage.removeItem(window.CartService.cartKey);
-                    } catch (e) {
-                        console.error('Failed to clear cart', e);
-                    }
-                }
-            }
-    </script>
 </body>
 </html>

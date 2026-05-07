@@ -83,48 +83,36 @@
                     </div>
 
                     <div class="mt-6 border-t border-border pt-6">
+                        <form method="POST" action="{{ route('cart.item.add') }}">
+                        @csrf
+                        <input type="hidden" name="type" value="souvenir">
+                        <input type="hidden" name="reference_id" value="{{ $souvenir['id'] }}">
+                        <input type="hidden" name="options" value="[]">
                         <div class="flex flex-col gap-3 tablet:flex-row tablet:items-center tablet:justify-between">
                             <div>
                                 <p class="mb-2 text-xs font-semibold uppercase tracking-widest text-placeholder">Quantity</p>
                                 <div class="inline-flex h-10 items-center overflow-hidden rounded-xl border border-border bg-bg">
-                                    <button
-                                        id="qtyMinus"
-                                        type="button"
-                                        class="qty-btn h-full px-4 text-sm font-semibold text-placeholder transition hover:text-accent"
-                                        aria-label="Decrease quantity"
-                                    >
-                                        −
-                                    </button>
                                     <label for="quantityInput" class="sr-only">Quantity</label>
                                     <input
                                         id="quantityInput"
-                                        type="text"
+                                        name="quantity"
+                                        type="number"
+                                        min="1"
                                         value="1"
-                                        inputmode="numeric"
-                                        pattern="[0-9]*"
-                                        class="qty-input h-full w-10 appearance-none border-none bg-transparent p-0 text-center text-sm outline-none text-text focus:ring-0"
+                                        class="h-full w-20 appearance-none border-none bg-transparent p-0 px-3 text-center text-sm outline-none text-text focus:ring-0"
                                         aria-label="Quantity"
-                                        style="background-color: transparent"
                                     />
-                                    <button
-                                        id="qtyPlus"
-                                        type="button"
-                                        class="qty-btn h-full px-4 text-sm font-semibold text-placeholder transition hover:text-accent"
-                                        aria-label="Increase quantity"
-                                    >
-                                        +
-                                    </button>
                                 </div>
                             </div>
 
                             <button
-                                type="button"
-                                id="addToCartBtn"
+                                type="submit"
                                 class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 text-xl font-semibold shadow-[0_14px_36px_rgba(0,0,0,.40)] transition hover:brightness-110 tablet:mt-0 tablet:w-[260px]"
                             >
                                 Add to Cart
                             </button>
                         </div>
+                        </form>
 
                         <div class="mt-5 rounded-xl border border-border bg-bg p-4">
                             <div class="text-sm">
@@ -183,25 +171,5 @@
 
     <x-layout.footer />
 
-    <script type="module">
-        document.getElementById('qtyPlus')?.addEventListener('click', function () {
-            const input = document.getElementById('quantityInput');
-            input.value = Math.max(1, parseInt(input.value || '1') + 1);
-        });
-        document.getElementById('qtyMinus')?.addEventListener('click', function () {
-            const input = document.getElementById('quantityInput');
-            input.value = Math.max(1, parseInt(input.value || '1') - 1);
-        });
-        document.getElementById('addToCartBtn')?.addEventListener('click', async function () {
-            const qty = parseInt(document.getElementById('quantityInput').value || '1');
-            await window.CartService.add({
-                type: 'souvenir',
-                reference_id: {{ $souvenir['id'] ?? 1 }},
-                quantity: qty,
-                options: {}
-            });
-            window.location.href = '{{ route('cart.index') }}';
-        });
-    </script>
 </body>
 </html>
