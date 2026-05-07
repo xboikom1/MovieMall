@@ -12,17 +12,24 @@ use Illuminate\Support\Facades\Route;
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/sync', [CartController::class, 'sync'])->name('cart.sync');
-Route::post('/cart/details', [CartController::class, 'details'])->name('cart.details');
+Route::match(['GET', 'POST'], '/cart/details', [CartController::class, 'details'])->name('cart.details');
+Route::post('/cart/edit-begin', [CartController::class, 'editBegin'])->name('cart.edit-begin');
+Route::post('/cart/edit-end', [CartController::class, 'editEnd'])->name('cart.edit-end');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/movies', [App\Http\Controllers\MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/{slug}', [MovieController::class, 'show'])->name('movies.show');
+Route::get('/movies/{id}/booked-seats', [MovieController::class, 'bookedSeats'])->whereNumber('id')->name('movies.booked-seats');
 Route::get('/souvenirs', [SouvenirController::class, 'index'])->name('souvenirs.index');
 Route::get('/souvenirs/{slug}', [App\Http\Controllers\SouvenirController::class, 'show'])->name('souvenirs.show');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/item/remove', [CartController::class, 'removeItem'])->name('cart.item.remove');
+Route::post('/cart/item/quantity', [CartController::class, 'updateQuantity'])->name('cart.item.quantity');
+Route::post('/cart/item/add', [CartController::class, 'addItem'])->name('cart.item.add');
+Route::post('/cart/item/edit-begin', [CartController::class, 'editBeginRedirect'])->name('cart.item.edit-begin');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::post('/checkout/submit', [CheckoutController::class, 'submit'])->name('checkout.submit');
 Route::get('/confirmation', function () { return view('confirmation'); })->name('confirmation');
