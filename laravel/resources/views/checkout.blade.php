@@ -10,7 +10,7 @@
 <body class="min-h-screen bg-bg text-text">
     <x-layout.header />
 
-    <main x-data="checkoutInit()" class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-10">
+    <main x-data="{ delivery: 'courier' }" class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-10">
         <a href="{{ route('cart.index') }}" class="block pb-4 text-placeholder transition hover:text-accent">← Back to Cart</a>
 
         <div class="mb-6 flex flex-col gap-3 tablet:flex-row tablet:items-start tablet:justify-between">
@@ -272,71 +272,70 @@
             <aside class="self-start rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6 desktop:sticky desktop:top-6">
                 <div class="mb-4 flex items-center justify-between">
                     <h2 class="text-lg font-bold">Order Summary</h2>
-                    <span
-                        class="rounded-full border border-border bg-button px-3 py-1 text-xs font-semibold text-placeholder"
-                        x-text="tickets.length + souvenirs.length + ' items'"
-                    ></span>
+                    <span class="rounded-full border border-border bg-button px-3 py-1 text-xs font-semibold text-placeholder">
+                        {{ count($tickets) + count($souvenirs) }} items
+                    </span>
                 </div>
 
                 <div class="flex flex-col gap-4">
-                    <template x-if="tickets.length > 0">
-                        <div>
-                            <p class="text-[0.85rem] font-semibold mb-2">Tickets</p>
-                            <div class="flex flex-col gap-3">
-                                <template x-for="item in tickets" :key="item.cart_item_id || Math.random()">
-                                    <div class="flex items-center gap-3 rounded-xl border border-border bg-bg p-3">
-                                        <a :href="item.url" class="shrink-0 w-14 overflow-hidden rounded-lg">
-                                            <img :src="item.image" :alt="item.name" class="w-full h-full object-cover aspect-[2/3]" />
-                                        </a>
-                                        <div class="flex-1 min-w-0">
-                                            <a :href="item.url" class="block font-semibold truncate" x-text="item.name + ' (' + item.quantity + '×)'"></a>
-                                            <div class="text-xs text-placeholder" x-text="item.schedule"></div>
-                                        </div>
-                                        <div class="flex-shrink-0 text-sm font-bold text-accent" x-text="parseFloat(item.subtotal).toFixed(2) + '€'"></div>
-                                    </div>
-                                </template>
+                    @if(count($tickets) > 0)
+                    <div>
+                        <p class="text-[0.85rem] font-semibold mb-2">Tickets</p>
+                        <div class="flex flex-col gap-3">
+                            @foreach($tickets as $item)
+                            <div class="flex items-center gap-3 rounded-xl border border-border bg-bg p-3">
+                                <a href="{{ $item['url'] }}" class="shrink-0 w-14 overflow-hidden rounded-lg">
+                                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="w-full h-full object-cover aspect-[2/3]" />
+                                </a>
+                                <div class="flex-1 min-w-0">
+                                    <a href="{{ $item['url'] }}" class="block font-semibold truncate">{{ $item['name'] }} ({{ $item['quantity'] }}×)</a>
+                                    <div class="text-xs text-placeholder">{{ $item['schedule'] }}</div>
+                                </div>
+                                <div class="flex-shrink-0 text-sm font-bold text-accent">{{ number_format($item['subtotal'], 2) }}€</div>
                             </div>
+                            @endforeach
                         </div>
-                    </template>
+                    </div>
+                    @endif
 
-                    <template x-if="souvenirs.length > 0">
-                        <div>
-                            <p class="text-[0.85rem] font-semibold mb-2">Souvenirs</p>
-                            <div class="flex flex-col gap-3">
-                                <template x-for="item in souvenirs" :key="item.cart_item_id || Math.random()">
-                                    <div class="flex items-center gap-3 rounded-xl border border-border bg-bg p-3">
-                                        <a :href="item.url" class="shrink-0 w-14 overflow-hidden rounded-lg">
-                                            <img :src="item.image" :alt="item.name" class="w-full h-full object-cover aspect-square" />
-                                        </a>
-                                        <div class="flex-1 min-w-0">
-                                            <a :href="item.url" class="block font-semibold truncate" x-text="item.name + ' × ' + item.quantity"></a>
-                                            <div class="text-xs text-placeholder" x-text="item.description"></div>
-                                        </div>
-                                        <div class="flex-shrink-0 text-sm font-bold text-accent" x-text="parseFloat(item.subtotal).toFixed(2) + '€'"></div>
-                                    </div>
-                                </template>
+                    @if(count($souvenirs) > 0)
+                    <div>
+                        <p class="text-[0.85rem] font-semibold mb-2">Souvenirs</p>
+                        <div class="flex flex-col gap-3">
+                            @foreach($souvenirs as $item)
+                            <div class="flex items-center gap-3 rounded-xl border border-border bg-bg p-3">
+                                <a href="{{ $item['url'] }}" class="shrink-0 w-14 overflow-hidden rounded-lg">
+                                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="w-full h-full object-cover aspect-square" />
+                                </a>
+                                <div class="flex-1 min-w-0">
+                                    <a href="{{ $item['url'] }}" class="block font-semibold truncate">{{ $item['name'] }} × {{ $item['quantity'] }}</a>
+                                    <div class="text-xs text-placeholder">{{ $item['description'] }}</div>
+                                </div>
+                                <div class="flex-shrink-0 text-sm font-bold text-accent">{{ number_format($item['subtotal'], 2) }}€</div>
                             </div>
+                            @endforeach
                         </div>
-                    </template>
+                    </div>
+                    @endif
                 </div>
 
                 <div class="mt-5 rounded-2xl border border-border bg-bg p-4">
                     <div class="flex flex-col gap-2 text-sm">
                         <div class="flex justify-between">
                             <span class="text-placeholder">Subtotal</span>
-                            <span class="font-medium" x-text="subtotal.toFixed(2) + '€'"></span>
+                            <span class="font-medium">{{ number_format($subtotal, 2) }}€</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-placeholder">Shipping</span>
-                            <span class="font-medium" x-text="shipping.toFixed(2) + '€'"></span>
+                            <span class="font-medium">{{ number_format($shipping, 2) }}€</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-placeholder">Taxes</span>
-                            <span class="font-medium" x-text="taxes.toFixed(2) + '€'"></span>
+                            <span class="font-medium">{{ number_format($taxes, 2) }}€</span>
                         </div>
                         <div class="mt-1 flex justify-between font-bold">
                             <span>Total</span>
-                            <span class="text-accent" x-text="grandTotal.toFixed(2) + '€'"></span>
+                            <span class="text-accent">{{ number_format($grandTotal, 2) }}€</span>
                         </div>
                     </div>
 
@@ -354,46 +353,6 @@
 
     <x-layout.footer />
     <script>
-        function checkoutInit() {
-            return {
-                delivery: 'courier',
-                tickets: [],
-                souvenirs: [],
-                subtotal: 0,
-                shipping: 5.0,
-                taxes: 0,
-                grandTotal: 0,
-                async init() {
-                    if (window.CartService && window.CartService.syncPromise) {
-                        await window.CartService.syncPromise;
-                    }
-
-                    let items = window.CartService ? window.CartService.getCart() : [];
-                    try {
-                        const response = await axios.post(
-                            '{{ route('cart.details') }}',
-                            { items },
-                            {
-                                headers: { 'X-CSRF-TOKEN': window.csrfToken }
-                            }
-                        );
-
-                        const enriched = response.data.items || [];
-                        this.subtotal = parseFloat(response.data.total || 0);
-                        this.tickets = enriched.filter((i) => i.type === 'ticket');
-                        this.souvenirs = enriched.filter((i) => i.type === 'souvenir');
-
-                        this.shipping = this.souvenirs.length > 0 ? 5.0 : 0.0;
-
-                        this.taxes = parseFloat((this.subtotal * 0.11).toFixed(2));
-                        this.grandTotal = parseFloat((this.subtotal + this.shipping + this.taxes).toFixed(2));
-                    } catch (e) {
-                        console.error(e);
-                    }
-                }
-            };
-        }
-
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('checkout-form');
             if (!form) return;
@@ -402,46 +361,36 @@
                 e.preventDefault();
 
                 const formData = new FormData(form);
-                const payload = {};
+                const payload  = {};
                 formData.forEach((v, k) => (payload[k] = v));
-                payload.items = window.CartService ? window.CartService.getCart() : [];
                 payload.delivery = payload.delivery || document.querySelector('input[name="delivery"]:checked')?.value || 'courier';
-                payload.order_number =
-                    payload.order_number || '#MM-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.floor(1000 + Math.random() * 9000);
-                payload.order_date = Date.now();
-                payload.order_email = payload.email || '';
 
                 try {
-                    const details = await axios.post('{{ route('cart.details') }}', { items: payload.items }, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
-                    payload.order_total = details.data.total !== undefined ? parseFloat(details.data.total).toFixed(2) : null;
-                } catch (e) {
-                    payload.order_total = payload.order_total || null;
-                }
-
-                try {
-                    const res = await axios.post('{{ route('checkout.submit') }}', payload, { headers: { 'X-CSRF-TOKEN': window.csrfToken } });
-                    if (res.data && res.data.redirect) {
+                    const res = await axios.post('{{ route('checkout.submit') }}', payload, {
+                        headers: { 'X-CSRF-TOKEN': window.csrfToken }
+                    });
+                    if (res.data?.redirect) {
                         window.location.href = res.data.redirect;
                     } else {
                         window.location.href = '{{ route('confirmation') }}';
                     }
                 } catch (err) {
                     console.error('Checkout submit failed', err);
-                    document.querySelectorAll('.field-error').forEach((e) => e.remove());
+                    document.querySelectorAll('.field-error').forEach(e => e.remove());
 
-                    if (err.response && err.response.status === 422 && err.response.data && err.response.data.errors) {
-                        const errors = err.response.data.errors;
-
-                        for (const [field, msgs] of Object.entries(errors)) {
-                            let input = document.querySelector('[name="' + field + '"]') || document.getElementById(field);
-                            let container = input ? input.parentElement : form;
-                            const el = document.createElement('div');
-                            el.className = 'field-error mt-1 text-sm text-red-400';
-                            el.innerText = Array.isArray(msgs) ? msgs.join(' ') : String(msgs);
+                    const data = err.response?.data;
+                    if (err.response?.status === 422 && data?.errors) {
+                        for (const [field, msgs] of Object.entries(data.errors)) {
+                            const input     = document.querySelector('[name="' + field + '"]') || document.getElementById(field);
+                            const container = input ? input.parentElement : form;
+                            const el        = document.createElement('div');
+                            el.className    = 'field-error mt-1 text-sm text-red-400';
+                            el.innerText    = Array.isArray(msgs) ? msgs.join(' ') : String(msgs);
                             container.appendChild(el);
                         }
-                        const firstErr = document.querySelector('.field-error');
-                        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        document.querySelector('.field-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else if (data?.message) {
+                        alert(data.message);
                     } else {
                         alert('Checkout failed. Please try again.');
                     }
