@@ -15,6 +15,7 @@
             </div>
             <div class="flex items-center gap-3">
                 <a href="{{ route('admin.dashboard') }}" class="rounded-lg border border-border bg-button px-3 py-2 text-sm transition hover:border-accent hover:text-accent">Products</a>
+                <a href="{{ route('admin.schedule') }}" class="rounded-lg border border-border bg-button px-3 py-2 text-sm transition hover:border-accent hover:text-accent">Schedule</a>
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
                     <button type="submit" class="flex items-center gap-2 rounded-lg border border-border bg-button px-3 py-2 text-sm transition hover:border-accent hover:text-accent">

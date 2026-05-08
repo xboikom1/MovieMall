@@ -77,6 +77,11 @@ Route::prefix('xj7qr2')->name('admin.')->group(function () {
             ->whereNumber('imageId')
             ->name('product.image.primary');
         Route::get('/orders', [\App\Http\Controllers\Admin\AdminDashboardController::class, 'orders'])->name('orders');
+
+        Route::get('/schedule', [\App\Http\Controllers\Admin\AdminScheduleController::class, 'index'])->name('schedule');
+        Route::post('/schedule', [\App\Http\Controllers\Admin\AdminScheduleController::class, 'store'])->name('schedule.store');
+        Route::delete('/schedule/{id}', [\App\Http\Controllers\Admin\AdminScheduleController::class, 'destroy'])->whereNumber('id')->name('schedule.destroy');
+
         Route::post('/logout', [\App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('logout');
     });
 });
