@@ -77,8 +77,8 @@
                             <p class="text-sm font-semibold break-words">{{ $souvenir['category'] }}</p>
                         </div>
                         <div>
-                            <p class="mb-1 text-xs uppercase tracking-widest text-placeholder">Movie Tie-in</p>
-                            <p class="text-sm font-semibold line-clamp-2 break-words">{{ $souvenir['movie'] }}</p>
+                            <p class="mb-1 text-xs uppercase tracking-widest text-placeholder">Franchise</p>
+                            <p class="text-sm font-semibold line-clamp-2 break-words">{{ $souvenir['franchise'] ?? '—' }}</p>
                         </div>
                     </div>
 
@@ -156,7 +156,7 @@
                                     <span class="min-w-0 truncate font-semibold">{{ $s['title'] }}</span>
                                     <span class="shrink-0 text-sm font-semibold text-accent">{{ $s['price'] }}</span>
                                 </div>
-                                <span class="truncate text-xs text-placeholder">{{ $s['movie'] }}</span>
+                                <span class="truncate text-xs text-placeholder">{{ $s['franchise'] ?? '' }}</span>
                                 <span
                                     class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder"
                                     >{{ $s['type'] }}</span

@@ -72,14 +72,14 @@
                         @endforeach
                     </div>
 
-                    <!-- movie tie-in -->
-                    <h3 class="text-placeholder text-xs font-bold mt-4">MOVIE TIE-IN</h3>
+                    <!-- franchise -->
+                    <h3 class="text-placeholder text-xs font-bold mt-4">FRANCHISE</h3>
                     <div class="flex flex-col text-sm my-1 gap-1.5">
-                        @foreach ($movies as $movie)
-                            <label class="flex items-center gap-1">
-                                <input type="checkbox" name="movies[]" value="{{ $movie->id }}" class="accent-accent"
-                                    {{ in_array($movie->id, (array) request('movies', [])) ? 'checked' : '' }} />
-                                <span class="cursor-pointer transition hover:text-accent">{{ $movie->title }}</span>
+                        @foreach ($franchises as $franchise)
+                            <label class="flex items-center gap-1 min-w-0">
+                                <input type="checkbox" name="franchises[]" value="{{ $franchise->id }}" class="accent-accent shrink-0"
+                                    {{ in_array($franchise->id, (array) request('franchises', [])) ? 'checked' : '' }} />
+                                <span class="truncate cursor-pointer transition hover:text-accent" title="{{ $franchise->name }}">{{ $franchise->name }}</span>
                             </label>
                         @endforeach
                     </div>
@@ -148,7 +148,7 @@
                                             <span class="shrink-0 text-xs font-bold text-accent">{{ number_format($s->price, 2) }}€</span>
                                         </div>
                                         <span
-                                            class="truncate text-xs text-placeholder">{{ $s->movie_title ?? '—' }}</span>
+                                            class="truncate text-xs text-placeholder">{{ $s->franchise_name ?? '—' }}</span>
                                         <span
                                             class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder">
                           {{ $s->category ?? '—' }}

@@ -69,12 +69,36 @@ class DatabaseSeeder extends Seeder
             ['name' => 'discontinued'],
         ]);
 
-        $directorId = fn(string $name) => DB::table('directors')->where('name', $name)->value('id');
-        $studioId = fn(string $name) => DB::table('studios')->where('name', $name)->value('id');
-        $languageId = fn(string $name) => DB::table('languages')->where('name', $name)->value('id');
-        $genreId = fn(string $name) => DB::table('genres')->where('name', $name)->value('id');
-        $categoryId = fn(string $name) => DB::table('category')->where('name', $name)->value('id');
-        $statusId = fn(string $name) => DB::table('souvenir_status')->where('name', $name)->value('id');
+        $franchiseNames = [
+            'SuperGrandpa', 'Gollum', 'Mission: Possible', 'Hiding Nemo', 'Blue Bulk',
+            'Mad Squirrel', 'Dr. Normal', 'The Godmother', 'The Procrastinator', 'The Devil Wears Sweatpants',
+        ];
+        foreach ($franchiseNames as $name) {
+            DB::table('franchises')->insert(['name' => $name]);
+        }
+
+        $directorId    = fn(string $name) => DB::table('directors')->where('name', $name)->value('id');
+        $studioId      = fn(string $name) => DB::table('studios')->where('name', $name)->value('id');
+        $languageId    = fn(string $name) => DB::table('languages')->where('name', $name)->value('id');
+        $genreId       = fn(string $name) => DB::table('genres')->where('name', $name)->value('id');
+        $categoryId    = fn(string $name) => DB::table('category')->where('name', $name)->value('id');
+        $statusId      = fn(string $name) => DB::table('souvenir_status')->where('name', $name)->value('id');
+        $getFranchiseId = fn(string $name) => DB::table('franchises')->where('name', $name)->value('id');
+
+        $franchiseForTitle = function (string $title) use ($getFranchiseId): ?int {
+            if (str_contains($title, 'Grandpa'))                 return $getFranchiseId('SuperGrandpa');
+            if (str_contains($title, 'Gollum'))                  return $getFranchiseId('Gollum');
+            if (str_contains($title, 'Mission:'))                return $getFranchiseId('Mission: Possible');
+            if (str_contains($title, 'Hiding Nemo') ||
+                str_contains($title, 'Hiding Dory'))             return $getFranchiseId('Hiding Nemo');
+            if (str_contains($title, 'Bulk'))                    return $getFranchiseId('Blue Bulk');
+            if (str_contains($title, 'Squirrel'))                return $getFranchiseId('Mad Squirrel');
+            if (str_contains($title, 'Dr. Normal'))              return $getFranchiseId('Dr. Normal');
+            if (str_contains($title, 'Godmother'))               return $getFranchiseId('The Godmother');
+            if (str_contains($title, 'Procrastinator'))          return $getFranchiseId('The Procrastinator');
+            if (str_contains($title, 'Devil Wears Sweatpants'))  return $getFranchiseId('The Devil Wears Sweatpants');
+            return null;
+        };
 
         $englishId = $languageId('English');
         $studioMmId = $studioId('MovieMall Studios');
@@ -952,8 +976,9 @@ class DatabaseSeeder extends Seeder
             $image = $data['image'];
             $movieData = array_diff_key($data, array_flip(['genres', 'image']));
             $movieData = array_merge($movieData, [
-                'created_at' => now(),
-                'updated_at' => now(),
+                'franchise_id' => $franchiseForTitle($data['title']),
+                'created_at'   => now(),
+                'updated_at'   => now(),
             ]);
 
             $movieId = DB::table('movies')->insertGetId($movieData);
@@ -1179,72 +1204,72 @@ class DatabaseSeeder extends Seeder
 
         $souvenirs = [
             // Superrandpa
-            ['name' => 'SuperGrandpa Cape Pin', 'price' => 7.99, 'category_id' => $accessoryId, 'movie_id' => $getMovieId('SuperGrandpa'), 'quantity' => 80, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_accessory.jpg'],
-            ['name' => 'SuperGrandpa Figurine', 'price' => 9.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId('SuperGrandpa'), 'quantity' => 50, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_figurine.jpg'],
-            ['name' => 'SuperGrandpa Deluxe Figurine', 'price' => 14.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId('SuperGrandpa'), 'quantity' => 20, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_figurine_2.png'],
-            ['name' => 'SuperGrandpa Plush Toy', 'price' => 12.99, 'category_id' => $plushId, 'movie_id' => $getMovieId('SuperGrandpa'), 'quantity' => 35, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_plush.jpg'],
-            ['name' => 'SuperGrandpa Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'movie_id' => $getMovieId('SuperGrandpa'), 'quantity' => 100, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_poster.png'],
-            ['name' => 'SuperGrandpa Art Print', 'price' => 8.99, 'category_id' => $printId, 'movie_id' => $getMovieId('SuperGrandpa'), 'quantity' => 60, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_print.jpg'],
-            ['name' => 'SuperGrandpa Prop Replica', 'price' => 29.99, 'category_id' => $propReplicaId, 'movie_id' => $getMovieId('SuperGrandpa'), 'quantity' => 15, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_prop.jpg'],
-            ['name' => 'SuperGrandpa Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'movie_id' => $getMovieId('SuperGrandpa'), 'quantity' => 90, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_stickers.jpg'],
+            ['name' => 'SuperGrandpa Cape Pin', 'price' => 7.99, 'category_id' => $accessoryId, 'franchise_id' => $getFranchiseId('SuperGrandpa'), 'quantity' => 80, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_accessory.jpg'],
+            ['name' => 'SuperGrandpa Figurine', 'price' => 9.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('SuperGrandpa'), 'quantity' => 50, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_figurine.jpg'],
+            ['name' => 'SuperGrandpa Deluxe Figurine', 'price' => 14.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('SuperGrandpa'), 'quantity' => 20, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_figurine_2.png'],
+            ['name' => 'SuperGrandpa Plush Toy', 'price' => 12.99, 'category_id' => $plushId, 'franchise_id' => $getFranchiseId('SuperGrandpa'), 'quantity' => 35, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_plush.jpg'],
+            ['name' => 'SuperGrandpa Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'franchise_id' => $getFranchiseId('SuperGrandpa'), 'quantity' => 100, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_poster.png'],
+            ['name' => 'SuperGrandpa Art Print', 'price' => 8.99, 'category_id' => $printId, 'franchise_id' => $getFranchiseId('SuperGrandpa'), 'quantity' => 60, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_print.jpg'],
+            ['name' => 'SuperGrandpa Prop Replica', 'price' => 29.99, 'category_id' => $propReplicaId, 'franchise_id' => $getFranchiseId('SuperGrandpa'), 'quantity' => 15, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_prop.jpg'],
+            ['name' => 'SuperGrandpa Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'franchise_id' => $getFranchiseId('SuperGrandpa'), 'quantity' => 90, 'status_id' => $availableId, 'image' => '/images/grandpa/souvenirs/grandpa_stickers.jpg'],
 
             // gollum stela the rng
-            ["name" => "Gollum's Ring", 'price' => 9.99, 'category_id' => $accessoryId, 'movie_id' => $getMovieId('Gollum: Steal The Ring'), 'quantity' => 25, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_accessory.jpg'],
-            ['name' => 'Gollum Figurine', 'price' => 11.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId('Gollum: Steal The Ring'), 'quantity' => 30, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_figurine.jpg'],
-            ['name' => 'Gollum Plush Toy', 'price' => 14.99, 'category_id' => $plushId, 'movie_id' => $getMovieId('Gollum: Steal The Ring'), 'quantity' => 20, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_plush.jpg'],
-            ['name' => 'Gollum Movie Poster', 'price' => 6.99, 'category_id' => $posterId, 'movie_id' => $getMovieId('Gollum: Steal The Ring'), 'quantity' => 65, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_poster.jpg'],
-            ['name' => 'Gollum Art Print', 'price' => 8.99, 'category_id' => $printId, 'movie_id' => $getMovieId('Gollum: Steal The Ring'), 'quantity' => 55, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_print.jpg'],
-            ['name' => 'Gollum Collector Statue', 'price' => 49.99, 'category_id' => $propReplicaId, 'movie_id' => $getMovieId('Gollum: Steal The Ring'), 'quantity' => 10, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_prop.jpg'],
-            ['name' => 'Gollum Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'movie_id' => $getMovieId('Gollum: Steal The Ring'), 'quantity' => 75, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_stickers.jpg'],
+            ["name" => "Gollum's Ring", 'price' => 9.99, 'category_id' => $accessoryId, 'franchise_id' => $getFranchiseId('Gollum'), 'quantity' => 25, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_accessory.jpg'],
+            ['name' => 'Gollum Figurine', 'price' => 11.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('Gollum'), 'quantity' => 30, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_figurine.jpg'],
+            ['name' => 'Gollum Plush Toy', 'price' => 14.99, 'category_id' => $plushId, 'franchise_id' => $getFranchiseId('Gollum'), 'quantity' => 20, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_plush.jpg'],
+            ['name' => 'Gollum Movie Poster', 'price' => 6.99, 'category_id' => $posterId, 'franchise_id' => $getFranchiseId('Gollum'), 'quantity' => 65, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_poster.jpg'],
+            ['name' => 'Gollum Art Print', 'price' => 8.99, 'category_id' => $printId, 'franchise_id' => $getFranchiseId('Gollum'), 'quantity' => 55, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_print.jpg'],
+            ['name' => 'Gollum Collector Statue', 'price' => 49.99, 'category_id' => $propReplicaId, 'franchise_id' => $getFranchiseId('Gollum'), 'quantity' => 10, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_prop.jpg'],
+            ['name' => 'Gollum Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'franchise_id' => $getFranchiseId('Gollum'), 'quantity' => 75, 'status_id' => $availableId, 'image' => '/images/gollum/souvenirs/gollum_stickers.jpg'],
 
             // mission possible
-            ['name' => 'Mission: Possible Spy Gadget', 'price' => 12.99, 'category_id' => $accessoryId, 'movie_id' => $getMovieId('Mission: Possible'), 'quantity' => 40, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_accessory.jpg'],
-            ['name' => 'Mission: Possible Figurine', 'price' => 9.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId('Mission: Possible'), 'quantity' => 35, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_figurine.jpg'],
-            ['name' => 'Mission: Possible Plush Toy', 'price' => 11.99, 'category_id' => $plushId, 'movie_id' => $getMovieId('Mission: Possible'), 'quantity' => 25, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_plush.jpg'],
-            ['name' => 'Mission: Possible Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'movie_id' => $getMovieId('Mission: Possible'), 'quantity' => 70, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_poster.jpg'],
-            ['name' => 'Mission: Possible Art Print', 'price' => 7.99, 'category_id' => $printId, 'movie_id' => $getMovieId('Mission: Possible'), 'quantity' => 60, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_print.jpg'],
-            ['name' => 'Mission: Possible Special Print', 'price' => 9.99, 'category_id' => $printId, 'movie_id' => $getMovieId('Mission: Possible'), 'quantity' => 30, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_print_2.png'],
-            ['name' => 'Mission: Possible Gadget Set', 'price' => 34.99, 'category_id' => $propReplicaId, 'movie_id' => $getMovieId('Mission: Possible'), 'quantity' => 12, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_prop.jpg'],
-            ['name' => 'Mission: Possible Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'movie_id' => $getMovieId('Mission: Possible'), 'quantity' => 85, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_stickers.jpg'],
+            ['name' => 'Mission: Possible Spy Gadget', 'price' => 12.99, 'category_id' => $accessoryId, 'franchise_id' => $getFranchiseId('Mission: Possible'), 'quantity' => 40, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_accessory.jpg'],
+            ['name' => 'Mission: Possible Figurine', 'price' => 9.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('Mission: Possible'), 'quantity' => 35, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_figurine.jpg'],
+            ['name' => 'Mission: Possible Plush Toy', 'price' => 11.99, 'category_id' => $plushId, 'franchise_id' => $getFranchiseId('Mission: Possible'), 'quantity' => 25, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_plush.jpg'],
+            ['name' => 'Mission: Possible Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'franchise_id' => $getFranchiseId('Mission: Possible'), 'quantity' => 70, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_poster.jpg'],
+            ['name' => 'Mission: Possible Art Print', 'price' => 7.99, 'category_id' => $printId, 'franchise_id' => $getFranchiseId('Mission: Possible'), 'quantity' => 60, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_print.jpg'],
+            ['name' => 'Mission: Possible Special Print', 'price' => 9.99, 'category_id' => $printId, 'franchise_id' => $getFranchiseId('Mission: Possible'), 'quantity' => 30, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_print_2.png'],
+            ['name' => 'Mission: Possible Gadget Set', 'price' => 34.99, 'category_id' => $propReplicaId, 'franchise_id' => $getFranchiseId('Mission: Possible'), 'quantity' => 12, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_prop.jpg'],
+            ['name' => 'Mission: Possible Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'franchise_id' => $getFranchiseId('Mission: Possible'), 'quantity' => 85, 'status_id' => $availableId, 'image' => '/images/mission/souvenirs/mission_stickers.jpg'],
 
             // hiding nemo
-            ['name' => 'Hiding Nemo Seashell Necklace', 'price' => 7.99, 'category_id' => $accessoryId, 'movie_id' => $getMovieId('Hiding Nemo'), 'quantity' => 45, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_accessory.jpg'],
-            ['name' => 'Hiding Nemo Figurine', 'price' => 9.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId('Hiding Nemo'), 'quantity' => 30, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_figurine.jpg'],
-            ['name' => 'Hiding Nemo Plush Toy', 'price' => 12.99, 'category_id' => $plushId, 'movie_id' => $getMovieId('Hiding Nemo'), 'quantity' => 40, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_plush.jpg'],
-            ['name' => 'Hiding Nemo XL Plush Toy', 'price' => 19.99, 'category_id' => $plushId, 'movie_id' => $getMovieId('Hiding Nemo'), 'quantity' => 15, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_plush_2.png'],
-            ['name' => 'Hiding Nemo Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'movie_id' => $getMovieId('Hiding Nemo'), 'quantity' => 75, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_poster.jpg'],
-            ['name' => 'Hiding Nemo Art Print', 'price' => 7.99, 'category_id' => $printId, 'movie_id' => $getMovieId('Hiding Nemo'), 'quantity' => 50, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_print.jpg'],
-            ['name' => 'Hiding Nemo Prop Replica', 'price' => 24.99, 'category_id' => $propReplicaId, 'movie_id' => $getMovieId('Hiding Nemo'), 'quantity' => 18, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_prop.jpg'],
-            ['name' => 'Hiding Nemo Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'movie_id' => $getMovieId('Hiding Nemo'), 'quantity' => 90, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_stickers.jpg'],
+            ['name' => 'Hiding Nemo Seashell Necklace', 'price' => 7.99, 'category_id' => $accessoryId, 'franchise_id' => $getFranchiseId('Hiding Nemo'), 'quantity' => 45, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_accessory.jpg'],
+            ['name' => 'Hiding Nemo Figurine', 'price' => 9.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('Hiding Nemo'), 'quantity' => 30, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_figurine.jpg'],
+            ['name' => 'Hiding Nemo Plush Toy', 'price' => 12.99, 'category_id' => $plushId, 'franchise_id' => $getFranchiseId('Hiding Nemo'), 'quantity' => 40, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_plush.jpg'],
+            ['name' => 'Hiding Nemo XL Plush Toy', 'price' => 19.99, 'category_id' => $plushId, 'franchise_id' => $getFranchiseId('Hiding Nemo'), 'quantity' => 15, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_plush_2.png'],
+            ['name' => 'Hiding Nemo Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'franchise_id' => $getFranchiseId('Hiding Nemo'), 'quantity' => 75, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_poster.jpg'],
+            ['name' => 'Hiding Nemo Art Print', 'price' => 7.99, 'category_id' => $printId, 'franchise_id' => $getFranchiseId('Hiding Nemo'), 'quantity' => 50, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_print.jpg'],
+            ['name' => 'Hiding Nemo Prop Replica', 'price' => 24.99, 'category_id' => $propReplicaId, 'franchise_id' => $getFranchiseId('Hiding Nemo'), 'quantity' => 18, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_prop.jpg'],
+            ['name' => 'Hiding Nemo Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'franchise_id' => $getFranchiseId('Hiding Nemo'), 'quantity' => 90, 'status_id' => $availableId, 'image' => '/images/nemo/souvenirs/nemo_stickers.jpg'],
 
             // blue bilk
-            ['name' => 'Blue Bulk Power Band', 'price' => 9.99, 'category_id' => $accessoryId, 'movie_id' => $getMovieId('The Ordinary Blue Bulk'), 'quantity' => 40, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_accessory.jpg'],
-            ['name' => 'Blue Bulk Figurine', 'price' => 11.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId('The Ordinary Blue Bulk'), 'quantity' => 25, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_figurine.jpg'],
-            ['name' => 'Blue Bulk Plush Toy', 'price' => 14.99, 'category_id' => $plushId, 'movie_id' => $getMovieId('The Ordinary Blue Bulk'), 'quantity' => 20, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_plush.jpg'],
-            ['name' => 'Blue Bulk Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'movie_id' => $getMovieId('The Ordinary Blue Bulk'), 'quantity' => 60, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_poster.jpg'],
-            ['name' => 'Blue Bulk Art Print', 'price' => 8.99, 'category_id' => $printId, 'movie_id' => $getMovieId('The Ordinary Blue Bulk'), 'quantity' => 45, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_print.jpg'],
-            ['name' => 'Blue Bulk Prop Replica', 'price' => 29.99, 'category_id' => $propReplicaId, 'movie_id' => $getMovieId('The Ordinary Blue Bulk'), 'quantity' => 15, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_prop.jpg'],
-            ['name' => 'Blue Bulk Deluxe Prop Replica', 'price' => 44.99, 'category_id' => $propReplicaId, 'movie_id' => $getMovieId('The Ordinary Blue Bulk'), 'quantity' => 8, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_prop_2.png'],
-            ['name' => 'Blue Bulk Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'movie_id' => $getMovieId('The Ordinary Blue Bulk'), 'quantity' => 80, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_stickers.jpg'],
+            ['name' => 'Blue Bulk Power Band', 'price' => 9.99, 'category_id' => $accessoryId, 'franchise_id' => $getFranchiseId('Blue Bulk'), 'quantity' => 40, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_accessory.jpg'],
+            ['name' => 'Blue Bulk Figurine', 'price' => 11.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('Blue Bulk'), 'quantity' => 25, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_figurine.jpg'],
+            ['name' => 'Blue Bulk Plush Toy', 'price' => 14.99, 'category_id' => $plushId, 'franchise_id' => $getFranchiseId('Blue Bulk'), 'quantity' => 20, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_plush.jpg'],
+            ['name' => 'Blue Bulk Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'franchise_id' => $getFranchiseId('Blue Bulk'), 'quantity' => 60, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_poster.jpg'],
+            ['name' => 'Blue Bulk Art Print', 'price' => 8.99, 'category_id' => $printId, 'franchise_id' => $getFranchiseId('Blue Bulk'), 'quantity' => 45, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_print.jpg'],
+            ['name' => 'Blue Bulk Prop Replica', 'price' => 29.99, 'category_id' => $propReplicaId, 'franchise_id' => $getFranchiseId('Blue Bulk'), 'quantity' => 15, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_prop.jpg'],
+            ['name' => 'Blue Bulk Deluxe Prop Replica', 'price' => 44.99, 'category_id' => $propReplicaId, 'franchise_id' => $getFranchiseId('Blue Bulk'), 'quantity' => 8, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_prop_2.png'],
+            ['name' => 'Blue Bulk Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'franchise_id' => $getFranchiseId('Blue Bulk'), 'quantity' => 80, 'status_id' => $availableId, 'image' => '/images/bulk/souvenirs/bulk_stickers.jpg'],
 
             // squirrels revenge
-            ['name' => 'Mad Squirrel Acorn Keychain', 'price' => 6.99, 'category_id' => $accessoryId, 'movie_id' => $getMovieId("The Squirrel's Revenge"), 'quantity' => 70, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_accessory.jpg'],
-            ['name' => 'Mad Squirrel Figurine', 'price' => 9.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId("The Squirrel's Revenge"), 'quantity' => 30, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_figurine.jpg'],
-            ['name' => 'Mad Squirrel Deluxe Figurine', 'price' => 14.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId("The Squirrel's Revenge"), 'quantity' => 15, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_figurine_2.png'],
-            ['name' => 'Mad Squirrel Plush Toy', 'price' => 12.99, 'category_id' => $plushId, 'movie_id' => $getMovieId("The Squirrel's Revenge"), 'quantity' => 25, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_plush.jpg'],
-            ["name" => "Squirrel's Revenge Movie Poster", 'price' => 5.99, 'category_id' => $posterId, 'movie_id' => $getMovieId("The Squirrel's Revenge"), 'quantity' => 80, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_poster.png'],
-            ["name" => "Squirrel's Revenge Art Print", 'price' => 7.99, 'category_id' => $printId, 'movie_id' => $getMovieId("The Squirrel's Revenge"), 'quantity' => 55, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_print.jpg'],
-            ['name' => 'Mad Squirrel Prop Replica', 'price' => 24.99, 'category_id' => $propReplicaId, 'movie_id' => $getMovieId("The Squirrel's Revenge"), 'quantity' => 18, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_prop.jpg'],
-            ["name" => "Squirrel's Revenge Sticker Pack", 'price' => 3.99, 'category_id' => $stickerPackId, 'movie_id' => $getMovieId("The Squirrel's Revenge"), 'quantity' => 100, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_stickers.jpg'],
+            ['name' => 'Mad Squirrel Acorn Keychain', 'price' => 6.99, 'category_id' => $accessoryId, 'franchise_id' => $getFranchiseId('Mad Squirrel'), 'quantity' => 70, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_accessory.jpg'],
+            ['name' => 'Mad Squirrel Figurine', 'price' => 9.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('Mad Squirrel'), 'quantity' => 30, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_figurine.jpg'],
+            ['name' => 'Mad Squirrel Deluxe Figurine', 'price' => 14.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('Mad Squirrel'), 'quantity' => 15, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_figurine_2.png'],
+            ['name' => 'Mad Squirrel Plush Toy', 'price' => 12.99, 'category_id' => $plushId, 'franchise_id' => $getFranchiseId('Mad Squirrel'), 'quantity' => 25, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_plush.jpg'],
+            ["name" => "Squirrel's Revenge Movie Poster", 'price' => 5.99, 'category_id' => $posterId, 'franchise_id' => $getFranchiseId('Mad Squirrel'), 'quantity' => 80, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_poster.png'],
+            ["name" => "Squirrel's Revenge Art Print", 'price' => 7.99, 'category_id' => $printId, 'franchise_id' => $getFranchiseId('Mad Squirrel'), 'quantity' => 55, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_print.jpg'],
+            ['name' => 'Mad Squirrel Prop Replica', 'price' => 24.99, 'category_id' => $propReplicaId, 'franchise_id' => $getFranchiseId('Mad Squirrel'), 'quantity' => 18, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_prop.jpg'],
+            ["name" => "Squirrel's Revenge Sticker Pack", 'price' => 3.99, 'category_id' => $stickerPackId, 'franchise_id' => $getFranchiseId('Mad Squirrel'), 'quantity' => 100, 'status_id' => $availableId, 'image' => '/images/squirrel/souvenirs/squirrel_stickers.jpg'],
 
             // dr normal
-            ['name' => 'Dr. Normal Lab Badge', 'price' => 7.99, 'category_id' => $accessoryId, 'movie_id' => $getMovieId('Dr. Normal'), 'quantity' => 60, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_accessory.jpg'],
-            ['name' => 'Dr. Normal Figurine', 'price' => 11.99, 'category_id' => $figurineId, 'movie_id' => $getMovieId('Dr. Normal'), 'quantity' => 35, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_figurine.jpg'],
-            ['name' => 'Dr. Normal Plush Toy', 'price' => 12.99, 'category_id' => $plushId, 'movie_id' => $getMovieId('Dr. Normal'), 'quantity' => 20, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_plush.jpg'],
-            ['name' => 'Dr. Normal Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'movie_id' => $getMovieId('Dr. Normal'), 'quantity' => 70, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_poster.jpg'],
-            ['name' => 'Dr. Normal Art Print', 'price' => 8.99, 'category_id' => $printId, 'movie_id' => $getMovieId('Dr. Normal'), 'quantity' => 45, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_print.jpg'],
-            ['name' => 'Dr. Normal Lab Equipment', 'price' => 39.99, 'category_id' => $propReplicaId, 'movie_id' => $getMovieId('Dr. Normal'), 'quantity' => 10, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_prop.jpg'],
-            ['name' => 'Dr. Normal Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'movie_id' => $getMovieId('Dr. Normal'), 'quantity' => 75, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_stickers.jpg'],
+            ['name' => 'Dr. Normal Lab Badge', 'price' => 7.99, 'category_id' => $accessoryId, 'franchise_id' => $getFranchiseId('Dr. Normal'), 'quantity' => 60, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_accessory.jpg'],
+            ['name' => 'Dr. Normal Figurine', 'price' => 11.99, 'category_id' => $figurineId, 'franchise_id' => $getFranchiseId('Dr. Normal'), 'quantity' => 35, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_figurine.jpg'],
+            ['name' => 'Dr. Normal Plush Toy', 'price' => 12.99, 'category_id' => $plushId, 'franchise_id' => $getFranchiseId('Dr. Normal'), 'quantity' => 20, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_plush.jpg'],
+            ['name' => 'Dr. Normal Movie Poster', 'price' => 5.99, 'category_id' => $posterId, 'franchise_id' => $getFranchiseId('Dr. Normal'), 'quantity' => 70, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_poster.jpg'],
+            ['name' => 'Dr. Normal Art Print', 'price' => 8.99, 'category_id' => $printId, 'franchise_id' => $getFranchiseId('Dr. Normal'), 'quantity' => 45, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_print.jpg'],
+            ['name' => 'Dr. Normal Lab Equipment', 'price' => 39.99, 'category_id' => $propReplicaId, 'franchise_id' => $getFranchiseId('Dr. Normal'), 'quantity' => 10, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_prop.jpg'],
+            ['name' => 'Dr. Normal Sticker Pack', 'price' => 3.99, 'category_id' => $stickerPackId, 'franchise_id' => $getFranchiseId('Dr. Normal'), 'quantity' => 75, 'status_id' => $availableId, 'image' => '/images/dr_normal/souvenirs/dr_normal_stickers.jpg'],
         ];
 
         foreach ($souvenirs as $data) {
@@ -1263,9 +1288,10 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $movieImage = DB::table('movie_images')
-                ->where('movie_id', $souvenirData['movie_id'])
-                ->where('is_primary', true)
-                ->value('url');
+                ->join('movies', 'movie_images.movie_id', '=', 'movies.id')
+                ->where('movies.franchise_id', $souvenirData['franchise_id'])
+                ->where('movie_images.is_primary', true)
+                ->value('movie_images.url');
 
             if ($movieImage) {
                 DB::table('souvenir_images')->insert([

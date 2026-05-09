@@ -50,26 +50,30 @@ class MovieController extends Controller
 
         $relatedSouvenirs = DB::table('souvenirs')
             ->join('category', 'souvenirs.category_id', '=', 'category.id')
+            ->join('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
                      ->where('souvenir_images.is_primary', true);
             })
-            ->where('souvenirs.movie_id', $movieRecord->id)
+            ->where('souvenirs.franchise_id', function ($sub) use ($movieRecord) {
+                $sub->select('franchise_id')->from('movies')->where('id', $movieRecord->id);
+            })
             ->select(
                 'souvenirs.name as title',
                 'souvenirs.price',
                 'category.name as type',
-                'souvenir_images.url as image'
+                'souvenir_images.url as image',
+                'franchises.name as franchise_name'
             )
             ->limit(4)
             ->get()
-            ->map(function ($s) use ($movieRecord) {
+            ->map(function ($s) {
                 return [
-                    'title' => $s->title,
-                    'image' => $s->image,
-                    'movie' => $movieRecord->title,
-                    'type' => $s->type,
-                    'price' => number_format($s->price, 2) . '€',
+                    'title'     => $s->title,
+                    'image'     => $s->image,
+                    'franchise' => $s->franchise_name,
+                    'type'      => $s->type,
+                    'price'     => number_format($s->price, 2) . '€',
                 ];
             })->toArray();
 

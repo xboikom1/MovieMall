@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('director_id')->nullable()->constrained('directors')->nullOnDelete();
             $table->foreignId('studio_id')->nullable()->constrained('studios')->nullOnDelete();
             $table->foreignId('language_id')->nullable()->constrained('languages')->nullOnDelete();
+            $table->foreignId('franchise_id')->nullable()->constrained('franchises')->nullOnDelete();
             $table->timestamps();
         });
 
@@ -57,6 +58,7 @@ return new class extends Migration
             $table->foreignId('schedule_slot_id')->constrained('schedule_slots')->cascadeOnDelete();
             $table->decimal('price', 10, 2)->notNull();
             $table->timestamp('created_at')->nullable();
+            $table->unique(['seat_id', 'schedule_slot_id'], 'tickets_seat_slot_unique');
         });
     }
 

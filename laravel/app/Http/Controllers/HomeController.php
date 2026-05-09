@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         return DB::table('souvenirs')
             ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
-            ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
+            ->leftJoin('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
                      ->where('souvenir_images.is_primary', true);
@@ -35,7 +35,7 @@ class HomeController extends Controller
                 'souvenirs.name',
                 'souvenirs.price',
                 'category.name as category',
-                'movies.title as movie_title',
+                'franchises.name as franchise_name',
                 'souvenir_images.url as image'
             )
             ->orderBy($orderBy, $direction)

@@ -13,7 +13,7 @@ class SouvenirController extends Controller
     {
         $query = DB::table('souvenirs')
             ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
-            ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
+            ->leftJoin('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
                     ->where('souvenir_images.is_primary', true);
@@ -23,7 +23,7 @@ class SouvenirController extends Controller
                 'souvenirs.name',
                 'souvenirs.price',
                 'category.name as category',
-                'movies.title as movie_title',
+                'franchises.name as franchise_name',
                 'souvenir_images.url as image'
             );
 
@@ -31,8 +31,8 @@ class SouvenirController extends Controller
             $query->whereIn('souvenirs.category_id', (array) $request->input('categories'));
         }
 
-        if ($request->filled('movies')) {
-            $query->whereIn('souvenirs.movie_id', (array) $request->input('movies'));
+        if ($request->filled('franchises')) {
+            $query->whereIn('souvenirs.franchise_id', (array) $request->input('franchises'));
         }
 
         if ($request->filled('price_min')) {
@@ -53,18 +53,19 @@ class SouvenirController extends Controller
 
         $souvenirs  = $query->paginate(20)->withQueryString();
         $categories = DB::table('category')->orderBy('name')->get();
-        $movies     = DB::table('movies')->orderBy('title')->get();
+        $franchises = DB::table('franchises')->orderBy('name')->get();
 
         $priceMin = (float) DB::table('souvenirs')->min('price');
         $priceMax = (float) DB::table('souvenirs')->max('price');
 
-        return view('souvenirs', compact('souvenirs', 'categories', 'movies', 'sort', 'priceMin', 'priceMax'));
+        return view('souvenirs', compact('souvenirs', 'categories', 'franchises', 'sort', 'priceMin', 'priceMax'));
     }
 
     public function show(string $slug): View
     {
         $rows = DB::table('souvenirs')
             ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
+            ->leftJoin('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
                     ->where('souvenir_images.is_primary', true);
@@ -73,8 +74,9 @@ class SouvenirController extends Controller
                 'souvenirs.id',
                 'souvenirs.name',
                 'souvenirs.price',
-                'souvenirs.movie_id',
+                'souvenirs.franchise_id',
                 'category.name as category',
+                'franchises.name as franchise_name',
                 'souvenir_images.url as image'
             )
             ->get();
@@ -83,7 +85,7 @@ class SouvenirController extends Controller
 
         abort_unless($souvenirRecord !== null, 404);
 
-        $movieTitle = DB::table('movies')->where('id', $souvenirRecord->movie_id)->value('title');
+        $franchiseName = $souvenirRecord->franchise_name;
 
         $souvenirImages = DB::table('souvenir_images')
             ->where('souvenir_id', $souvenirRecord->id)
@@ -93,37 +95,38 @@ class SouvenirController extends Controller
 
         $related = DB::table('souvenirs')
             ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
-            ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
+            ->leftJoin('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
                     ->where('souvenir_images.is_primary', true);
             })
             ->where('souvenirs.id', '!=', $souvenirRecord->id)
-            ->select('souvenirs.name as title', 'souvenirs.price', 'category.name as type', 'souvenir_images.url as image', 'movies.title as movie_title')
+            ->where('souvenirs.franchise_id', $souvenirRecord->franchise_id)
+            ->select('souvenirs.name as title', 'souvenirs.price', 'category.name as type', 'souvenir_images.url as image', 'franchises.name as franchise_name')
             ->inRandomOrder()
             ->limit(8)
             ->get()
             ->map(function ($s) {
                 return [
-                    'title' => $s->title,
-                    'image' => $s->image ?? '/images/SuperGrandpaSouvenir.png',
-                    'movie' => $s->movie_title,
-                    'type' => $s->type,
-                    'price' => number_format($s->price, 2) . '€',
+                    'title'     => $s->title,
+                    'image'     => $s->image ?? '/images/SuperGrandpaSouvenir.png',
+                    'franchise' => $s->franchise_name,
+                    'type'      => $s->type,
+                    'price'     => number_format($s->price, 2) . '€',
                 ];
             })->toArray();
 
         $souvenir = [
-            'id' => $souvenirRecord->id,
-            'slug' => $slug,
-            'title' => $souvenirRecord->name,
-            'images' => !empty($souvenirImages) ? $souvenirImages : [$souvenirRecord->image ?? '/images/SuperGrandpaSouvenir.png'],
-            'image' => $souvenirRecord->image ?? '/images/SuperGrandpaSouvenir.png',
-            'price' => number_format($souvenirRecord->price, 2) . '€',
-            'in_stock' => true,
-            'category' => $souvenirRecord->category,
-            'movie' => $movieTitle,
-            'description' => '',
+            'id'               => $souvenirRecord->id,
+            'slug'             => $slug,
+            'title'            => $souvenirRecord->name,
+            'images'           => !empty($souvenirImages) ? $souvenirImages : [$souvenirRecord->image ?? '/images/SuperGrandpaSouvenir.png'],
+            'image'            => $souvenirRecord->image ?? '/images/SuperGrandpaSouvenir.png',
+            'price'            => number_format($souvenirRecord->price, 2) . '€',
+            'in_stock'         => true,
+            'category'         => $souvenirRecord->category,
+            'franchise'        => $franchiseName,
+            'description'      => '',
             'related_souvenirs' => $related,
         ];
 

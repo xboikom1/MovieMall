@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name', 150)->notNull();
             $table->decimal('price', 10, 2)->notNull();
             $table->foreignId('category_id')->nullable()->constrained('category')->nullOnDelete();
-            $table->foreignId('movie_id')->nullable()->constrained('movies')->nullOnDelete();
+            $table->foreignId('franchise_id')->nullable()->constrained('franchises')->nullOnDelete();
             $table->integer('quantity')->default(0);
             $table->foreignId('status_id')->nullable()->constrained('souvenir_status')->nullOnDelete();
             $table->timestamps();

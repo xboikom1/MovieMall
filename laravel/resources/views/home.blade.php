@@ -154,7 +154,7 @@
                                         <span class="min-w-0 truncate font-semibold">{{ $s->name }}</span>
                                         <span class="shrink-0 text-sm font-semibold text-accent">{{ number_format($s->price, 2) }}€</span>
                                     </div>
-                                    <span class="truncate text-xs text-placeholder">{{ $s->movie_title ?? '—' }}</span>
+                                    <span class="truncate text-xs text-placeholder">{{ $s->franchise_name ?? '—' }}</span>
                                     <span
                                         class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder"
                                         >{{ $s->category ?? '—' }}</span
@@ -196,7 +196,7 @@
                                         <span class="min-w-0 truncate font-semibold">{{ $s->name }}</span>
                                         <span class="shrink-0 text-sm font-semibold text-accent">{{ number_format($s->price, 2) }}€</span>
                                     </div>
-                                    <span class="truncate text-xs text-placeholder">{{ $s->movie_title ?? '—' }}</span>
+                                    <span class="truncate text-xs text-placeholder">{{ $s->franchise_name ?? '—' }}</span>
                                     <span
                                         class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder"
                                         >{{ $s->category ?? '—' }}</span

@@ -19,6 +19,10 @@ return new class extends Migration
             $table->enum('status', ['draft', 'paid'])->default('draft');
             $table->enum('delivery_type', ['courier', 'locker', 'pickup'])->nullable();
             $table->foreignId('delivery_address_id')->nullable()->constrained('delivery_addresses')->nullOnDelete();
+            $table->string('shipping_street', 150)->nullable();
+            $table->string('shipping_city', 100)->nullable();
+            $table->string('shipping_postal_code', 20)->nullable();
+            $table->string('shipping_country', 100)->nullable();
             $table->decimal('subtotal', 10, 2)->nullable();
             $table->decimal('shipping_cost', 10, 2)->nullable();
             $table->decimal('tax', 10, 2)->nullable();
@@ -36,6 +40,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('souvenir_id')->constrained('souvenirs')->cascadeOnDelete();
+            $table->decimal('price', 10, 2)->notNull();
             $table->integer('quantity')->notNull();
         });
 

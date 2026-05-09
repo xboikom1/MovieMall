@@ -139,7 +139,7 @@
                                                 <span class="min-w-0 truncate font-semibold">{{ $souvenir['title'] }}</span>
                                                 <span class="shrink-0 text-sm font-semibold text-accent">{{ $souvenir['price'] }}</span>
                                             </div>
-                                            <span class="truncate text-xs text-placeholder">{{ $souvenir['movie'] }}</span>
+                                            <span class="truncate text-xs text-placeholder">{{ $souvenir['franchise'] ?? '' }}</span>
                                             <span
                                                 class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder"
                                                 >{{ $souvenir['type'] }}</span
