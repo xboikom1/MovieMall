@@ -1148,5 +1148,95 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        $secondaryImages = [
+            // Dr. Normal
+            ['title' => 'Dr. Normal',                                              'url' => '/images/dr_normal/movies/secondary/dr-normal-1.jpg'],
+            ['title' => 'Dr. Normal 2: Just Another Day',                         'url' => '/images/dr_normal/movies/secondary/dr-normal-2.jpg'],
+            ['title' => 'Dr. Normal 3: The Routine Checkup',                      'url' => '/images/dr_normal/movies/secondary/dr-normal-3.jpg'],
+            ['title' => 'Dr. Normal 4: Mildly Inconvenienced',                    'url' => '/images/dr_normal/movies/secondary/dr-normal-4.jpg'],
+            ['title' => 'Dr. Normal 5: The Multiverse of Average',                'url' => '/images/dr_normal/movies/secondary/dr-normal-5.jpg'],
+            ['title' => 'Dr. Normal: Origins (He Was Always Like This)',           'url' => '/images/dr_normal/movies/secondary/dr-normal-origins.jpg'],
+            // Gollum
+            ['title' => 'Gollum: Steal The Ring',                                 'url' => '/images/gollum/movies/secondary/gollum-1.jpg'],
+            ['title' => 'Gollum 2: I Lost It Again',                              'url' => '/images/gollum/movies/secondary/gollum-2.jpg'],
+            ['title' => 'Gollum 3: The Pawn Shop Returns',                        'url' => '/images/gollum/movies/secondary/gollum-3.jpg'],
+            ['title' => 'Gollum 4: The Fellowship of the Bling',                  'url' => '/images/gollum/movies/secondary/gollum-4.jpg'],
+            ['title' => 'Gollum 5: The Two Pigeons',                              'url' => '/images/gollum/movies/secondary/gollum-5.jpg'],
+            ["title" => "Gollum 6: Return of the King's Cousin",                  'url' => '/images/gollum/movies/secondary/gollum-6.jpg'],
+            // Hiding Nemo
+            ['title' => 'Hiding Nemo',                                            'url' => '/images/nemo/movies/secondary/hiding-nemo-1.jpg'],
+            ["title" => "Hiding Nemo 2: He's Still There",                        'url' => '/images/nemo/movies/secondary/hiding-nemo-2.jpg'],
+            ['title' => 'Hiding Dory (She Forgot Where She Hid)',                 'url' => '/images/nemo/movies/secondary/hiding-dory.jpg'],
+            ['title' => 'Hiding Nemo 4: The Witness Protection Program',          'url' => '/images/nemo/movies/secondary/hiding-nemo-4.jpg'],
+            ['title' => 'Hiding Nemo 5: Found Him (Just Kidding)',                'url' => '/images/nemo/movies/secondary/hiding-nemo-5.jpg'],
+            // Mission: Possible
+            ['title' => 'Mission: Possible',                                      'url' => '/images/mission/movies/secondary/mission-possible-1.jpg'],
+            ['title' => 'Mission: Possible 2: Actually Pretty Easy',              'url' => '/images/mission/movies/secondary/mission-possible-2.jpg'],
+            ['title' => 'Mission: Possible 3: A Minor Setback',                   'url' => '/images/mission/movies/secondary/mission-possible-3.jpg'],
+            ['title' => 'Mission: Possible 4: Ghost Protocol (He Just Ignored My Texts)', 'url' => '/images/mission/movies/secondary/mission-possible-4.jpg'],
+            ['title' => 'Mission: Possible 5: Rogue Nation (They Forgot To Pay Taxes)',   'url' => '/images/mission/movies/secondary/mission-possible-5.jpg'],
+            ['title' => 'Mission: Possible 6: Fallout (We Dropped A Plate)',      'url' => '/images/mission/movies/secondary/mission-possible-6.jpg'],
+            ['title' => 'Mission: Possible 7: Dead Reckoning (Using A Calculator)', 'url' => '/images/mission/movies/secondary/mission-possible-7.jpg'],
+            ['title' => 'Mission: Possible 8: The Final Checkmark',               'url' => '/images/mission/movies/secondary/mission-possible-8.jpg'],
+            // SuperGrandpa
+            ['title' => 'SuperGrandpa',                                           'url' => '/images/grandpa/movies/secondary/supergrandpa-1.jpg'],
+            ['title' => 'SuperGrandpa 2: The Search for the Dentures',            'url' => '/images/grandpa/movies/secondary/supergrandpa-2.jpg'],
+            ['title' => 'SuperGrandpa 3: Asleep at 4 PM',                         'url' => '/images/grandpa/movies/secondary/supergrandpa-3.jpg'],
+            ['title' => 'SuperGrandpa 4: Back in My Day',                         'url' => '/images/grandpa/movies/secondary/supergrandpa-4.jpg'],
+            ['title' => 'SuperGrandpa vs. The Remote Control',                    'url' => '/images/grandpa/movies/secondary/supergrandpa-remote.jpg'],
+            // Blue Bulk
+            ['title' => 'The Ordinary Blue Bulk',                                 'url' => '/images/bulk/movies/secondary/blue-bulk-1.jpg'],
+            ['title' => 'The Ordinary Blue Bulk 2: Slightly Annoyed',             'url' => '/images/bulk/movies/secondary/blue-bulk-2.jpg'],
+            ['title' => 'The Ordinary Blue Bulk 3: He Needs a Nap',               'url' => '/images/bulk/movies/secondary/blue-bulk-3.jpg'],
+            ['title' => "The Ordinary Blue Bulk 4: The Grocery Store Meltdown",   'url' => '/images/bulk/movies/secondary/blue-bulk-4.jpg'],
+            ["title" => "The Ordinary Blue Bulk 5: Planet Bulk (It's Just a Small Island)", 'url' => '/images/bulk/movies/secondary/blue-bulk-5.jpg'],
+            ['title' => 'The Ordinary Blue Bulk 6: The Mildly Frustrating Traffic Jam', 'url' => '/images/bulk/movies/secondary/blue-bulk-6.jpg'],
+            // Squirrel's Revenge
+            ["title" => "The Squirrel's Revenge",                                 'url' => '/images/squirrel/movies/secondary/squirrel-1.jpg'],
+            ["title" => "The Squirrel's Revenge 2: For the Acorns",               'url' => '/images/squirrel/movies/secondary/squirrel-2.jpg'],
+            ["title" => "The Squirrel's Revenge 3: The Bird Feeder Heist",        'url' => '/images/squirrel/movies/secondary/squirrel-3.jpg'],
+            ["title" => "The Squirrel's Revenge 4: Barking Up the Wrong Tree",    'url' => '/images/squirrel/movies/secondary/squirrel-4.jpg'],
+            ["title" => "The Squirrel's Revenge 5: Winter is Coming (Time to Hibernate)", 'url' => '/images/squirrel/movies/secondary/squirrel-5.jpg'],
+            // The Godmother
+            ['title' => 'The Godmother',                                          'url' => '/images/godmother/movies/secondary/godmother-1.jpg'],
+            ['title' => 'The Godmother Part II: The Guilt Trip',                  'url' => '/images/godmother/movies/secondary/godmother-2.jpg'],
+            ['title' => 'The Godmother Part III: The Leftovers',                  'url' => '/images/godmother/movies/secondary/godmother-3.jpg'],
+            ['title' => 'The Godmother 4: Family Meeting',                        'url' => '/images/godmother/movies/secondary/godmother-4.jpg'],
+            ['title' => 'The Godmother 5: The Favor',                             'url' => '/images/godmother/movies/secondary/godmother-5.jpg'],
+            ["title" => "The Godmother 6: Omertà (Code of Silence)",              'url' => '/images/godmother/movies/secondary/godmother-6.jpg'],
+            ['title' => 'The Godmother 7: The Mattresses',                        'url' => '/images/godmother/movies/secondary/godmother-7.jpg'],
+            ['title' => 'The Godmother 8: The Final Blessing',                    'url' => '/images/godmother/movies/secondary/godmother-8.jpg'],
+            // The Procrastinator
+            ['title' => 'The Procrastinator',                                     'url' => '/images/procrastinator/movies/secondary/procrastinator-1.jpg'],
+            ['title' => 'The Procrastinator 2: Judgment Day (Eventually)',        'url' => '/images/procrastinator/movies/secondary/procrastinator-2.jpg'],
+            ['title' => 'The Procrastinator 3: Rise of the Machines (Tomorrow)',  'url' => '/images/procrastinator/movies/secondary/procrastinator-3.jpg'],
+            ['title' => 'The Procrastinator 4: Salvation (Pending)',              'url' => '/images/procrastinator/movies/secondary/procrastinator-4.jpg'],
+            ['title' => 'The Procrastinator 5: Genisys (Loading...)',             'url' => '/images/procrastinator/movies/secondary/procrastinator-5.jpg'],
+            ['title' => 'The Procrastinator 6: Dark Fate (In Drafts)',            'url' => '/images/procrastinator/movies/secondary/procrastinator-6.jpg'],
+            ["title" => "The Procrastinator 7: I'll Be Back (In a Minute)",       'url' => '/images/procrastinator/movies/secondary/procrastinator-7.jpg'],
+            ['title' => 'The Procrastinator 8: The Final Deadline',               'url' => '/images/procrastinator/movies/secondary/procrastinator-8.jpg'],
+            // The Devil Wears Sweatpants
+            ['title' => 'The Devil Wears Sweatpants',                             'url' => '/images/devil/movies/secondary/devil-sweatpants-1.jpg'],
+            ['title' => 'The Devil Wears Sweatpants 2: The Muted Mic',            'url' => '/images/devil/movies/secondary/devil-sweatpants-2.jpg'],
+            ["title" => "The Devil Wears Sweatpants 3: The 'Hard Pants' Rebellion", 'url' => '/images/devil/movies/secondary/devil-sweatpants-3.jpg'],
+            ['title' => 'The Devil Wears Sweatpants 4: Camera Off',               'url' => '/images/devil/movies/secondary/devil-sweatpants-4.jpg'],
+            ['title' => 'The Devil Wears Sweatpants 5: The Ugg Boot Ultimatum',   'url' => '/images/devil/movies/secondary/devil-sweatpants-5.jpg'],
+            ['title' => 'The Devil Wears Sweatpants 6: Reply All',                'url' => '/images/devil/movies/secondary/devil-sweatpants-6.jpg'],
+            ['title' => 'The Devil Wears Sweatpants 7: The Standing Desk',        'url' => '/images/devil/movies/secondary/devil-sweatpants-7.jpg'],
+            ['title' => 'The Devil Wears Sweatpants 8: Return to Office (Denied)', 'url' => '/images/devil/movies/secondary/devil-sweatpants-8.jpg'],
+        ];
+
+        foreach ($secondaryImages as $entry) {
+            $movieId = $getMovieId($entry['title']);
+            if ($movieId) {
+                DB::table('movie_images')->insert([
+                    'movie_id'   => $movieId,
+                    'url'        => $entry['url'],
+                    'is_primary' => false,
+                    'created_at' => now(),
+                ]);
+            }
+        }
     }
 }
