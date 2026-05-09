@@ -991,6 +991,7 @@ class DatabaseSeeder extends Seeder
 
         $hallAId = DB::table('halls')->where('name', 'Hall A')->value('id');
         $hallBId = DB::table('halls')->where('name', 'Hall B')->value('id');
+        $hallCId = DB::table('halls')->where('name', 'Hall C')->value('id');
 
         $slotDefs = [
             // SuperGrandpa — Hall A
@@ -1026,6 +1027,133 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Dr. Normal',              'hall' => $hallAId, 'starts_at' => '2026-05-13 20:00:00', 'length' => 116],
             ['title' => 'Dr. Normal',              'hall' => $hallAId, 'starts_at' => '2026-05-15 17:30:00', 'length' => 116],
         ];
+
+        // Dr. Normal sequels
+        $slotDefs[] = ['title' => 'Dr. Normal 2: Just Another Day',                          'hall' => $hallAId, 'starts_at' => '2026-05-16 14:00:00', 'length' => 98];
+        $slotDefs[] = ['title' => 'Dr. Normal 2: Just Another Day',                          'hall' => $hallCId, 'starts_at' => '2026-05-19 16:30:00', 'length' => 98];
+        $slotDefs[] = ['title' => 'Dr. Normal 3: The Routine Checkup',                       'hall' => $hallCId, 'starts_at' => '2026-05-17 11:00:00', 'length' => 104];
+        $slotDefs[] = ['title' => 'Dr. Normal 3: The Routine Checkup',                       'hall' => $hallAId, 'starts_at' => '2026-05-20 18:00:00', 'length' => 104];
+        $slotDefs[] = ['title' => 'Dr. Normal 4: Mildly Inconvenienced',                     'hall' => $hallAId, 'starts_at' => '2026-05-18 15:30:00', 'length' => 96];
+        $slotDefs[] = ['title' => 'Dr. Normal 4: Mildly Inconvenienced',                     'hall' => $hallCId, 'starts_at' => '2026-05-22 13:00:00', 'length' => 96];
+        $slotDefs[] = ['title' => 'Dr. Normal 5: The Multiverse of Average',                 'hall' => $hallCId, 'starts_at' => '2026-05-19 20:00:00', 'length' => 112];
+        $slotDefs[] = ['title' => 'Dr. Normal 5: The Multiverse of Average',                 'hall' => $hallAId, 'starts_at' => '2026-05-23 11:30:00', 'length' => 112];
+        $slotDefs[] = ['title' => 'Dr. Normal: Origins (He Was Always Like This)',            'hall' => $hallAId, 'starts_at' => '2026-05-21 13:00:00', 'length' => 88];
+        $slotDefs[] = ['title' => 'Dr. Normal: Origins (He Was Always Like This)',            'hall' => $hallCId, 'starts_at' => '2026-05-25 17:00:00', 'length' => 88];
+        // Gollum sequels
+        $slotDefs[] = ['title' => 'Gollum 2: I Lost It Again',                               'hall' => $hallBId, 'starts_at' => '2026-05-16 13:00:00', 'length' => 118];
+        $slotDefs[] = ['title' => 'Gollum 2: I Lost It Again',                               'hall' => $hallCId, 'starts_at' => '2026-05-20 15:00:00', 'length' => 118];
+        $slotDefs[] = ['title' => 'Gollum 3: The Pawn Shop Returns',                         'hall' => $hallCId, 'starts_at' => '2026-05-17 16:00:00', 'length' => 110];
+        $slotDefs[] = ['title' => 'Gollum 3: The Pawn Shop Returns',                         'hall' => $hallBId, 'starts_at' => '2026-05-21 19:00:00', 'length' => 110];
+        $slotDefs[] = ['title' => 'Gollum 4: The Fellowship of the Bling',                   'hall' => $hallBId, 'starts_at' => '2026-05-18 11:00:00', 'length' => 124];
+        $slotDefs[] = ['title' => 'Gollum 4: The Fellowship of the Bling',                   'hall' => $hallCId, 'starts_at' => '2026-05-23 14:00:00', 'length' => 124];
+        $slotDefs[] = ['title' => 'Gollum 5: The Two Pigeons',                               'hall' => $hallCId, 'starts_at' => '2026-05-20 18:30:00', 'length' => 98];
+        $slotDefs[] = ['title' => 'Gollum 5: The Two Pigeons',                               'hall' => $hallBId, 'starts_at' => '2026-05-24 12:00:00', 'length' => 98];
+        $slotDefs[] = ["title" => "Gollum 6: Return of the King's Cousin",                   'hall' => $hallBId, 'starts_at' => '2026-05-22 20:00:00', 'length' => 130];
+        $slotDefs[] = ["title" => "Gollum 6: Return of the King's Cousin",                   'hall' => $hallCId, 'starts_at' => '2026-05-26 16:30:00', 'length' => 130];
+        // Hiding Nemo sequels
+        $slotDefs[] = ["title" => "Hiding Nemo 2: He's Still There",                         'hall' => $hallAId, 'starts_at' => '2026-05-17 12:00:00', 'length' => 95];
+        $slotDefs[] = ["title" => "Hiding Nemo 2: He's Still There",                         'hall' => $hallBId, 'starts_at' => '2026-05-22 14:30:00', 'length' => 95];
+        $slotDefs[] = ['title' => 'Hiding Dory (She Forgot Where She Hid)',                  'hall' => $hallBId, 'starts_at' => '2026-05-18 17:00:00', 'length' => 100];
+        $slotDefs[] = ['title' => 'Hiding Dory (She Forgot Where She Hid)',                  'hall' => $hallAId, 'starts_at' => '2026-05-24 11:00:00', 'length' => 100];
+        $slotDefs[] = ['title' => 'Hiding Nemo 4: The Witness Protection Program',           'hall' => $hallAId, 'starts_at' => '2026-05-19 19:30:00', 'length' => 102];
+        $slotDefs[] = ['title' => 'Hiding Nemo 4: The Witness Protection Program',           'hall' => $hallBId, 'starts_at' => '2026-05-26 15:00:00', 'length' => 102];
+        $slotDefs[] = ['title' => 'Hiding Nemo 5: Found Him (Just Kidding)',                 'hall' => $hallBId, 'starts_at' => '2026-05-21 10:30:00', 'length' => 88];
+        $slotDefs[] = ['title' => 'Hiding Nemo 5: Found Him (Just Kidding)',                 'hall' => $hallAId, 'starts_at' => '2026-05-27 13:30:00', 'length' => 88];
+        // Mission: Possible sequels
+        $slotDefs[] = ['title' => 'Mission: Possible 2: Actually Pretty Easy',               'hall' => $hallCId, 'starts_at' => '2026-05-17 14:30:00', 'length' => 102];
+        $slotDefs[] = ['title' => 'Mission: Possible 2: Actually Pretty Easy',               'hall' => $hallBId, 'starts_at' => '2026-05-23 11:00:00', 'length' => 102];
+        $slotDefs[] = ['title' => 'Mission: Possible 3: A Minor Setback',                    'hall' => $hallBId, 'starts_at' => '2026-05-18 20:00:00', 'length' => 106];
+        $slotDefs[] = ['title' => 'Mission: Possible 3: A Minor Setback',                    'hall' => $hallCId, 'starts_at' => '2026-05-25 15:30:00', 'length' => 106];
+        $slotDefs[] = ['title' => 'Mission: Possible 4: Ghost Protocol (He Just Ignored My Texts)', 'hall' => $hallCId, 'starts_at' => '2026-05-19 12:30:00', 'length' => 113];
+        $slotDefs[] = ['title' => 'Mission: Possible 4: Ghost Protocol (He Just Ignored My Texts)', 'hall' => $hallBId, 'starts_at' => '2026-05-27 18:00:00', 'length' => 113];
+        $slotDefs[] = ['title' => 'Mission: Possible 5: Rogue Nation (They Forgot To Pay Taxes)',   'hall' => $hallBId, 'starts_at' => '2026-05-20 17:00:00', 'length' => 108];
+        $slotDefs[] = ['title' => 'Mission: Possible 5: Rogue Nation (They Forgot To Pay Taxes)',   'hall' => $hallCId, 'starts_at' => '2026-05-29 12:00:00', 'length' => 108];
+        $slotDefs[] = ['title' => 'Mission: Possible 6: Fallout (We Dropped A Plate)',       'hall' => $hallCId, 'starts_at' => '2026-05-21 19:30:00', 'length' => 120];
+        $slotDefs[] = ['title' => 'Mission: Possible 6: Fallout (We Dropped A Plate)',       'hall' => $hallBId, 'starts_at' => '2026-05-30 14:00:00', 'length' => 120];
+        $slotDefs[] = ['title' => 'Mission: Possible 7: Dead Reckoning (Using A Calculator)', 'hall' => $hallBId, 'starts_at' => '2026-05-23 15:00:00', 'length' => 116];
+        $slotDefs[] = ['title' => 'Mission: Possible 7: Dead Reckoning (Using A Calculator)', 'hall' => $hallCId, 'starts_at' => '2026-06-01 11:30:00', 'length' => 116];
+        $slotDefs[] = ['title' => 'Mission: Possible 8: The Final Checkmark',                'hall' => $hallCId, 'starts_at' => '2026-05-25 20:00:00', 'length' => 125];
+        $slotDefs[] = ['title' => 'Mission: Possible 8: The Final Checkmark',                'hall' => $hallBId, 'starts_at' => '2026-06-03 17:00:00', 'length' => 125];
+        // SuperGrandpa sequels
+        $slotDefs[] = ['title' => 'SuperGrandpa 2: The Search for the Dentures',             'hall' => $hallAId, 'starts_at' => '2026-05-18 13:30:00', 'length' => 112];
+        $slotDefs[] = ['title' => 'SuperGrandpa 2: The Search for the Dentures',             'hall' => $hallCId, 'starts_at' => '2026-05-25 19:00:00', 'length' => 112];
+        $slotDefs[] = ['title' => 'SuperGrandpa 3: Asleep at 4 PM',                          'hall' => $hallCId, 'starts_at' => '2026-05-20 11:00:00', 'length' => 96];
+        $slotDefs[] = ['title' => 'SuperGrandpa 3: Asleep at 4 PM',                          'hall' => $hallAId, 'starts_at' => '2026-05-27 16:00:00', 'length' => 96];
+        $slotDefs[] = ['title' => 'SuperGrandpa 4: Back in My Day',                          'hall' => $hallAId, 'starts_at' => '2026-05-22 17:30:00', 'length' => 108];
+        $slotDefs[] = ['title' => 'SuperGrandpa 4: Back in My Day',                          'hall' => $hallCId, 'starts_at' => '2026-05-29 13:30:00', 'length' => 108];
+        $slotDefs[] = ['title' => 'SuperGrandpa vs. The Remote Control',                     'hall' => $hallCId, 'starts_at' => '2026-05-24 14:00:00', 'length' => 118];
+        $slotDefs[] = ['title' => 'SuperGrandpa vs. The Remote Control',                     'hall' => $hallAId, 'starts_at' => '2026-05-31 11:00:00', 'length' => 118];
+        // Blue Bulk sequels
+        $slotDefs[] = ['title' => 'The Ordinary Blue Bulk 2: Slightly Annoyed',              'hall' => $hallBId, 'starts_at' => '2026-05-18 15:00:00', 'length' => 118];
+        $slotDefs[] = ['title' => 'The Ordinary Blue Bulk 2: Slightly Annoyed',              'hall' => $hallCId, 'starts_at' => '2026-05-26 12:30:00', 'length' => 118];
+        $slotDefs[] = ['title' => 'The Ordinary Blue Bulk 3: He Needs a Nap',                'hall' => $hallCId, 'starts_at' => '2026-05-20 20:00:00', 'length' => 122];
+        $slotDefs[] = ['title' => 'The Ordinary Blue Bulk 3: He Needs a Nap',                'hall' => $hallBId, 'starts_at' => '2026-05-28 17:00:00', 'length' => 122];
+        $slotDefs[] = ['title' => 'The Ordinary Blue Bulk 4: The Grocery Store Meltdown',    'hall' => $hallBId, 'starts_at' => '2026-05-22 12:00:00', 'length' => 115];
+        $slotDefs[] = ['title' => 'The Ordinary Blue Bulk 4: The Grocery Store Meltdown',    'hall' => $hallCId, 'starts_at' => '2026-05-30 15:30:00', 'length' => 115];
+        $slotDefs[] = ["title" => "The Ordinary Blue Bulk 5: Planet Bulk (It's Just a Small Island)", 'hall' => $hallCId, 'starts_at' => '2026-05-24 18:00:00', 'length' => 128];
+        $slotDefs[] = ["title" => "The Ordinary Blue Bulk 5: Planet Bulk (It's Just a Small Island)", 'hall' => $hallBId, 'starts_at' => '2026-06-01 13:00:00', 'length' => 128];
+        $slotDefs[] = ['title' => 'The Ordinary Blue Bulk 6: The Mildly Frustrating Traffic Jam', 'hall' => $hallBId, 'starts_at' => '2026-05-26 19:30:00', 'length' => 134];
+        $slotDefs[] = ['title' => 'The Ordinary Blue Bulk 6: The Mildly Frustrating Traffic Jam', 'hall' => $hallCId, 'starts_at' => '2026-06-04 11:00:00', 'length' => 134];
+        // Squirrel's Revenge sequels
+        $slotDefs[] = ["title" => "The Squirrel's Revenge 2: For the Acorns",                'hall' => $hallAId, 'starts_at' => '2026-05-19 11:30:00', 'length' => 98];
+        $slotDefs[] = ["title" => "The Squirrel's Revenge 2: For the Acorns",                'hall' => $hallBId, 'starts_at' => '2026-05-27 16:30:00', 'length' => 98];
+        $slotDefs[] = ["title" => "The Squirrel's Revenge 3: The Bird Feeder Heist",         'hall' => $hallBId, 'starts_at' => '2026-05-21 14:00:00', 'length' => 104];
+        $slotDefs[] = ["title" => "The Squirrel's Revenge 3: The Bird Feeder Heist",         'hall' => $hallAId, 'starts_at' => '2026-05-29 18:30:00', 'length' => 104];
+        $slotDefs[] = ["title" => "The Squirrel's Revenge 4: Barking Up the Wrong Tree",     'hall' => $hallAId, 'starts_at' => '2026-05-23 19:00:00', 'length' => 96];
+        $slotDefs[] = ["title" => "The Squirrel's Revenge 4: Barking Up the Wrong Tree",     'hall' => $hallBId, 'starts_at' => '2026-06-02 12:00:00', 'length' => 96];
+        $slotDefs[] = ["title" => "The Squirrel's Revenge 5: Winter is Coming (Time to Hibernate)", 'hall' => $hallBId, 'starts_at' => '2026-05-25 11:00:00', 'length' => 102];
+        $slotDefs[] = ["title" => "The Squirrel's Revenge 5: Winter is Coming (Time to Hibernate)", 'hall' => $hallAId, 'starts_at' => '2026-06-04 15:00:00', 'length' => 102];
+        // The Godmother
+        $slotDefs[] = ['title' => 'The Godmother',                                           'hall' => $hallAId, 'starts_at' => '2026-05-21 16:00:00', 'length' => 142];
+        $slotDefs[] = ['title' => 'The Godmother',                                           'hall' => $hallBId, 'starts_at' => '2026-05-31 14:30:00', 'length' => 142];
+        $slotDefs[] = ['title' => 'The Godmother Part II: The Guilt Trip',                   'hall' => $hallBId, 'starts_at' => '2026-05-22 19:30:00', 'length' => 148];
+        $slotDefs[] = ['title' => 'The Godmother Part II: The Guilt Trip',                   'hall' => $hallAId, 'starts_at' => '2026-06-03 16:00:00', 'length' => 148];
+        $slotDefs[] = ['title' => 'The Godmother Part III: The Leftovers',                   'hall' => $hallAId, 'starts_at' => '2026-05-23 13:30:00', 'length' => 132];
+        $slotDefs[] = ['title' => 'The Godmother Part III: The Leftovers',                   'hall' => $hallBId, 'starts_at' => '2026-06-06 11:00:00', 'length' => 132];
+        $slotDefs[] = ['title' => 'The Godmother 4: Family Meeting',                         'hall' => $hallBId, 'starts_at' => '2026-05-25 16:00:00', 'length' => 138];
+        $slotDefs[] = ['title' => 'The Godmother 4: Family Meeting',                         'hall' => $hallAId, 'starts_at' => '2026-06-08 19:00:00', 'length' => 138];
+        $slotDefs[] = ['title' => 'The Godmother 5: The Favor',                              'hall' => $hallAId, 'starts_at' => '2026-05-27 20:00:00', 'length' => 135];
+        $slotDefs[] = ['title' => 'The Godmother 5: The Favor',                              'hall' => $hallBId, 'starts_at' => '2026-06-10 14:30:00', 'length' => 135];
+        $slotDefs[] = ["title" => "The Godmother 6: Omertà (Code of Silence)",               'hall' => $hallBId, 'starts_at' => '2026-05-29 12:30:00', 'length' => 130];
+        $slotDefs[] = ["title" => "The Godmother 6: Omertà (Code of Silence)",               'hall' => $hallAId, 'starts_at' => '2026-06-12 17:00:00', 'length' => 130];
+        $slotDefs[] = ['title' => 'The Godmother 7: The Mattresses',                         'hall' => $hallAId, 'starts_at' => '2026-05-31 15:00:00', 'length' => 126];
+        $slotDefs[] = ['title' => 'The Godmother 7: The Mattresses',                         'hall' => $hallBId, 'starts_at' => '2026-06-14 13:00:00', 'length' => 126];
+        $slotDefs[] = ['title' => 'The Godmother 8: The Final Blessing',                     'hall' => $hallBId, 'starts_at' => '2026-06-02 18:00:00', 'length' => 152];
+        $slotDefs[] = ['title' => 'The Godmother 8: The Final Blessing',                     'hall' => $hallAId, 'starts_at' => '2026-06-16 20:00:00', 'length' => 152];
+        // The Procrastinator
+        $slotDefs[] = ['title' => 'The Procrastinator',                                      'hall' => $hallCId, 'starts_at' => '2026-05-22 11:00:00', 'length' => 118];
+        $slotDefs[] = ['title' => 'The Procrastinator',                                      'hall' => $hallBId, 'starts_at' => '2026-06-02 15:30:00', 'length' => 118];
+        $slotDefs[] = ['title' => 'The Procrastinator 2: Judgment Day (Eventually)',         'hall' => $hallBId, 'starts_at' => '2026-05-24 16:00:00', 'length' => 112];
+        $slotDefs[] = ['title' => 'The Procrastinator 2: Judgment Day (Eventually)',         'hall' => $hallCId, 'starts_at' => '2026-06-05 12:00:00', 'length' => 112];
+        $slotDefs[] = ['title' => 'The Procrastinator 3: Rise of the Machines (Tomorrow)',   'hall' => $hallCId, 'starts_at' => '2026-05-25 19:30:00', 'length' => 108];
+        $slotDefs[] = ['title' => 'The Procrastinator 3: Rise of the Machines (Tomorrow)',   'hall' => $hallBId, 'starts_at' => '2026-06-07 14:00:00', 'length' => 108];
+        $slotDefs[] = ['title' => 'The Procrastinator 4: Salvation (Pending)',               'hall' => $hallBId, 'starts_at' => '2026-05-27 13:00:00', 'length' => 120];
+        $slotDefs[] = ['title' => 'The Procrastinator 4: Salvation (Pending)',               'hall' => $hallCId, 'starts_at' => '2026-06-09 17:30:00', 'length' => 120];
+        $slotDefs[] = ['title' => 'The Procrastinator 5: Genisys (Loading...)',              'hall' => $hallCId, 'starts_at' => '2026-05-29 15:00:00', 'length' => 116];
+        $slotDefs[] = ['title' => 'The Procrastinator 5: Genisys (Loading...)',              'hall' => $hallBId, 'starts_at' => '2026-06-11 11:30:00', 'length' => 116];
+        $slotDefs[] = ['title' => 'The Procrastinator 6: Dark Fate (In Drafts)',             'hall' => $hallBId, 'starts_at' => '2026-05-31 18:30:00', 'length' => 124];
+        $slotDefs[] = ['title' => 'The Procrastinator 6: Dark Fate (In Drafts)',             'hall' => $hallCId, 'starts_at' => '2026-06-13 16:00:00', 'length' => 124];
+        $slotDefs[] = ["title" => "The Procrastinator 7: I'll Be Back (In a Minute)",        'hall' => $hallCId, 'starts_at' => '2026-06-01 12:00:00', 'length' => 110];
+        $slotDefs[] = ["title" => "The Procrastinator 7: I'll Be Back (In a Minute)",        'hall' => $hallBId, 'starts_at' => '2026-06-15 19:00:00', 'length' => 110];
+        $slotDefs[] = ['title' => 'The Procrastinator 8: The Final Deadline',                'hall' => $hallBId, 'starts_at' => '2026-06-03 20:00:00', 'length' => 135];
+        $slotDefs[] = ['title' => 'The Procrastinator 8: The Final Deadline',                'hall' => $hallCId, 'starts_at' => '2026-06-17 14:30:00', 'length' => 135];
+        // The Devil Wears Sweatpants
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants',                              'hall' => $hallAId, 'starts_at' => '2026-05-23 12:30:00', 'length' => 110];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants',                              'hall' => $hallCId, 'starts_at' => '2026-06-04 17:00:00', 'length' => 110];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 2: The Muted Mic',             'hall' => $hallCId, 'starts_at' => '2026-05-25 14:00:00', 'length' => 104];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 2: The Muted Mic',             'hall' => $hallAId, 'starts_at' => '2026-06-07 11:30:00', 'length' => 104];
+        $slotDefs[] = ["title" => "The Devil Wears Sweatpants 3: The 'Hard Pants' Rebellion", 'hall' => $hallAId, 'starts_at' => '2026-05-26 18:30:00', 'length' => 98];
+        $slotDefs[] = ["title" => "The Devil Wears Sweatpants 3: The 'Hard Pants' Rebellion", 'hall' => $hallCId, 'starts_at' => '2026-06-09 15:00:00', 'length' => 98];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 4: Camera Off',                'hall' => $hallCId, 'starts_at' => '2026-05-28 11:30:00', 'length' => 95];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 4: Camera Off',                'hall' => $hallAId, 'starts_at' => '2026-06-11 19:30:00', 'length' => 95];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 5: The Ugg Boot Ultimatum',    'hall' => $hallAId, 'starts_at' => '2026-05-30 16:00:00', 'length' => 102];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 5: The Ugg Boot Ultimatum',    'hall' => $hallCId, 'starts_at' => '2026-06-13 13:00:00', 'length' => 102];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 6: Reply All',                 'hall' => $hallCId, 'starts_at' => '2026-06-01 19:00:00', 'length' => 108];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 6: Reply All',                 'hall' => $hallAId, 'starts_at' => '2026-06-15 14:30:00', 'length' => 108];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 7: The Standing Desk',         'hall' => $hallAId, 'starts_at' => '2026-06-03 13:30:00', 'length' => 100];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 7: The Standing Desk',         'hall' => $hallCId, 'starts_at' => '2026-06-17 11:00:00', 'length' => 100];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 8: Return to Office (Denied)', 'hall' => $hallCId, 'starts_at' => '2026-06-05 17:30:00', 'length' => 112];
+        $slotDefs[] = ['title' => 'The Devil Wears Sweatpants 8: Return to Office (Denied)', 'hall' => $hallAId, 'starts_at' => '2026-06-19 18:00:00', 'length' => 112];
 
         foreach ($slotDefs as $def) {
             $movieId = DB::table('movies')->where('title', $def['title'])->value('id');
