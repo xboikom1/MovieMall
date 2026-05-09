@@ -33,9 +33,9 @@ class AdminScheduleController extends Controller
             $query->where('schedule_slots.movie_id', $movieFilter);
         }
 
-        $slots   = $query->paginate(20)->withQueryString();
-        $movies  = DB::table('movies')->orderBy('title')->get(['id', 'title']);
-        $halls   = DB::table('halls')->orderBy('name')->get(['id', 'name']);
+        $slots = $query->paginate(20)->withQueryString();
+        $movies = DB::table('movies')->orderBy('title')->get(['id', 'title']);
+        $halls = DB::table('halls')->orderBy('name')->get(['id', 'name']);
 
         return view('admin.schedule', compact('slots', 'movies', 'halls', 'movieFilter'));
     }
@@ -43,19 +43,19 @@ class AdminScheduleController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'movie_id'   => ['required', 'integer', 'exists:movies,id'],
-            'hall_id'    => ['required', 'integer', 'exists:halls,id'],
-            'starts_at'  => ['required', 'date', 'after:now'],
+            'movie_id' => ['required', 'integer', 'exists:movies,id'],
+            'hall_id' => ['required', 'integer', 'exists:halls,id'],
+            'starts_at' => ['required', 'date', 'after:now'],
         ]);
 
         $length = (int) DB::table('movies')->where('id', $data['movie_id'])->value('length_minutes');
         $endsAt = Carbon::parse($data['starts_at'])->addMinutes($length + 15);
 
         DB::table('schedule_slots')->insert([
-            'movie_id'  => $data['movie_id'],
-            'hall_id'   => $data['hall_id'],
+            'movie_id' => $data['movie_id'],
+            'hall_id' => $data['hall_id'],
             'starts_at' => Carbon::parse($data['starts_at'])->format('Y-m-d H:i:s'),
-            'ends_at'   => $endsAt->format('Y-m-d H:i:s'),
+            'ends_at' => $endsAt->format('Y-m-d H:i:s'),
         ]);
 
         return redirect()->route('admin.schedule', array_filter(['movie_id' => $request->query('movie_id')]))

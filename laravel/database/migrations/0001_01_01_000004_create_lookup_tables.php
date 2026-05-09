@@ -42,10 +42,16 @@ return new class extends Migration
             $table->id();
             $table->string('name', 20)->nullable();
         });
+
+        Schema::create('franchises', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 100)->notNull();
+        });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('franchises');
         Schema::dropIfExists('souvenir_status');
         Schema::dropIfExists('category');
         Schema::dropIfExists('halls');
