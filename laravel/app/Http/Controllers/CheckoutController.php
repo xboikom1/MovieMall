@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +36,7 @@ class CheckoutController extends Controller
         return view('checkout', compact('tickets', 'souvenirs', 'subtotal', 'shipping', 'taxes', 'grandTotal'));
     }
 
-    public function submit(Request $request): JsonResponse
+    public function submit(Request $request): RedirectResponse
     {
         $request->validate([
             'firstName' => 'required|string|max:100',
@@ -64,7 +64,7 @@ class CheckoutController extends Controller
         }
 
         if (empty($cartItems)) {
-            return response()->json(['status' => 'error', 'message' => 'Your cart is empty.'], 422);
+            return back()->with('error', 'Your cart is empty.')->withInput();
         }
 
         // Structural validation: reject carts with missing slot/seat data or non-existent products
@@ -73,14 +73,14 @@ class CheckoutController extends Controller
 
             if ($item['type'] === 'ticket') {
                 if (empty($opts['schedule_slot_id']) || empty($opts['seat_ids'])) {
-                    return response()->json(['status' => 'error', 'message' => 'Please select a showtime and seats before checking out.'], 422);
+                    return back()->with('error', 'Please select a showtime and seats before checking out.')->withInput();
                 }
                 if (!DB::table('movies')->where('id', $item['reference_id'])->exists()) {
-                    return response()->json(['status' => 'error', 'message' => 'Invalid item in cart.'], 422);
+                    return back()->with('error', 'Invalid item in cart.')->withInput();
                 }
             } elseif ($item['type'] === 'souvenir') {
                 if (!DB::table('souvenirs')->where('id', $item['reference_id'])->exists()) {
-                    return response()->json(['status' => 'error', 'message' => 'Invalid item in cart.'], 422);
+                    return back()->with('error', 'Invalid item in cart.')->withInput();
                 }
             }
         }
@@ -199,10 +199,10 @@ class CheckoutController extends Controller
         } catch (\RuntimeException $e) {
             if (str_starts_with($e->getMessage(), 'out_of_stock:')) {
                 $name = substr($e->getMessage(), 13);
-                return response()->json(['status' => 'error', 'message' => "\"$name\" is out of stock."], 422);
+                return back()->with('error', "\"$name\" is out of stock.")->withInput();
             }
             if ($e->getMessage() === 'seats_taken') {
-                return response()->json(['status' => 'error', 'message' => 'One or more selected seats are no longer available.'], 422);
+                return back()->with('error', 'One or more selected seats are no longer available.')->withInput();
             }
             throw $e;
         }
@@ -233,9 +233,6 @@ class CheckoutController extends Controller
             'order_items_json' => json_encode($enrichedItems),
         ]);
 
-        return response()->json([
-            'status'   => 'success',
-            'redirect' => route('confirmation'),
-        ]);
+        return redirect()->route('confirmation');
     }
 }

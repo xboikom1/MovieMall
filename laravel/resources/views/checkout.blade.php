@@ -10,7 +10,7 @@
 <body class="min-h-screen bg-bg text-text">
     <x-layout.header />
 
-    <main x-data="{ delivery: 'courier' }" class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-10">
+    <main x-data="{ delivery: '{{ old('delivery', 'courier') }}' }" class="mx-auto max-w-7xl px-4 py-6 tablet:px-6 tablet:py-10">
         <a href="{{ route('cart.index') }}" class="block pb-4 text-placeholder transition hover:text-accent">← Back to Cart</a>
 
         <div class="mb-6 flex flex-col gap-3 tablet:flex-row tablet:items-start tablet:justify-between">
@@ -34,7 +34,14 @@
         <div class="grid grid-cols-1 gap-6 desktop:grid-cols-[1fr_380px] desktop:gap-8">
             {{-- Checkout Form --}}
             <section class="rounded-2xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:p-6">
-                <form id="checkout-form" class="flex flex-col gap-8">
+                @if(session('error'))
+                    <div class="mb-5 rounded-xl border border-red-500 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                <form id="checkout-form" method="POST" action="{{ route('checkout.submit') }}" class="flex flex-col gap-8">
+                    @csrf
                     {{-- Contact --}}
                     <div>
                         <h2 class="mb-4 text-xl font-bold">Contact</h2>
@@ -48,9 +55,11 @@
                                     type="text"
                                     autocomplete="given-name"
                                     placeholder="First name"
+                                    value="{{ old('firstName') }}"
                                     class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     required
                                 />
+                                @error('firstName') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label for="lastName" class="mb-1 block text-xs font-semibold text-placeholder">Last Name</label>
@@ -60,9 +69,11 @@
                                     type="text"
                                     autocomplete="family-name"
                                     placeholder="Last name"
+                                    value="{{ old('lastName') }}"
                                     class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     required
                                 />
+                                @error('lastName') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label for="email" class="mb-1 block text-xs font-semibold text-placeholder">Email</label>
@@ -72,9 +83,11 @@
                                     type="email"
                                     autocomplete="email"
                                     placeholder="email@example.com"
+                                    value="{{ old('email') }}"
                                     class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     required
                                 />
+                                @error('email') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label for="phone" class="mb-1 block text-xs font-semibold text-placeholder">Phone</label>
@@ -84,8 +97,10 @@
                                     type="tel"
                                     autocomplete="tel"
                                     placeholder="+421 123 456 789"
+                                    value="{{ old('phone') }}"
                                     class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                 />
+                                @error('phone') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                             </div>
                         </div>
                     </div>
@@ -139,9 +154,11 @@
                                     type="text"
                                     autocomplete="address-line1"
                                     placeholder="Street address"
+                                    value="{{ old('address1') }}"
                                     class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     :required="delivery !== 'pickup'"
                                 />
+                                @error('address1') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label for="city" class="mb-1 block text-xs font-semibold text-placeholder">City</label>
@@ -151,9 +168,11 @@
                                     type="text"
                                     autocomplete="address-level2"
                                     placeholder="City"
+                                    value="{{ old('city') }}"
                                     class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     :required="delivery !== 'pickup'"
                                 />
+                                @error('city') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label for="postal" class="mb-1 block text-xs font-semibold text-placeholder">Postal Code</label>
@@ -163,9 +182,11 @@
                                     type="text"
                                     autocomplete="postal-code"
                                     placeholder="Postal code"
+                                    value="{{ old('postal') }}"
                                     class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     :required="delivery !== 'pickup'"
                                 />
+                                @error('postal') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                             </div>
                             <div class="tablet:col-span-2">
                                 <label for="country" class="mb-1 block text-xs font-semibold text-placeholder">Country</label>
@@ -176,16 +197,17 @@
                                     class="w-full appearance-none rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
                                     :required="delivery !== 'pickup'"
                                 >
-                                    <option value="" selected disabled>Select Country</option>
-                                    <option>Slovakia</option>
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>United Kingdom</option>
-                                    <option>Germany</option>
-                                    <option>France</option>
-                                    <option>Spain</option>
-                                    <option>Australia</option>
+                                    <option value="" @selected(!old('country')) disabled>Select Country</option>
+                                    <option @selected(old('country') === 'Slovakia')>Slovakia</option>
+                                    <option @selected(old('country') === 'United States')>United States</option>
+                                    <option @selected(old('country') === 'Canada')>Canada</option>
+                                    <option @selected(old('country') === 'United Kingdom')>United Kingdom</option>
+                                    <option @selected(old('country') === 'Germany')>Germany</option>
+                                    <option @selected(old('country') === 'France')>France</option>
+                                    <option @selected(old('country') === 'Spain')>Spain</option>
+                                    <option @selected(old('country') === 'Australia')>Australia</option>
                                 </select>
+                                @error('country') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                             </div>
                         </div>
                     </div>
@@ -224,8 +246,10 @@
                                         inputmode="numeric"
                                         autocomplete="cc-number"
                                         placeholder="XXXX XXXX XXXX XXXX"
+                                        value="{{ old('cardNumber') }}"
                                         class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     />
+                                    @error('cardNumber') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                                 </div>
                                 <div>
                                     <label for="expiry" class="mb-1 block text-xs font-semibold text-placeholder">Expiry Date</label>
@@ -236,8 +260,10 @@
                                         inputmode="numeric"
                                         autocomplete="cc-exp"
                                         placeholder="MM/YY"
+                                        value="{{ old('expiry') }}"
                                         class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     />
+                                    @error('expiry') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                                 </div>
                                 <div>
                                     <label for="cvv" class="mb-1 block text-xs font-semibold text-placeholder">CVV</label>
@@ -250,6 +276,7 @@
                                         placeholder="XXX"
                                         class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     />
+                                    @error('cvv') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="tablet:col-span-2">
                                     <label for="cardName" class="mb-1 block text-xs font-semibold text-placeholder">Name on Card</label>
@@ -259,8 +286,10 @@
                                         type="text"
                                         autocomplete="cc-name"
                                         placeholder="Name on card"
+                                        value="{{ old('cardName') }}"
                                         class="w-full rounded-xl border border-border bg-button px-4 py-3 text-sm outline-none placeholder:text-placeholder focus:border-accent focus:ring-1 focus:ring-accent"
                                     />
+                                    @error('cardName') <p class="mt-1 text-xs text-red-400">{{ $message }}</p> @enderror
                                 </div>
                             </div>
                         </div>
@@ -352,51 +381,5 @@
     </main>
 
     <x-layout.footer />
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('checkout-form');
-            if (!form) return;
-
-            form.addEventListener('submit', async function (e) {
-                e.preventDefault();
-
-                const formData = new FormData(form);
-                const payload  = {};
-                formData.forEach((v, k) => (payload[k] = v));
-                payload.delivery = payload.delivery || document.querySelector('input[name="delivery"]:checked')?.value || 'courier';
-
-                try {
-                    const res = await axios.post('{{ route('checkout.submit') }}', payload, {
-                        headers: { 'X-CSRF-TOKEN': window.csrfToken }
-                    });
-                    if (res.data?.redirect) {
-                        window.location.href = res.data.redirect;
-                    } else {
-                        window.location.href = '{{ route('confirmation') }}';
-                    }
-                } catch (err) {
-                    console.error('Checkout submit failed', err);
-                    document.querySelectorAll('.field-error').forEach(e => e.remove());
-
-                    const data = err.response?.data;
-                    if (err.response?.status === 422 && data?.errors) {
-                        for (const [field, msgs] of Object.entries(data.errors)) {
-                            const input     = document.querySelector('[name="' + field + '"]') || document.getElementById(field);
-                            const container = input ? input.parentElement : form;
-                            const el        = document.createElement('div');
-                            el.className    = 'field-error mt-1 text-sm text-red-400';
-                            el.innerText    = Array.isArray(msgs) ? msgs.join(' ') : String(msgs);
-                            container.appendChild(el);
-                        }
-                        document.querySelector('.field-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } else if (data?.message) {
-                        alert(data.message);
-                    } else {
-                        alert('Checkout failed. Please try again.');
-                    }
-                }
-            });
-        });
-    </script>
 </body>
 </html>
