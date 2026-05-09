@@ -53,7 +53,7 @@ class MovieController extends Controller
             ->join('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
-                     ->where('souvenir_images.is_primary', true);
+                    ->where('souvenir_images.is_primary', true);
             })
             ->where('souvenirs.franchise_id', function ($sub) use ($movieRecord) {
                 $sub->select('franchise_id')->from('movies')->where('id', $movieRecord->id);
@@ -69,11 +69,11 @@ class MovieController extends Controller
             ->get()
             ->map(function ($s) {
                 return [
-                    'title'     => $s->title,
-                    'image'     => $s->image,
+                    'title' => $s->title,
+                    'image' => $s->image,
                     'franchise' => $s->franchise_name,
-                    'type'      => $s->type,
-                    'price'     => number_format($s->price, 2) . '€',
+                    'type' => $s->type,
+                    'price' => number_format($s->price, 2).'€',
                 ];
             })->toArray();
 
@@ -98,23 +98,23 @@ class MovieController extends Controller
             $editingItem = null;
         }
 
-        $slotsForView = $allSlots->map(fn($slot) => [
-            'id'   => $slot->id,
+        $slotsForView = $allSlots->map(fn ($slot) => [
+            'id' => $slot->id,
             'date' => Carbon::parse($slot->starts_at)->format('M j'),
             'time' => Carbon::parse($slot->starts_at)->format('H:i'),
         ])->values()->toArray();
 
-        $uniqueDates  = array_values(array_unique(array_column($slotsForView, 'date')));
-        $initialDate  = $editingItem['options']['date'] ?? ($uniqueDates[0] ?? null);
+        $uniqueDates = array_values(array_unique(array_column($slotsForView, 'date')));
+        $initialDate = $editingItem['options']['date'] ?? ($uniqueDates[0] ?? null);
         $initialTimes = array_values(array_column(
-            array_filter($slotsForView, fn($s) => $s['date'] === $initialDate),
+            array_filter($slotsForView, fn ($s) => $s['date'] === $initialDate),
             'time'
         ));
-        $initialTime  = $editingItem['options']['time'] ?? ($initialTimes[0] ?? null);
+        $initialTime = $editingItem['options']['time'] ?? ($initialTimes[0] ?? null);
 
         // Use editing item's slot if present, otherwise first slot (null if no slots exist)
         $initialSlotId = $firstSlot?->id;
-        if ($editingItem && !empty($editingItem['options']['schedule_slot_id'])) {
+        if ($editingItem && ! empty($editingItem['options']['schedule_slot_id'])) {
             $initialSlotId = (int) $editingItem['options']['schedule_slot_id'];
         }
 
@@ -125,17 +125,17 @@ class MovieController extends Controller
                 ->where('orders.status', 'paid')
                 ->where('tickets.schedule_slot_id', $initialSlotId)
                 ->pluck('tickets.seat_id')
-                ->map(fn($id) => (string) $id)->all()
+                ->map(fn ($id) => (string) $id)->all()
             : [];
 
         $movieData = [
-            'id'               => $movieRecord->id,
-            'schedule_slots'   => $slotsForView,
+            'id' => $movieRecord->id,
+            'schedule_slots' => $slotsForView,
             'schedule_slot_id' => $initialSlotId,
-            'unique_dates'     => $uniqueDates,
-            'initial_date'     => $initialDate,
-            'initial_times'    => $initialTimes,
-            'initial_time'     => $initialTime,
+            'unique_dates' => $uniqueDates,
+            'initial_date' => $initialDate,
+            'initial_times' => $initialTimes,
+            'initial_time' => $initialTime,
             'slug' => $slug,
             'title' => $movieRecord->title,
             'images' => $images,
@@ -143,17 +143,17 @@ class MovieController extends Controller
             'price' => $movieRecord->price,
             'genres' => $genres,
             'synopsis' => $movieRecord->synopsis,
-            'rating' => $movieRecord->rating . '/10',
-            'duration' => $movieRecord->length_minutes . ' min',
+            'rating' => $movieRecord->rating.'/10',
+            'duration' => $movieRecord->length_minutes.' min',
             'release_date' => Carbon::parse($movieRecord->release_date)->format('F j, Y'),
             'director' => $movieRecord->director,
             'language' => $movieRecord->language,
             'studio' => $movieRecord->studio,
             'related_souvenirs' => $relatedSouvenirs,
-            'movie_id'          => $movieRecord->id,
-            'seats'             => $seats,
-            'booked_seat_ids'   => $bookedSeatIds,
-            'editing_item'      => $editingItem,
+            'movie_id' => $movieRecord->id,
+            'seats' => $seats,
+            'booked_seat_ids' => $bookedSeatIds,
+            'editing_item' => $editingItem,
         ];
 
         return view('movie-details', [
@@ -170,8 +170,9 @@ class MovieController extends Controller
             ->where('orders.status', 'paid')
             ->where('tickets.schedule_slot_id', $slotId)
             ->pluck('tickets.seat_id')
-            ->map(fn($id) => (string) $id)
+            ->map(fn ($id) => (string) $id)
             ->all();
+
         return response()->json(['booked_seat_ids' => $ids]);
     }
 
@@ -225,7 +226,7 @@ class MovieController extends Controller
             $query->where('movies.price', '<=', (float) $request->input('price_max'));
         }
 
-        $query->orderBy('movies.' . $orderBy, $direction);
+        $query->orderBy('movies.'.$orderBy, $direction);
 
         $movies = $query->paginate(20)->withQueryString();
 
@@ -237,7 +238,7 @@ class MovieController extends Controller
             ->select('movie_genres.movie_id', 'genres.name')
             ->get()
             ->groupBy('movie_id')
-            ->map(fn($g) => $g->pluck('name')->implode(', '))
+            ->map(fn ($g) => $g->pluck('name')->implode(', '))
             ->toArray();
 
         $allGenres = DB::table('genres')->orderBy('name')->get();
@@ -255,4 +256,3 @@ class MovieController extends Controller
         ]);
     }
 }
-

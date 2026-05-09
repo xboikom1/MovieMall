@@ -8,7 +8,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AdminDashboardController extends Controller
@@ -30,7 +29,7 @@ class AdminDashboardController extends Controller
             'images.*' => ['image', 'max:5120'],
         ]);
 
-        DB::transaction(function () use ($validated, $request) {
+        DB::transaction(function () use ($validated) {
             if ($validated['type'] === 'movie') {
                 $id = DB::table('movies')->insertGetId([
                     'title' => $validated['title'],
@@ -42,8 +41,8 @@ class AdminDashboardController extends Controller
 
                 foreach ($validated['images'] as $index => $image) {
                     $path = $image->store('images', 'public');
-                    $url = '/storage/' . $path;
-                    
+                    $url = '/storage/'.$path;
+
                     DB::table('movie_images')->insert([
                         'movie_id' => $id,
                         'url' => $url,
@@ -62,8 +61,8 @@ class AdminDashboardController extends Controller
 
                 foreach ($validated['images'] as $index => $image) {
                     $path = $image->store('images', 'public');
-                    $url = '/storage/' . $path;
-                    
+                    $url = '/storage/'.$path;
+
                     DB::table('souvenir_images')->insert([
                         'souvenir_id' => $id,
                         'url' => $url,
@@ -86,7 +85,7 @@ class AdminDashboardController extends Controller
         if ($filter === 'movies') {
             $query = $this->movieBaseQuery();
             if ($search !== '') {
-                $query->where('movies.title', 'like', '%' . $search . '%');
+                $query->where('movies.title', 'like', '%'.$search.'%');
             }
             $products = $query
                 ->orderByDesc('movies.updated_at')
@@ -96,7 +95,7 @@ class AdminDashboardController extends Controller
         } elseif ($filter === 'souvenirs') {
             $query = $this->souvenirBaseQuery();
             if ($search !== '') {
-                $query->where('souvenirs.name', 'like', '%' . $search . '%');
+                $query->where('souvenirs.name', 'like', '%'.$search.'%');
             }
             $products = $query
                 ->orderByDesc('souvenirs.updated_at')
@@ -107,8 +106,8 @@ class AdminDashboardController extends Controller
             $movieQuery = $this->movieBaseQuery();
             $souvenirQuery = $this->souvenirBaseQuery();
             if ($search !== '') {
-                $movieQuery->where('movies.title', 'like', '%' . $search . '%');
-                $souvenirQuery->where('souvenirs.name', 'like', '%' . $search . '%');
+                $movieQuery->where('movies.title', 'like', '%'.$search.'%');
+                $souvenirQuery->where('souvenirs.name', 'like', '%'.$search.'%');
             }
             $movies = $movieQuery->get()->map(fn (object $row) => $this->mapMovieRow($row));
             $souvenirs = $souvenirQuery->get()->map(fn (object $row) => $this->mapSouvenirRow($row));
@@ -221,7 +220,7 @@ class AdminDashboardController extends Controller
         $request->validate(['image' => ['required', 'image', 'max:5120']]);
 
         $path = $request->file('image')->store('images', 'public');
-        $url = '/storage/' . $path;
+        $url = '/storage/'.$path;
 
         if ($productType === 'movie') {
             abort_unless(DB::table('movies')->where('id', $id)->exists(), 404);
@@ -369,7 +368,7 @@ class AdminDashboardController extends Controller
 
         return redirect()
             ->route('admin.dashboard', $redirectParams)
-            ->with('status', ucfirst($productType) . ' deleted successfully.');
+            ->with('status', ucfirst($productType).' deleted successfully.');
     }
 
     public function orders(Request $request): View
@@ -387,17 +386,17 @@ class AdminDashboardController extends Controller
                 'orders.total_amount',
                 'orders.created_at',
                 DB::raw("COALESCE(users.first_name || ' ' || users.last_name, orders.guest_first_name || ' ' || orders.guest_last_name) as customer_name"),
-                DB::raw("COALESCE(users.email, orders.guest_email) as customer_email"),
+                DB::raw('COALESCE(users.email, orders.guest_email) as customer_email'),
                 'invoices.invoice_number'
             )
             ->orderByDesc('orders.created_at');
 
         if ($search !== '') {
-            $like = '%' . strtolower($search) . '%';
+            $like = '%'.strtolower($search).'%';
             $query->where(function ($q) use ($like) {
                 $q->whereRaw("LOWER(COALESCE(users.first_name || ' ' || users.last_name, orders.guest_first_name || ' ' || orders.guest_last_name)) LIKE ?", [$like])
-                  ->orWhereRaw("LOWER(COALESCE(users.email, orders.guest_email)) LIKE ?", [$like])
-                  ->orWhereRaw("LOWER(invoices.invoice_number) LIKE ?", [$like]);
+                    ->orWhereRaw('LOWER(COALESCE(users.email, orders.guest_email)) LIKE ?', [$like])
+                    ->orWhereRaw('LOWER(invoices.invoice_number) LIKE ?', [$like]);
             });
         }
 

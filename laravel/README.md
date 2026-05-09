@@ -25,11 +25,11 @@ php artisan serve
 
 ## Admin Access
 
-| Field    | Value                       |
-|----------|-----------------------------|
-| URL      | `/xj7qr2/login`             |
-| Email    | `admin@moviemall.com`       |
-| Password | `MM$ecure#2026!`            |
+| Field    | Value                 |
+| -------- | --------------------- |
+| URL      | `/xj7qr2/login`       |
+| Email    | `admin@moviemall.com` |
+| Password | `MM$ecure#2026!`      |
 
 > Re-seed the database (`php artisan migrate:fresh --seed`) to apply the default credentials if you have an existing database.
 

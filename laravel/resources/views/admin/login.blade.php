@@ -9,20 +9,34 @@
     <html lang="en">
         <head>
             <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0"
+            />
             <title>MovieMall Admin</title>
 
             @vite (['resources/css/app.css', 'resources/js/app.js'])
         </head>
 
         <body class="min-h-screen bg-bg text-text">
-            <header class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,0.4)]">
-                <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6">
+            <header
+                class="border-b border-border bg-dark shadow-[0_14px_36px_rgba(0,0,0,0.4)]"
+            >
+                <div
+                    class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 tablet:px-6"
+                >
                     <div class="flex items-center gap-3 tablet:gap-6">
-                        <a href="{{ route('home') }}" class="flex items-center rounded-xl bg-accent px-4 py-2 font-semibold tablet:text-lg"> MovieMall </a>
+                        <a
+                            href="{{ route('home') }}"
+                            class="flex items-center rounded-xl bg-accent px-4 py-2 font-semibold tablet:text-lg"
+                        >
+                            MovieMall
+                        </a>
                     </div>
 
-                    <div class="flex items-center gap-2 text-xs tablet:gap-4 tablet:text-sm">
+                    <div
+                        class="flex items-center gap-2 text-xs tablet:gap-4 tablet:text-sm"
+                    >
                         <a
                             href="{{ route('home') }}"
                             class="rounded-lg border border-border bg-button px-3 py-2 font-semibold transition hover:bg-accent focus:bg-accent tablet:px-5"
@@ -33,19 +47,33 @@
                 </div>
             </header>
 
-            <main class="mx-auto flex min-h-[calc(100vh-76px)] max-w-7xl items-center justify-center px-4 py-8 tablet:px-6 tablet:py-14">
-                <section class="w-full max-w-xl rounded-3xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:max-w-2xl tablet:p-10">
-                    <h1 class="mb-6 text-2xl font-bold tablet:mb-8 tablet:text-4xl">Admin sign in</h1>
+            <main
+                class="mx-auto flex min-h-[calc(100vh-76px)] max-w-7xl items-center justify-center px-4 py-8 tablet:px-6 tablet:py-14"
+            >
+                <section
+                    class="w-full max-w-xl rounded-3xl border border-border bg-dark p-5 shadow-[0_14px_36px_rgba(0,0,0,.4)] tablet:max-w-2xl tablet:p-10"
+                >
+                    <h1
+                        class="mb-6 text-2xl font-bold tablet:mb-8 tablet:text-4xl"
+                    >
+                        Admin sign in
+                    </h1>
 
                     @if (session('status'))
                         <p class="mb-4 text-sm text-green-400">{{ session('status') }}</p>
                     @endif
 
-                    <form method="POST" action="{{ route('admin.login') }}" class="mx-auto flex max-w-xl flex-col gap-4 tablet:gap-6">
+                    <form
+                        method="POST"
+                        action="{{ route('admin.login') }}"
+                        class="mx-auto flex max-w-xl flex-col gap-4 tablet:gap-6"
+                    >
                         @csrf
 
                         <div>
-                            <label class="sr-only" for="login-email">Email</label>
+                            <label class="sr-only" for="login-email"
+                                >Email</label
+                            >
                             <input
                                 id="login-email"
                                 name="email"
@@ -63,7 +91,9 @@
                         </div>
 
                         <div>
-                            <label class="sr-only" for="login-password">Password</label>
+                            <label class="sr-only" for="login-password"
+                                >Password</label
+                            >
                             <input
                                 id="login-password"
                                 name="password"
@@ -79,8 +109,15 @@
                         </div>
 
                         <div class="flex items-center justify-between">
-                            <label class="flex cursor-pointer items-center gap-2 text-sm text-placeholder">
-                                <input id="remember_me" name="remember" type="checkbox" class="rounded border-border bg-button text-accent focus:ring-accent" />
+                            <label
+                                class="flex cursor-pointer items-center gap-2 text-sm text-placeholder"
+                            >
+                                <input
+                                    id="remember_me"
+                                    name="remember"
+                                    type="checkbox"
+                                    class="rounded border-border bg-button text-accent focus:ring-accent"
+                                />
                                 Remember me
                             </label>
                         </div>

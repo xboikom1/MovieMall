@@ -10,12 +10,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $topMovies   = $this->fetchMovies('rating', 'desc', 5);
+        $topMovies = $this->fetchMovies('rating', 'desc', 5);
         $newReleases = $this->fetchMovies('release_date', 'desc', 5);
 
-        $genresByName = DB::table('genres')->get()->keyBy(fn($g) => strtolower($g->name));
+        $genresByName = DB::table('genres')->get()->keyBy(fn ($g) => strtolower($g->name));
 
-        $newestSouvenirs   = $this->fetchSouvenirs('souvenirs.id', 'desc');
+        $newestSouvenirs = $this->fetchSouvenirs('souvenirs.id', 'desc');
         $bestValueSouvenirs = $this->fetchSouvenirs('souvenirs.price', 'asc');
 
         return view('home', compact('topMovies', 'newReleases', 'genresByName', 'newestSouvenirs', 'bestValueSouvenirs'));
@@ -28,7 +28,7 @@ class HomeController extends Controller
             ->leftJoin('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
-                     ->where('souvenir_images.is_primary', true);
+                    ->where('souvenir_images.is_primary', true);
             })
             ->select(
                 'souvenirs.id',
@@ -51,7 +51,7 @@ class HomeController extends Controller
                     ->where('movie_images.is_primary', true);
             })
             ->select('movies.id', 'movies.title', 'movies.rating', 'movies.release_date', 'movie_images.url as image')
-            ->orderBy('movies.' . $orderBy, $direction)
+            ->orderBy('movies.'.$orderBy, $direction)
             ->limit($limit)
             ->get();
 
@@ -70,11 +70,11 @@ class HomeController extends Controller
                 : '';
 
             return [
-                'slug'   => Str::slug($movie->title),
-                'title'  => $movie->title,
-                'image'  => $movie->image,
+                'slug' => Str::slug($movie->title),
+                'title' => $movie->title,
+                'image' => $movie->image,
                 'rating' => $movie->rating,
-                'year'   => Carbon::parse($movie->release_date)->year,
+                'year' => Carbon::parse($movie->release_date)->year,
                 'genres' => $genres,
             ];
         })->toArray();

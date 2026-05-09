@@ -11,10 +11,14 @@
 
     <main>
         {{-- Banner --}}
-        <section class="bg-dark px-4 py-14 tablet:px-6 tablet:py-20 desktop:py-28 border-b border-border">
+        <section
+            class="bg-dark px-4 py-14 tablet:px-6 tablet:py-20 desktop:py-28 border-b border-border"
+        >
             <div class="flex mx-auto max-w-7xl items-center gap-10">
                 <div class="flex flex-col flex-1 gap-6">
-                    <h1 class="text-3xl tablet:text-4xl desktop:text-5xl font-bold leading-tight">
+                    <h1
+                        class="text-3xl tablet:text-4xl desktop:text-5xl font-bold leading-tight"
+                    >
                         Your Cinema,
                         <br />Your rules
                     </h1>
@@ -45,24 +49,37 @@
         </section>
 
         {{-- Recommendation grid --}}
-        <section class="flex flex-col mx-auto max-w-7xl gap-12 px-4 py-12 tablet:px-6 tablet:py-16">
+        <section
+            class="flex flex-col mx-auto max-w-7xl gap-12 px-4 py-12 tablet:px-6 tablet:py-16"
+        >
             {{-- Top Rated --}}
             <div>
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl tablet:text-2xl font-bold">Top Rated</h2>
-                    <a href="{{ route('movies.index') }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
+                    <a
+                        href="{{ route('movies.index') }}"
+                        class="text-accent text-sm font-semibold transition hover:brightness-125"
+                        >See More</a
+                    >
                 </div>
 
-                <ul class="grid grid-cols-2 gap-4 gap-y-7 tablet:grid-cols-3 tablet:gap-5 tablet:gap-y-8 desktop:grid-cols-5">
+                <ul
+                    class="grid grid-cols-2 gap-4 gap-y-7 tablet:grid-cols-3 tablet:gap-5 tablet:gap-y-8 desktop:grid-cols-5"
+                >
                     @foreach ($topMovies as $movie)
                         <li
                             class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]"
                         >
-                            <a href="{{ route('movies.show', $movie['slug']) }}" class="block relative h-full">
+                            <a
+                                href="{{ route('movies.show', $movie['slug']) }}"
+                                class="block relative h-full"
+                            >
                                 <div
                                     class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"
                                 ></div>
-                                <div class="relative bg-button aspect-[2/3] overflow-hidden">
+                                <div
+                                    class="relative bg-button aspect-[2/3] overflow-hidden"
+                                >
                                     <img
                                         src="{{ $movie['image'] }}"
                                         alt="{{ $movie['title'] }}"
@@ -70,14 +87,27 @@
                                     />
                                 </div>
                                 <div class="flex flex-col gap-1 p-3">
-                                    <span class="min-w-0 truncate font-semibold">{{ $movie['title'] }}</span>
-                                    <div class="flex gap-2 text-placeholder text-xs">
+                                    <span
+                                        class="min-w-0 truncate font-semibold"
+                                        >{{ $movie['title'] }}</span
+                                    >
+                                    <div
+                                        class="flex gap-2 text-placeholder text-xs"
+                                    >
                                         <span>{{ $movie['year'] }}</span>
-                                        <span class="truncate max-w-[160px] inline-block">{{ $movie['genres'] }}</span>
+                                        <span
+                                            class="truncate max-w-[160px] inline-block"
+                                            >{{ $movie['genres'] }}</span
+                                        >
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <span class="text-xs text-rating">★</span>
-                                        <span class="text-xs text-rating">{{ $movie['rating'] }}</span>
+                                        <span class="text-xs text-rating"
+                                            >★</span
+                                        >
+                                        <span
+                                            class="text-xs text-rating"
+                                            >{{ $movie['rating'] }}</span
+                                        >
                                     </div>
                                 </div>
                             </a>
@@ -89,20 +119,33 @@
             {{-- New Releases --}}
             <div>
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-xl tablet:text-2xl font-bold">New Releases</h2>
-                    <a href="{{ route('movies.index') }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
+                    <h2 class="text-xl tablet:text-2xl font-bold">
+                        New Releases
+                    </h2>
+                    <a
+                        href="{{ route('movies.index') }}"
+                        class="text-accent text-sm font-semibold transition hover:brightness-125"
+                        >See More</a
+                    >
                 </div>
 
-                <ul class="grid grid-cols-2 gap-4 gap-y-7 tablet:grid-cols-3 tablet:gap-5 tablet:gap-y-8 desktop:grid-cols-5">
+                <ul
+                    class="grid grid-cols-2 gap-4 gap-y-7 tablet:grid-cols-3 tablet:gap-5 tablet:gap-y-8 desktop:grid-cols-5"
+                >
                     @foreach ($newReleases as $movie)
                         <li
                             class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]"
                         >
-                            <a href="{{ route('movies.show', $movie['slug']) }}" class="block relative h-full">
+                            <a
+                                href="{{ route('movies.show', $movie['slug']) }}"
+                                class="block relative h-full"
+                            >
                                 <div
                                     class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"
                                 ></div>
-                                <div class="relative bg-button aspect-[2/3] overflow-hidden">
+                                <div
+                                    class="relative bg-button aspect-[2/3] overflow-hidden"
+                                >
                                     <img
                                         src="{{ $movie['image'] }}"
                                         alt="{{ $movie['title'] }}"
@@ -110,14 +153,27 @@
                                     />
                                 </div>
                                 <div class="flex flex-col gap-1 p-3">
-                                    <span class="min-w-0 truncate font-semibold">{{ $movie['title'] }}</span>
-                                    <div class="flex gap-2 text-placeholder text-xs">
+                                    <span
+                                        class="min-w-0 truncate font-semibold"
+                                        >{{ $movie['title'] }}</span
+                                    >
+                                    <div
+                                        class="flex gap-2 text-placeholder text-xs"
+                                    >
                                         <span>{{ $movie['year'] }}</span>
-                                        <span class="truncate max-w-[160px] inline-block">{{ $movie['genres'] }}</span>
+                                        <span
+                                            class="truncate max-w-[160px] inline-block"
+                                            >{{ $movie['genres'] }}</span
+                                        >
                                     </div>
                                     <div class="flex items-center gap-1">
-                                        <span class="text-xs text-rating">★</span>
-                                        <span class="text-xs text-rating">{{ $movie['rating'] }}</span>
+                                        <span class="text-xs text-rating"
+                                            >★</span
+                                        >
+                                        <span
+                                            class="text-xs text-rating"
+                                            >{{ $movie['rating'] }}</span
+                                        >
                                     </div>
                                 </div>
                             </a>
@@ -129,20 +185,33 @@
             {{-- Newest Arrivals --}}
             <div>
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-xl tablet:text-2xl font-bold">Newest Arrivals</h2>
-                    <a href="{{ route('souvenirs.index') }}" class="text-accent text-sm font-semibold transition hover:brightness-125">See More</a>
+                    <h2 class="text-xl tablet:text-2xl font-bold">
+                        Newest Arrivals
+                    </h2>
+                    <a
+                        href="{{ route('souvenirs.index') }}"
+                        class="text-accent text-sm font-semibold transition hover:brightness-125"
+                        >See More</a
+                    >
                 </div>
 
-                <ul class="grid grid-cols-2 gap-4 gap-y-7 tablet:grid-cols-3 tablet:gap-5 tablet:gap-y-8 desktop:grid-cols-5">
+                <ul
+                    class="grid grid-cols-2 gap-4 gap-y-7 tablet:grid-cols-3 tablet:gap-5 tablet:gap-y-8 desktop:grid-cols-5"
+                >
                     @foreach ($newestSouvenirs as $s)
                         <li
                             class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]"
                         >
-                            <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($s->name)) }}" class="block relative h-full">
+                            <a
+                                href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($s->name)) }}"
+                                class="block relative h-full"
+                            >
                                 <div
                                     class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"
                                 ></div>
-                                <div class="bg-button aspect-square overflow-hidden">
+                                <div
+                                    class="bg-button aspect-square overflow-hidden"
+                                >
                                     <img
                                         src="{{ $s->image ?? '/images/SuperGrandpaSouvenir.png' }}"
                                         alt="{{ $s->name }}"
@@ -150,11 +219,22 @@
                                     />
                                 </div>
                                 <div class="flex flex-col gap-1 p-3">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <span class="min-w-0 truncate font-semibold">{{ $s->name }}</span>
-                                        <span class="shrink-0 text-sm font-semibold text-accent">{{ number_format($s->price, 2) }}€</span>
+                                    <div
+                                        class="flex items-center justify-between gap-2"
+                                    >
+                                        <span
+                                            class="min-w-0 truncate font-semibold"
+                                            >{{ $s->name }}</span
+                                        >
+                                        <span
+                                            class="shrink-0 text-sm font-semibold text-accent"
+                                            >{{ number_format($s->price, 2) }}€</span
+                                        >
                                     </div>
-                                    <span class="truncate text-xs text-placeholder">{{ $s->franchise_name ?? '—' }}</span>
+                                    <span
+                                        class="truncate text-xs text-placeholder"
+                                        >{{ $s->franchise_name ?? '—' }}</span
+                                    >
                                     <span
                                         class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder"
                                         >{{ $s->category ?? '—' }}</span
@@ -169,22 +249,33 @@
             {{-- Best Value --}}
             <div>
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-xl tablet:text-2xl font-bold">Best Value</h2>
-                    <a href="{{ route('souvenirs.index', ['sort' => 'price_asc']) }}" class="text-accent text-sm font-semibold transition hover:brightness-125"
+                    <h2 class="text-xl tablet:text-2xl font-bold">
+                        Best Value
+                    </h2>
+                    <a
+                        href="{{ route('souvenirs.index', ['sort' => 'price_asc']) }}"
+                        class="text-accent text-sm font-semibold transition hover:brightness-125"
                         >See More</a
                     >
                 </div>
 
-                <ul class="grid grid-cols-2 gap-4 gap-y-7 tablet:grid-cols-3 tablet:gap-5 tablet:gap-y-8 desktop:grid-cols-5">
+                <ul
+                    class="grid grid-cols-2 gap-4 gap-y-7 tablet:grid-cols-3 tablet:gap-5 tablet:gap-y-8 desktop:grid-cols-5"
+                >
                     @foreach ($bestValueSouvenirs as $s)
                         <li
                             class="group bg-dark rounded-2xl overflow-hidden border border-border shadow-[0_14px_36px_rgba(0,0,0,.35)] transition-all duration-300 hover:bg-button hover:border-accent hover:scale-[1.03]"
                         >
-                            <a href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($s->name)) }}" class="block relative h-full">
+                            <a
+                                href="{{ route('souvenirs.show', \Illuminate\Support\Str::slug($s->name)) }}"
+                                class="block relative h-full"
+                            >
                                 <div
                                     class="absolute inset-0 bg-gradient-to-b from-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"
                                 ></div>
-                                <div class="bg-button aspect-square overflow-hidden">
+                                <div
+                                    class="bg-button aspect-square overflow-hidden"
+                                >
                                     <img
                                         src="{{ $s->image ?? '/images/SuperGrandpaSouvenir.png' }}"
                                         alt="{{ $s->name }}"
@@ -192,11 +283,22 @@
                                     />
                                 </div>
                                 <div class="flex flex-col gap-1 p-3">
-                                    <div class="flex items-center justify-between gap-2">
-                                        <span class="min-w-0 truncate font-semibold">{{ $s->name }}</span>
-                                        <span class="shrink-0 text-sm font-semibold text-accent">{{ number_format($s->price, 2) }}€</span>
+                                    <div
+                                        class="flex items-center justify-between gap-2"
+                                    >
+                                        <span
+                                            class="min-w-0 truncate font-semibold"
+                                            >{{ $s->name }}</span
+                                        >
+                                        <span
+                                            class="shrink-0 text-sm font-semibold text-accent"
+                                            >{{ number_format($s->price, 2) }}€</span
+                                        >
                                     </div>
-                                    <span class="truncate text-xs text-placeholder">{{ $s->franchise_name ?? '—' }}</span>
+                                    <span
+                                        class="truncate text-xs text-placeholder"
+                                        >{{ $s->franchise_name ?? '—' }}</span
+                                    >
                                     <span
                                         class="inline-block self-start rounded-full border border-border bg-button px-2 py-0.5 text-[0.6rem] font-semibold text-placeholder"
                                         >{{ $s->category ?? '—' }}</span
@@ -210,11 +312,17 @@
         </section>
 
         {{--       Browse By Genre --}}
-        <section class="bg-dark px-4 py-12 tablet:px-6 tablet:py-16 border-t border-border">
+        <section
+            class="bg-dark px-4 py-12 tablet:px-6 tablet:py-16 border-t border-border"
+        >
             <div class="mx-auto max-w-7xl">
-                <h2 class="text-xl tablet:text-2xl font-bold mb-6">Browse By Genre</h2>
+                <h2 class="text-xl tablet:text-2xl font-bold mb-6">
+                    Browse By Genre
+                </h2>
 
-                <ul class="grid auto-rows-[120px] grid-cols-2 gap-3 tablet:auto-rows-[140px] tablet:grid-cols-4">
+                <ul
+                    class="grid auto-rows-[120px] grid-cols-2 gap-3 tablet:auto-rows-[140px] tablet:grid-cols-4"
+                >
                     <li class="tablet:col-span-2 tablet:row-span-2">
                         <a
                             href="{{ route('movies.index', isset($genresByName['action']) ? ['genres[]' => $genresByName['action']->id] : []) }}"
@@ -225,11 +333,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Action</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Action</span
+                            >
                         </a>
                     </li>
 
@@ -243,11 +355,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Comedy</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Comedy</span
+                            >
                         </a>
                     </li>
 
@@ -261,11 +377,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Drama</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Drama</span
+                            >
                         </a>
                     </li>
 
@@ -279,11 +399,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Sci-Fi</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Sci-Fi</span
+                            >
                         </a>
                     </li>
 
@@ -297,11 +421,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Thriller</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Thriller</span
+                            >
                         </a>
                     </li>
 
@@ -315,11 +443,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Fantasy</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Fantasy</span
+                            >
                         </a>
                     </li>
 
@@ -333,11 +465,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Horror</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Horror</span
+                            >
                         </a>
                     </li>
 
@@ -351,11 +487,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Romance</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Romance</span
+                            >
                         </a>
                     </li>
 
@@ -369,11 +509,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Documentary</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Documentary</span
+                            >
                         </a>
                     </li>
 
@@ -387,11 +531,15 @@
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.06]"
                                 alt=""
                             />
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"
+                            ></div>
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                             ></div>
-                            <span class="relative z-10 truncate w-full block">Apocalypse</span>
+                            <span class="relative z-10 truncate w-full block"
+                                >Apocalypse</span
+                            >
                         </a>
                     </li>
                 </ul>
