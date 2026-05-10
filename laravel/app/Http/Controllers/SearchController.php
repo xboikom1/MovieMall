@@ -42,7 +42,7 @@ class SearchController extends Controller
 
             $souvenirs = DB::table('souvenirs')
                 ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
-                ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
+                ->leftJoin('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
                 ->leftJoin('souvenir_images', function ($join) {
                     $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
                         ->where('souvenir_images.is_primary', true);
@@ -50,14 +50,14 @@ class SearchController extends Controller
                 ->where(function ($sub) use ($like) {
                     $sub->where('souvenirs.name', 'ilike', $like)
                         ->orWhere('category.name', 'ilike', $like)
-                        ->orWhere('movies.title', 'ilike', $like);
+                        ->orWhere('franchises.name', 'ilike', $like);
                 })
                 ->select(
                     'souvenirs.id',
                     'souvenirs.name',
                     'souvenirs.price',
                     'category.name as category',
-                    'movies.title as movie_title',
+                    'franchises.name as franchise_name',
                     'souvenir_images.url as image'
                 )
                 ->orderBy('souvenirs.name', 'asc')

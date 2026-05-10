@@ -179,11 +179,11 @@
                                         <div class="text-placeholder text-xs">
                                             {{ $souvenir->category }}
                                         </div>
-                                        @if ($souvenir->movie_title)
+                                        @if ($souvenir->franchise_name)
                                             <div
                                                 class="text-placeholder text-xs truncate"
                                             >
-                                                {{ $souvenir->movie_title }}
+                                                {{ $souvenir->franchise_name }}
                                             </div>
                                         @endif
                                     </div>

@@ -277,21 +277,21 @@
                             </div>
                             <div class="flex flex-col gap-1.5">
                                 <label
-                                    for="movie_id"
+                                    for="franchise_id"
                                     class="text-sm font-medium text-placeholder"
-                                    >Linked Movie</label
+                                    >Linked Franchise</label
                                 >
                                 <select
-                                    id="movie_id"
-                                    name="movie_id"
+                                    id="franchise_id"
+                                    name="franchise_id"
                                     class="w-full rounded-xl border border-border bg-button px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/30 appearance-none"
                                 >
                                     <option value="">None</option>
-                                    @foreach ($movies as $movie)
+                                    @foreach ($franchises as $franchise)
                                         <option
-                                            value="{{ $movie->id }}"
-                                            {{ (string) old('movie_id', $product->movie_id) === (string) $movie->id ? 'selected' : '' }}
-                                            >{{ $movie->title }}
+                                            value="{{ $franchise->id }}"
+                                            {{ (string) old('franchise_id', $product->franchise_id) === (string) $franchise->id ? 'selected' : '' }}
+                                            >{{ $franchise->name }}
                                         </option>
                                     @endforeach
                                 </select>

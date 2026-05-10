@@ -188,7 +188,7 @@ class AdminDashboardController extends Controller
                 'souvenirs.price',
                 'souvenirs.quantity',
                 'souvenirs.category_id',
-                'souvenirs.movie_id',
+                'souvenirs.franchise_id',
                 'souvenirs.status_id',
                 'souvenir_images.url as image'
             )
@@ -207,7 +207,7 @@ class AdminDashboardController extends Controller
             'product' => $product,
             'images' => $images,
             'categories' => DB::table('category')->orderBy('name')->get(['id', 'name']),
-            'movies' => DB::table('movies')->orderBy('title')->get(['id', 'title']),
+            'franchises' => DB::table('franchises')->orderBy('name')->get(['id', 'name']),
             'statuses' => DB::table('souvenir_status')->orderBy('name')->get(['id', 'name']),
         ]);
     }
@@ -326,7 +326,7 @@ class AdminDashboardController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'quantity' => ['required', 'integer', 'min:0'],
             'category_id' => ['nullable', 'integer', 'exists:category,id'],
-            'movie_id' => ['nullable', 'integer', 'exists:movies,id'],
+            'franchise_id' => ['nullable', 'integer', 'exists:franchises,id'],
             'status_id' => ['nullable', 'integer', 'exists:souvenir_status,id'],
         ]);
 
@@ -337,7 +337,7 @@ class AdminDashboardController extends Controller
                 'price' => $validated['price'],
                 'quantity' => $validated['quantity'],
                 'category_id' => $validated['category_id'] ?? null,
-                'movie_id' => $validated['movie_id'] ?? null,
+                'franchise_id' => $validated['franchise_id'] ?? null,
                 'status_id' => $validated['status_id'] ?? null,
                 'updated_at' => now(),
             ]);
@@ -444,7 +444,7 @@ class AdminDashboardController extends Controller
     {
         return DB::table('souvenirs')
             ->leftJoin('category', 'souvenirs.category_id', '=', 'category.id')
-            ->leftJoin('movies', 'souvenirs.movie_id', '=', 'movies.id')
+            ->leftJoin('franchises', 'souvenirs.franchise_id', '=', 'franchises.id')
             ->leftJoin('souvenir_images', function ($join) {
                 $join->on('souvenirs.id', '=', 'souvenir_images.souvenir_id')
                     ->where('souvenir_images.is_primary', true);
@@ -456,7 +456,7 @@ class AdminDashboardController extends Controller
                 'souvenirs.updated_at',
                 'souvenir_images.url as image',
                 'category.name as category_name',
-                'movies.title as movie_title'
+                'franchises.name as franchise_name'
             );
     }
 
@@ -475,7 +475,7 @@ class AdminDashboardController extends Controller
 
     private function mapSouvenirRow(object $row): object
     {
-        $parts = array_filter([$row->category_name ?? null, $row->movie_title ?? null]);
+        $parts = array_filter([$row->category_name ?? null, $row->franchise_name ?? null]);
 
         return (object) [
             'id' => $row->id,
