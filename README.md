@@ -15,7 +15,7 @@ A full-stack e-commerce platform for movie tickets and souvenirs, built with **L
 * **Secure Checkout**: Server-side recalculation of all totals (subtotal, shipping, tax) to prevent price-manipulation attacks.
 * **User Profiles**: Manage saved delivery addresses and view historical order data.
 
-### Admin Panel (`/xj7qr2/dashboard`)
+### Admin Panel (`/xj7qr2/login`)
 * **Obfuscated Access**: Admin area is mounted on a non-conventional prefix to prevent discovery.
 * **Product Management**: Create, edit, and delete movies or souvenirs, including multi-image uploads and setting primary images.
 * **Schedule Management**: Create screening slots with automated end-time calculation based on movie duration and a 15-minute cleaning buffer.
@@ -71,7 +71,7 @@ A full-stack e-commerce platform for movie tickets and souvenirs, built with **L
 | **User** | test@example.com | password |
 | **Admin** | admin@moviemall.com | MM$ecure#2026! |
 
-*The admin panel is available at `/xj7qr2/dashboard`.*
+*The admin panel is available at `/xj7qr2/login`.*
 
 ## Project Structure
 * `app/Http/Controllers/`: specialized controllers for `Cart`, `Checkout`, `AdminDashboard`, and `Search`.
