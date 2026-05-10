@@ -1,6 +1,6 @@
 # MovieMall
 
-A fictional movie ticket and souvenir store built with Laravel, Alpine.js, and Tailwind CSS.
+A fictional movie ticket and souvenir store built with Laravel and Tailwind CSS.
 
 ## Features
 
@@ -58,10 +58,9 @@ The admin panel is available at `/xj7qr2/dashboard`.
 
 ```
 laravel/
-  app/Http/Controllers/   # Route controllers
-  app/Http/Middleware/     # SyncSessionCart runs on every web request
-  database/migrations/    # Single-pass schema (migrate:fresh friendly)
-  database/seeders/       # Full dataset — 65 movies, 10 franchises, souvenirs
-  resources/views/        # Blade templates
-  resources/js/           # Alpine.js components, Axios setup
+  app/Http/Controllers/
+  app/Http/Middleware/
+  database/migrations/
+  database/seeders/
+  resources/views/
 ```
